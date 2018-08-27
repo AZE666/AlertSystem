@@ -1,0 +1,7 @@
+{
+  "name": "OfficeApp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
