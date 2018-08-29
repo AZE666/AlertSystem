@@ -1,5 +1,6 @@
 import { ApiConfig } from "./api.config";
 import { AppUtil } from "./app.util";
+import { AppLang } from "./app.lang";
 import { StatusBar } from '@ionic-native/status-bar';
 import {TabsPage} from "../pages/tabs/tabs";
 import { HomePage } from "../pages/home/home";
@@ -15,6 +16,10 @@ export class AppBase{
     public statusBarStyle="X";//{DARK}
     public uploadpath:string=ApiConfig.getUploadPath();
     public util=AppUtil;
+
+    public Lang=[];
+
+
     public constructor(navCtrl:NavController,
         modalCtrl:ModalController, 
         viewCtrl:ViewController,
@@ -32,7 +37,7 @@ export class AppBase{
         this.onMyLoad();
     }
     onMyLoad(){
-        
+        this.Lang=AppLang.Lang;
     }
     ionViewDidEnter(){
         this.setStatusBar();
