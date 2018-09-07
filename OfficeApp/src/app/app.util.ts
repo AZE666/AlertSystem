@@ -39,6 +39,10 @@ export class AppUtil {
     }
 
     public static IsMobileNo(str){
+        console.log(str);
+        if(str==null||str==undefined||str.length!=11){
+            return false;
+        }
 
         var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
         return myreg.test(str);

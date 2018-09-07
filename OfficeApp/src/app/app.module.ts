@@ -8,6 +8,8 @@ import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+import { ListPage } from '../pages/list/list';
+import { LoginPage } from '../pages/login/login';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -20,6 +22,8 @@ enableProdMode();
     AboutPage,
     ContactPage,
     HomePage,
+    LoginPage,
+    ListPage,
     TabsPage
   ],
   imports: [
@@ -42,7 +46,9 @@ enableProdMode();
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    LoginPage,
+    ListPage
   ],
   providers: [
     StatusBar,

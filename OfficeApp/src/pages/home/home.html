@@ -1,3 +1,139 @@
+<ion-header>
+    <div class="padding-20 bg-primary " style="padding-top: 40px;">
+        <div>
+            <div class="flex-row flex-center">
+                <div>
+                    <i class="material-icons txt-white h2" menuToggle>list</i>
+                </div>
+                <div class="flex-1">
+                    <div class="flex-row flex-center">
+                        <div class="flex-1 text-right margin-right-10">
+                            <i class="material-icons h1" (click)="menuChange(0)" [class.txt-white]="menu==0" [class.txt-light-white]="menu!=0" [class.h2]="menu!=0">highlight_off</i>
+                        </div>
+                        <div>
+                            <i class="material-icons h1" (click)="menuChange(1)" [class.txt-white]="menu==1" [class.txt-light-white]="menu!=1" [class.h2]="menu!=1">donut_small</i>
+                        </div>
+                        <div class="flex-1 margin-left-10">
+                            <i class="material-icons h1" (click)="menuChange(2)" [class.txt-white]="menu==2" [class.txt-light-white]="menu!=2" [class.h2]="menu!=2">event_seat</i>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <i class="material-icons txt-white h2">search</i>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-header>
+
 <ion-content>
-  
+    <div class="body">
+        <ion-slides #menu_slider  >
+            <ion-slide class="padding body" >
+                
+            </ion-slide>
+            <ion-slide class="body" >
+                <div class="bg-primary flex-row">
+                    <div class="flex-row flex-1">
+                        <div class="flex-1"></div>
+                        <div class="padding-20 txt-white no_active" [class.sub_active]="menu1==0" (click)="menu1Change(0)">推荐</div>
+                        <div class="flex-1"></div>
+                    </div>
+                    <div class="flex-row flex-1">
+                        <div class="flex-1"></div>
+                        <div class="padding-20 txt-white no_active" [class.sub_active]="menu1==1" (click)="menu1Change(1)">综合</div>
+                        <div class="flex-1"></div>
+                    </div>
+                    <div class="flex-row flex-1">
+                        <div class="flex-1"></div>
+                        <div class="padding-20 txt-white no_active" [class.sub_active]="menu1==2" (click)="menu1Change(2)" >关注</div>
+                        <div class="flex-1"></div>
+                    </div>
+                </div>
+                <ion-slides  #menu1_slider  >
+                        <ion-slide class="body" >
+                            a
+                        </ion-slide>
+                        <ion-slide class="body" >
+                            <div class="bg-primary bgafterbanner" ></div>
+                            <div>
+                                <div class="padding">
+
+                                        <ion-slides  class="adv_banner"  >
+                                                <ion-slide *ngFor="let item of bannerlist" >
+                                                    <img src="{{uploadpath}}banner/{{item.pic}}" (click)="bannerClick(item.link)" />
+                                                </ion-slide>
+                                            </ion-slides>
+                                </div>
+                            </div>
+                        </ion-slide>
+                        <ion-slide class="body" >
+                            c
+                        </ion-slide>
+                    </ion-slides>
+            </ion-slide>
+            <ion-slide class="padding body" style="padding-top:0px;">
+                
+            </ion-slide>
+        </ion-slides>
+    </div>
+
+
+
+    <!--menuToggle
+    
+    <div class="body">
+
+        <ion-slides direction="vertical">
+            <ion-slide class="padding body" style="padding-top:0px;">
+                <div class="sliderbody">
+                    <div class="h3">
+                        罗湖区
+                    </div>
+                    <div class="h4">
+                        {{dashboard.city}}
+                    </div>
+                    <div class="h5">
+                        温度：{{dashboard.wendu}}&#176;C
+                    </div>
+                    <div class="h5">
+                        湿度：{{dashboard.shidu}}
+                    </div>
+                    <div class="inbottom">
+                        <div class="h6">环保综合指数：</div>
+                        <div class="zhishu">68</div>
+                    </div>
+                </div>
+            </ion-slide>
+            <ion-slide class="padding body">
+                <div class="padding bg sliderbody">
+                    <div class="h3 ">数据数字化</div>
+                    <div class="margin-top-10 border-bottom-bold "></div>
+                    <div class="sliderbody margin-top-10">
+                        <div class="sliderbody_map" #home_map id="home_map"></div>
+                    </div>
+                </div>
+            </ion-slide>
+            <ion-slide class="padding body">
+                <div class="padding bg sliderbody">
+                    <div class="h3 ">综合概况</div>
+                    <div class="margin-top-10 border-bottom-bold "></div>
+                    <div class="flex-row">
+                        <div class="flex-2 h5">街道</div>
+                        <div class="flex-1 h5">环保指数</div>
+                        <div class="flex-1 h5">油烟指数</div>
+                        <div class="flex-1 h5">检测数量</div>
+                    </div>
+                    <div class="margin-top-10 border-bottom "></div>
+                    <div class="flex-row" *ngFor="let item of dashboard.streets;let i=index;">
+                        <div class="flex-2 h5">{{i+1}}. {{item.areaname}}</div>
+                        <div class="flex-1 h5">{{item.avg_index}}</div>
+                        <div class="flex-1 h5">{{item.avg_index}}</div>
+                        <div class="flex-1 h5">{{item.object_count}}</div>
+                    </div>
+                </div>
+            </ion-slide>
+        </ion-slides>
+    </div>
+-->
 </ion-content>

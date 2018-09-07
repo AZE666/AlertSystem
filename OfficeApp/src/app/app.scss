@@ -16,11 +16,8 @@
 // automatically applied to the <body> element in the app.
 
 /**app.wxss**/
+@import '../assets/iconfont/material-icons.css';
 
-
-page{
-    background: #f8f8f8;
-  }
   .clear-contact{
     position: absolute;  
     opacity: 0;
@@ -44,7 +41,7 @@ page{
   div,a,input,text,textarea{
     font-size: px(16);
     font-weight: 350;
-    color: #2c2c2c;
+    color: #090909;
   }
   .flex-row{
     display: flex;
@@ -73,14 +70,14 @@ page{
     text-align: right;
   }
   .white-block{
-    background: white;
+    background: #fdfdfd;
   }
   .primary-block{
-    background: #F04848;
+    background: #0288D1;
     color:white;
   }
   .bg-primary{
-    background: #F04848;
+    background: #0288D1;
   }
   
   .txt-primary{
@@ -94,6 +91,9 @@ page{
   }
   .txt-gray{
     color:#aaa;
+  }
+  .txt-light-white{
+    color:rgba(255,255,255,0.7);
   }
   .txt-blue{
     color:#3c78d8;
@@ -109,6 +109,9 @@ page{
     word-break:keep-all;           /* 不换行 */
   white-space:nowrap;          /* 不换行 */
   overflow:hidden;               /* 内容超出宽度时隐藏超出部分的内容 */
+  }
+  .h0{
+    font-size: px(48) !important;
   }
   .h1{
     font-size: px(32) !important;
@@ -137,7 +140,7 @@ page{
   
   button[type=primary]{
     
-    background-color: #F04848;
+    background-color: #0288D1;
   }
   button.button-hover[type=primary]{
     
@@ -148,10 +151,13 @@ page{
   }
   
   .input{
-    border-bottom:px(0.5) solid #ddd;
-    padding-bottom:px(10);
+    border:0px;
+    background-color: transparent;
   }
   
+  .padding{
+    padding:px(20);
+  }
   .padding-10{
     padding:px(5);
   }
@@ -179,8 +185,14 @@ page{
   .margin-left-10{
       margin-left:px(20);
   }
+  .margin-left{
+      margin-left:px(40);
+  }
   .margin-right-10{
       margin-right:px(20);
+  }
+  .margin-right{
+      margin-right:px(40);
   }
   .height-40{
     height: px(20);
@@ -271,12 +283,28 @@ page{
     width: px(375);
     background: rgba(221, 221, 221, 0.5);
   }
+  .width100{
+    width: 100%;
+  }
   .border-bottom{
-    border-bottom: 1px rgba(221, 221, 221, 0.5) solid;
+    border-bottom: 1px white solid;
+  }
+  .border-bottom-bold{
+    border-bottom: 4px rgb(255, 255, 255) solid;
+  }
+  .fullheight{
+    height: 100%;
   }
   
-  
-
+  .debug1{
+    background: #0288D1;
+  }
+  .debug2{
+    background: #AA0048;
+  }
+  .debug3{
+    background: #AA00BB;
+  }
 
 
   .swiper-pagination-bullet-active{
@@ -289,9 +317,31 @@ page{
   }
 
   .content-ios,.content-md{
-      background: #fcfcfc;
+      background: #fdfdfd;
   }
 
   .htmlcontent div,a,section{
     font-size: 14px;
+    color:#f4f4f4;
+  }
+
+  .tabs-md .tabbar{
+    background: #000000;
+    color:white;
+  }
+  .tabs-ios .tabbar{
+    background: #000000;
+    color:white;
+  }
+  .tab-button-text{
+
+    color:white;
+  }
+  .tabs-md .tab-button-icon{
+
+    color:white;
+  }
+  .tabs-ios .tab-button-icon{
+
+    color:white;
   }
