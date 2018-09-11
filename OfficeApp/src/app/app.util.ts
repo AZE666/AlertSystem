@@ -19,9 +19,11 @@ export class AppUtil {
         s = s.replace(/&nbsp;/g, " ");
         s = s.replace(/&#39;/g, "\'");
         s = s.replace(/&quot;/g, "\"");
+        
+        //s = s.replace(new RegExp("</p>", "gm"), "</p><br />");
 
-        var reg=new RegExp("\"/alucard263096/zhizhenapp/upload/","g"); //创建正则RegExp对象   
-        s= s.replace(reg,"\"http://cmsdev.app-link.org/alucard263096/zhizhenapp/upload/"); 
+        var reg=new RegExp("\"/alucard263096/aze/upload/","g"); //创建正则RegExp对象   
+        s= s.replace(reg,"\"http://cmsdev.app-link.org/alucard263096/aze/upload/"); 
         
         return s;
     }

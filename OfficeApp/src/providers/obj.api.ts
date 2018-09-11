@@ -14,7 +14,7 @@ import 'rxjs/add/operator/map';
   for more info on providers and Angular 2 DI.
 */
 @Injectable()
-export class CommonApi {
+export class ObjApi {
 
   constructor(public http: Http) {
 
@@ -23,51 +23,8 @@ export class CommonApi {
 
 
   //获取所有的广告
-  public bannerlist(data, showLoadingModal: boolean = true) {
-    var mod = 'common/bannerlist';
-    var url = ApiConfig.getApiUrl() + mod;
-    var headers = ApiConfig.GetHeader(url, data);
-    let options = new RequestOptions({ headers: headers });
-
-    let body = ApiConfig.ParamUrlencoded(data);
-
-    let loading: Loading = null;
-    if (showLoadingModal) {
-      loading = ApiConfig.GetLoadingModal();
-    }
-
-    return this.http.post(url, body, options).toPromise()
-      .then((res) => {
-        if (ApiConfig.DataLoadedHandle(mod, data, res)) {
-          if (showLoadingModal) {
-            ApiConfig.DimissLoadingModal();
-          }
-          var retjson = res.json();
-          console.log(retjson);
-          return retjson;
-        } else {
-          console.log(res);
-          return Promise.reject(res);
-        }
-      })
-      .catch(err => {
-        console.log(err);
-        if (showLoadingModal) {
-          ApiConfig.DimissLoadingModal();
-        }
-        return ApiConfig.ErrorHandle(mod, data, err);
-      });
-
-
-  }
-
-
-
-
-
-  //获取所有的广告
-  public resource(data, showLoadingModal: boolean = true) {
-    var mod = 'common/resource';
+  public list(data, showLoadingModal: boolean = true) {
+    var mod = 'obj/list';
     var url = ApiConfig.getApiUrl() + mod;
     var headers = ApiConfig.GetHeader(url, data);
     let options = new RequestOptions({ headers: headers });
@@ -107,8 +64,8 @@ export class CommonApi {
 
 
   //获取所有的广告
-  public newslist(data, showLoadingModal: boolean = true) {
-    var mod = 'common/newslist';
+  public eventlist(data, showLoadingModal: boolean = true) {
+    var mod = 'obj/eventlist';
     var url = ApiConfig.getApiUrl() + mod;
     var headers = ApiConfig.GetHeader(url, data);
     let options = new RequestOptions({ headers: headers });
@@ -145,46 +102,6 @@ export class CommonApi {
 
   }
 
-
-
-  //获取所有的广告
-  public news(data, showLoadingModal: boolean = true) {
-    var mod = 'common/news';
-    var url = ApiConfig.getApiUrl() + mod;
-    var headers = ApiConfig.GetHeader(url, data);
-    let options = new RequestOptions({ headers: headers });
-
-    let body = ApiConfig.ParamUrlencoded(data);
-
-    let loading: Loading = null;
-    if (showLoadingModal) {
-      loading = ApiConfig.GetLoadingModal();
-    }
-
-    return this.http.post(url, body, options).toPromise()
-      .then((res) => {
-        if (ApiConfig.DataLoadedHandle(mod, data, res)) {
-          if (showLoadingModal) {
-            ApiConfig.DimissLoadingModal();
-          }
-          var retjson = res.json();
-          console.log(retjson);
-          return retjson;
-        } else {
-          console.log(res);
-          return Promise.reject(res);
-        }
-      })
-      .catch(err => {
-        console.log(err);
-        if (showLoadingModal) {
-          ApiConfig.DimissLoadingModal();
-        }
-        return ApiConfig.ErrorHandle(mod, data, err);
-      });
-
-
-  }
 
 
 }

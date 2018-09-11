@@ -1,7 +1,4 @@
 page-home {
-    ion-content{
-        margin-top:-1px;
-    }
     .toolbar-background-ios{
         background-color:transparent;
         border-style: unset !important;
@@ -71,5 +68,33 @@ page-home {
         width: 100%;
         border-radius: 5px;
     }
-    
+    .little-field{
+        width:px(100);
+    }    
+    .aqi{
+        font-size: 100px;
+    }
+    .map{
+        height: px(190);
+    }
+    .objblock{
+        border-radius: 3px;
+        border:1px rgba(211,211,211,.54) solid;
+    }
+    .objcover{
+        width: 100%;
+        height: px(160);
+        background-size: 100% 100%;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+    }
+    .objtitle{
+        margin-top: px(80);
+    }
+    .objtitlebg{
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        height: 100%;
+        background-color: rgba(0,0,0,.54);
+    }
 }

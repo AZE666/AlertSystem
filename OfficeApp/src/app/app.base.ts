@@ -4,10 +4,12 @@ import { AppLang } from "./app.lang";
 import { StatusBar } from '@ionic-native/status-bar';
 import { TabsPage } from "../pages/tabs/tabs";
 import { HomePage } from "../pages/home/home";
-import { NavController, ModalController, ViewController, App, ToastController } from "ionic-angular";
+import { NavController, ModalController, ViewController, App, ToastController,NavParams } from "ionic-angular";
+import { CommonApi } from '../providers/common.api';
 
 export class AppBase {
     static TabChangeParamCache = null;
+    public static commonapi:CommonApi=null;
     
 
     public statusBar: StatusBar = null;
@@ -15,11 +17,15 @@ export class AppBase {
     public modalCtrl: ModalController = null;
     public viewCtrl: ViewController = null;
     public toastCtrl: ToastController = null;
+    public navParams:NavParams=null;
     public statusBarStyle = "X";//{DARK}
     public uploadpath: string = ApiConfig.getUploadPath();
     public util = AppUtil;
-
     public Lang = [];
+    public res=[];
+
+
+    public options={};
 
     public firseonshow=true;
 
@@ -28,26 +34,35 @@ export class AppBase {
         modalCtrl: ModalController,
         viewCtrl: ViewController,
         statusBar: StatusBar,
-        toastCtrl: ToastController) {
+        toastCtrl: ToastController,
+    navParams:NavParams) {
 
         this.navCtrl = navCtrl;
         this.modalCtrl = modalCtrl;
         this.viewCtrl = viewCtrl;
         this.statusBar = statusBar;
         this.toastCtrl = toastCtrl;
+        this.navParams=navParams;
     }
     setStatusBar() {
-      this.statusBar.styleLightContent();
+    //  this.statusBar.styleLightContent();
     }
     ionViewDidLoad() {
         this.onMyLoad();
+        this.options=this.navParams.data;
     }
     onMyLoad() {
         this.Lang = AppLang.getLang();
     }
+    getResources(){
+        AppBase.commonapi.resource({},false).then((res)=>{
+            this.res=res;
+        });
+    }
     ionViewDidEnter() {
         this.setStatusBar();
         this.checkLogin();
+        this.getResources();
         this.onMyShow();
         this.firseonshow=false;
     }

@@ -28,9 +28,9 @@ export class LoginPage extends AppBase {
   retryverifysecond=0;
   constructor(public navCtrl: NavController, public modalCtrl: ModalController
     , public statusBar: StatusBar, public viewCtrl: ViewController, public toastCtrl: ToastController,
-    public memberApi: MemberApi
+    public memberApi: MemberApi,public navParam:NavParams
   ) {
-    super(navCtrl, modalCtrl, viewCtrl, statusBar, toastCtrl);
+    super(navCtrl, modalCtrl, viewCtrl, statusBar, toastCtrl,navParam);
     this.model="v";
   }
 

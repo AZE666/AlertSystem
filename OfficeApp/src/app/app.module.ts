@@ -13,6 +13,7 @@ import { LoginPage } from '../pages/login/login';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { CommonApi } from '../providers/common.api';
 
 enableProdMode();
 
@@ -53,6 +54,7 @@ enableProdMode();
   providers: [
     StatusBar,
     SplashScreen,
+    CommonApi,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

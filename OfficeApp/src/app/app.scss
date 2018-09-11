@@ -43,6 +43,12 @@
     font-weight: 350;
     color: #090909;
   }
+
+.nostyle div,a,input,text,textarea{
+  color:inherit;
+  font-size:inherit;
+  font-weight:inherit;
+}
   .flex-row{
     display: flex;
   }
@@ -81,7 +87,7 @@
   }
   
   .txt-primary{
-    color:#0877E3;
+    color:#0288D1;
   }
   .txt-orange{
     color:#FF9800;
@@ -99,8 +105,7 @@
     color:#3c78d8;
   }
   .txt-light{
-    color: #fcfcfc;
-    font-weight: 350;
+    color: #fcfcfcde;
   }
   .txt-bold{
     font-weight: bolder;
@@ -110,14 +115,17 @@
   white-space:nowrap;          /* 不换行 */
   overflow:hidden;               /* 内容超出宽度时隐藏超出部分的内容 */
   }
+  .h-1{
+    font-size: px(72) !important;
+  }
   .h0{
-    font-size: px(48) !important;
+    font-size: px(56) !important;
   }
   .h1{
-    font-size: px(32) !important;
+    font-size: px(48) !important;
   }
   .h2{
-    font-size: px(28) !important;
+    font-size: px(32) !important;
   }
   .h3{
     font-size: px(24) !important;
@@ -170,6 +178,12 @@
   .padding-40{
     padding:px(20);
   }
+  .padding-top{
+    padding-top:px(20);
+  }
+  .padding-bottom-10{
+    padding-bottom:px(5);
+  }
   .padding-bottom{
     padding-bottom:px(20);
   }
@@ -182,11 +196,17 @@
   .margin-top{
     margin-top:px(20);
   }
+  .margin-left-5{
+      margin-left:px(10);
+  }
   .margin-left-10{
       margin-left:px(20);
   }
   .margin-left{
       margin-left:px(40);
+  }
+  .margin-right-5{
+      margin-right:px(10);
   }
   .margin-right-10{
       margin-right:px(20);
@@ -206,33 +226,36 @@
   .radius-50{
     border-radius: 50%;
   }
+  .dot-line{
+    border-bottom:dotted 3px #aaa;
+  }
   .icon-10{
-    width: px(10);
-    height: px(10);
+    width: px(10) !important;
+    height: px(10) !important;
   }
   .icon-15{
-    width: px(15);
-    height: px(15);
+    width: px(15) !important;
+    height: px(15) !important;
   }
   .icon{
-    width: px(20);
-    height: px(20);
+    width: px(20) !important;
+    height: px(20) !important;
   }
   .icon-25{
-    width: px(25);
-    height: px(25);
+    width: px(25) !important;
+    height: px(25) !important;
   }
   .icon-30{
-    width: px(30);
-    height: px(30);
+    width: px(30) !important;
+    height: px(30) !important;
   }
   .icon-40{
-    width: px(40);
-    height: px(40);
+    width: px(40) !important;
+    height: px(40) !important;
   }
   .icon-50{
-    width: px(50);
-    height: px(50);
+    width: px(50) !important;
+    height: px(50) !important;
   }
   .border-raidus-50{
     border-radius: 50%;
@@ -275,6 +298,9 @@
   .border-top{
     border-top: 1px rgba(221, 221, 221, 0.5) solid;
   }
+  .border-top-bold{
+    border-top: 3px rgba(221, 221, 221, 0.5) solid;
+  }
   
   .bottom-block{
     height:px(15);
@@ -287,13 +313,16 @@
     width: 100%;
   }
   .border-bottom{
-    border-bottom: 1px white solid;
+    border-bottom: 1px rgba(221, 221, 221, 0.5) solid;
   }
   .border-bottom-bold{
-    border-bottom: 4px rgb(255, 255, 255) solid;
+    border-bottom: 3px rgb(255, 255, 255) solid;
   }
   .fullheight{
     height: 100%;
+  }
+  .height100{
+    height: 100vh;;
   }
   
   .debug1{
@@ -344,4 +373,20 @@
   .tabs-ios .tab-button-icon{
 
     color:white;
+  }
+  .onerow{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .tworow{
+    overflow:hidden; 
+    text-overflow:ellipsis;
+    display:-webkit-box; 
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2; 
+  }
+  .absolute{
+    position: absolute;
+    overflow:hidden;
   }

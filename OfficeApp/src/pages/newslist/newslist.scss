@@ -1,0 +1,21 @@
+page-newslist {
+    .cover{
+        width: px(120);
+        height: px(85);
+        border-radius: 4px;
+    }
+    .title{
+        height: px(50);
+    }
+    .video_cover{
+        width:px(355);
+        height: px(200);
+        background-size: 100% 100%;
+    }
+    .videotitle{
+        height: px(60);
+    }
+    .margin-top-100{
+        margin-top:px(100);
+    }
+}

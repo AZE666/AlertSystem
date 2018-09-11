@@ -1,5 +1,5 @@
 <ion-header>
-    <div class="padding-20 bg-primary " style="padding-top: 40px;">
+    <div class="padding-20 bg-primary ">
         <div>
             <div class="flex-row flex-center">
                 <div>
@@ -28,11 +28,44 @@
 
 <ion-content>
     <div class="body">
-        <ion-slides #menu_slider  >
-            <ion-slide class="padding body" >
-                
+        <ion-slides #menu_slider>
+            <ion-slide class="body">
+                <div class="bg-primary flex-row">
+                    <div class="flex-row flex-1">
+                        <div class="flex-1"></div>
+                        <div class="padding-20 txt-white no_active" [class.sub_active]="menu0==0" (click)="menu0Change(0)">周榜</div>
+                        <div class="flex-1"></div>
+                    </div>
+                    <div class="flex-row flex-1">
+                        <div class="flex-1"></div>
+                        <div class="padding-20 txt-white no_active" [class.sub_active]="menu0==1" (click)="menu0Change(1)">月榜</div>
+                        <div class="flex-1"></div>
+                    </div>
+                    <div class="flex-row flex-1">
+                        <div class="flex-1"></div>
+                        <div class="padding-20 txt-white no_active" [class.sub_active]="menu0==2" (click)="menu0Change(2)">季榜</div>
+                        <div class="flex-1"></div>
+                    </div>
+                </div>
+                <ion-slides #menu0_slider>
+                    <ion-slide class="body">
+                        <div class="body" (swipe)="swipe($event,0,0)">
+
+                        </div>
+                    </ion-slide>
+                    <ion-slide class="body">
+                        <div class="body" (swipe)="swipe($event,0,1)">
+
+                        </div>
+                    </ion-slide>
+                    <ion-slide class="body">
+                        <div class="body" (swipe)="swipe($event,0,2)">
+
+                        </div>
+                    </ion-slide>
+                </ion-slides>
             </ion-slide>
-            <ion-slide class="body" >
+            <ion-slide class="body">
                 <div class="bg-primary flex-row">
                     <div class="flex-row flex-1">
                         <div class="flex-1"></div>
@@ -46,34 +79,288 @@
                     </div>
                     <div class="flex-row flex-1">
                         <div class="flex-1"></div>
-                        <div class="padding-20 txt-white no_active" [class.sub_active]="menu1==2" (click)="menu1Change(2)" >关注</div>
+                        <div class="padding-20 txt-white no_active" [class.sub_active]="menu1==2" (click)="menu1Change(2)">关注</div>
                         <div class="flex-1"></div>
                     </div>
                 </div>
-                <ion-slides  #menu1_slider  >
-                        <ion-slide class="body" >
-                            a
-                        </ion-slide>
-                        <ion-slide class="body" >
-                            <div class="bg-primary bgafterbanner" ></div>
-                            <div>
+                <ion-slides #menu1_slider>
+                    <ion-slide class="body">
+                        <div class="body" (swipe)="swipe($event,1,0)">
+
+                        </div>
+                    </ion-slide>
+                    <ion-slide class="body">
+                        <ion-scroll scrollY="true" class="fullheight">
+                            <div class="bg-primary bgafterbanner"></div>
+                            <div (swipe)="swipe($event,1,1)">
                                 <div class="padding">
 
-                                        <ion-slides  class="adv_banner"  >
-                                                <ion-slide *ngFor="let item of bannerlist" >
-                                                    <img src="{{uploadpath}}banner/{{item.pic}}" (click)="bannerClick(item.link)" />
-                                                </ion-slide>
-                                            </ion-slides>
+                                    <ion-slides class="adv_banner">
+                                        <ion-slide *ngFor="let item of bannerlist">
+                                            <img src="{{uploadpath}}banner/{{item.pic}}" (click)="bannerClick(item.link)" />
+                                        </ion-slide>
+                                    </ion-slides>
+                                </div>
+                                <div>
+                                    <div>
+                                        <div class="padding">
+                                            <div class="flex-row flex-center text-center">
+                                                <div class="flex-1" (click)="gotoNews('A','环保资讯')">
+                                                    <div>
+                                                        <img onerror="onerror=null;src='assets/imgs/t.png'" class="icon-40" src="{{uploadpath}}resource/{{res['homeicon1']}}" />
+                                                    </div>
+                                                    <div class="h5 margin-top-10">
+                                                        环保资讯
+                                                    </div>
+                                                </div>
+                                                <div class="flex-1" (click)="gotoNews('B','政策政规')">
+                                                    <div>
+                                                        <img onerror="onerror=null;src='assets/imgs/t.png'" class="icon-40" src="{{uploadpath}}resource/{{res['homeicon2']}}" />
+                                                    </div>
+                                                    <div class="h5 margin-top-10">
+                                                        政策政规
+                                                    </div>
+                                                </div>
+                                                <div class="flex-1" (click)="gotoNews('C','安志资讯')">
+                                                    <div>
+                                                        <img onerror="onerror=null;src='assets/imgs/t.png'" class="icon-40" src="{{uploadpath}}resource/{{res['homeicon3']}}" />
+                                                    </div>
+                                                    <div class="h5 margin-top-10">
+                                                        安志资讯
+                                                    </div>
+                                                </div>
+                                                <div class="flex-1">
+                                                    <div>
+                                                        <img onerror="onerror=null;src='assets/imgs/t.png'" class="icon-40" src="{{uploadpath}}resource/{{res['homeicon4']}}" />
+                                                    </div>
+                                                    <div class="h5 margin-top-10">
+                                                        地图大数据
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center padding-top border-top-bold padding-bottom">
+                                            <div class="h2">
+                                                {{dashboard.area.areaname}}
+                                                <img onerror="onerror=null;src='assets/imgs/t.png'" class="icon-30 " style="position:absolute;margin-top:5px;" src="{{uploadpath}}resource/{{res['mapmark']}}"
+                                                />
+                                            </div>
+                                            <div class="margin-top-5 h5">{{dashboard.area.cityname}}</div>
+                                            <div class="margin-top">
+                                                <div class="flex-row flex-center">
+                                                    <div class="flex-1">
+                                                        <div class="flex-row">
+                                                            <div class="flex-1 text-right margin-right-5">
+                                                                <img onerror="onerror=null;src='assets/imgs/t.png'" class="icon-15" src="{{uploadpath}}resource/{{res.fengli}}" />
+                                                            </div>
+                                                            <div class="h3 txt-bold">8</div>
+                                                            <div class="flex-1 h6" style="text-align: left;margin-left:2px">mph</div>
+                                                        </div>
+                                                        <div>风力</div>
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <div class="flex-row">
+                                                            <div class="flex-1 text-right margin-right-5">
+                                                                <img onerror="onerror=null;src='assets/imgs/t.png'" class="icon-15" src="{{uploadpath}}resource/{{res.wendu}}" />
+                                                            </div>
+                                                            <div class="h3 txt-bold">{{dashboard.wendu}}</div>
+                                                            <div class="flex-1 h6" style="text-align: left;margin-left:2px">&#8451;</div>
+                                                        </div>
+                                                        <div>温度</div>
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <div class="flex-row">
+                                                            <div class="flex-1 text-right margin-right-5">
+                                                                <img onerror="onerror=null;src='assets/imgs/t.png'" class="icon-15" src="{{uploadpath}}resource/{{res.shidu}}" />
+                                                            </div>
+                                                            <div class="h3 txt-bold">{{dashboard.shidu.replace("%","")}}</div>
+                                                            <div class="flex-1 h6" style="text-align: left;margin-left:2px">%</div>
+                                                        </div>
+                                                        <div>湿度</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="border-top-bold padding">
+                                            <div class="txt-bold">
+                                                空气质量 {{dashboard.environment.quality}}
+                                            </div>
+                                            <div class="flex-row flex-center">
+                                                <div class="flex-1 aqi text-center margin-top-10 margin-right">{{dashboard.environment.aqi}}</div>
+                                                <div class="flex-1  margin-left">
+                                                    <div class="flex-row ">
+                                                        <div class="little-field txt-gray h5">co</div>
+                                                        <div class="h5">{{dashboard.environment.co}}</div>
+                                                    </div>
+                                                    <div class="flex-row margin-top-5">
+                                                        <div class="little-field txt-gray h5">no2</div>
+                                                        <div class="h5">{{dashboard.environment.no2}}</div>
+                                                    </div>
+                                                    <div class="flex-row margin-top-5">
+                                                        <div class="little-field txt-gray h5">o3</div>
+                                                        <div class="h5">{{dashboard.environment.o3}}</div>
+                                                    </div>
+                                                    <div class="flex-row margin-top-5">
+                                                        <div class="little-field txt-gray h5">so2</div>
+                                                        <div class="h5">{{dashboard.environment.so2}}</div>
+                                                    </div>
+                                                    <div class="flex-row margin-top-5">
+                                                        <div class="little-field txt-gray h5">pm10</div>
+                                                        <div class="h5">{{dashboard.environment.pm10}}</div>
+                                                    </div>
+                                                    <div class="flex-row margin-top-5">
+                                                        <div class="little-field txt-gray h5">pm2.5</div>
+                                                        <div class="h5">{{dashboard.environment.pm25}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="border-top-bold padding">
+                                            <div class="txt-bold">
+                                                地图
+                                            </div>
+                                            <div class="margin-top">
+                                                <div class="map" #home_map id="home_map"></div>
+                                            </div>
+                                        </div>
+                                        <div class="border-top-bold padding">
+                                            <div class="txt-bold">
+                                                罗湖区
+                                            </div>
+                                            <div class="margin-top">
+                                                <div class="flex-row text-center">
+                                                    <div class="flex-1 txt-bold">街道</div>
+                                                    <div class="flex-1 txt-bold">检测数量</div>
+                                                    <div class="flex-1 txt-bold">综合环保指数</div>
+                                                </div>
+                                                <div class="dot-line margin-top-10"></div>
+                                                <div class="flex-row text-center margin-top-5" *ngFor="let item of dashboard.streets ">
+                                                    <div class="flex-1 h5">{{item.areaname}}</div>
+                                                    <div class="flex-1 h5">{{item.object_count}}家</div>
+                                                    <div class="flex-1 h5">{{item.avg_index}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </ion-slide>
-                        <ion-slide class="body" >
-                            c
-                        </ion-slide>
-                    </ion-slides>
+                            <div style="height:50px;"></div>
+                        </ion-scroll>
+                    </ion-slide>
+                    <ion-slide class="body">
+                        <ion-scroll scrollY="true" class="fullheight">
+                            <div class="body padding-20" (swipe)="swipe($event,1,2)">
+                                <div *ngFor="let item of focusobjlist">
+                                    <div class="margin-top objblock white-block">
+                                        <div class="objcover" [style.background-image]="'url('+uploadpath+'object/'+item.cover+')'">
+                                            <div class="objtitlebg padding-20">
+                                                <div class="h4 txt-bold txt-white objtitle onerow">{{item.name}}{{item.name}}</div>
+                                                <div class="h5 txt-light margin-top-5  onerow">{{item.address}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="padding-20">
+
+                                            <div class="flex-row flex-center">
+                                                <div class="margin-right-10">污染排放状态</div>
+                                                <div class="line-height-0 margin-right-5">
+                                                    <img class="icon" src="{{uploadpath}}resource/{{res.green}}" *ngIf="item.index<30" />
+                                                    <img class="icon" src="{{uploadpath}}resource/{{res.yellow}}" *ngIf="30<=item.index&&item.index<70" />
+                                                    <img class="icon" src="{{uploadpath}}resource/{{res.red}}" *ngIf="item.index>=70" />
+                                                </div>
+                                                <div class="line-height-0">
+                                                    <div *ngIf="item.index<30">正常</div>
+                                                    <div *ngIf="30<=item.index&&item.index<70">预警</div>
+                                                    <div *ngIf="item.index>=70">超标</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="height:50px;"></div>
+                        </ion-scroll>
+                    </ion-slide>
+                </ion-slides>
             </ion-slide>
-            <ion-slide class="padding body" style="padding-top:0px;">
-                
+            <ion-slide class="body">
+                <div class="bg-primary flex-row">
+                    <div class="flex-row flex-1">
+                        <div class="flex-1"></div>
+                        <div class="padding-20 txt-white no_active" [class.sub_active]="menu2==0" (click)="menu2Change(0)">待办事务</div>
+                        <div class="flex-1"></div>
+                    </div>
+                    <div class="flex-row flex-1">
+                        <div class="flex-1"></div>
+                        <div class="padding-20 txt-white no_active" [class.sub_active]="menu2==1" (click)="menu2Change(1)">进行中</div>
+                        <div class="flex-1"></div>
+                    </div>
+                </div>
+                <ion-slides #menu2_slider>
+                    <ion-slide class="body">
+                        <ion-scroll scrollY="true" class="fullheight">
+                            <div class="body" (swipe)="swipe($event,2,0)">
+
+                                <div *ngIf="aeventlist.length==0">
+                                    <div class=" flex-row flex-center" style="margin-top:30vh;">
+                                        <div class="flex-1 text-center">
+                                            <div class="line-height-0">
+                                                <img onerror="onerror=null;src='assets/imgs/t.png'" src="{{uploadpath}}resource/{{res.nodata}}" style="width:50%" />
+                                            </div>
+                                            <div class="txt-gray h5 margin-top" style="margin-top:10vh;">暂时没有数据</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div *ngFor="let item of aeventlist;let idx=index;">
+                                    <div class="padding-20 white-block">
+                                        <div class="padding-20 border-bottom">
+                                            <div>{{idx+1}}. {{item.title}}</div>
+                                            <div class="flex-row flex-bottom margin-top">
+                                                <div class="flex-1 h5 txt-gray">{{item.object_id_name}}</div>
+                                                <div class="text-right h6 txt-gray">{{item.created_time_formatting}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div style="height:50px;"></div>
+
+                            </div>
+                        </ion-scroll>
+                    </ion-slide>
+                    <ion-slide class="body">
+                        <ion-scroll scrollY="true" class="fullheight">
+                            <div class="body" (swipe)="swipe($event,2,1)">
+
+                                <div *ngIf="beventlist.length==0">
+                                    <div class=" flex-row flex-center" style="margin-top:30vh;">
+                                        <div class="flex-1 text-center">
+                                            <div class="line-height-0">
+                                                <img onerror="onerror=null;src='assets/imgs/t.png'" src="{{uploadpath}}resource/{{res.nodata}}" style="width:50%" />
+                                            </div>
+                                            <div class="txt-gray h5 margin-top" style="margin-top:10vh;">暂时没有数据</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div *ngFor="let item of beventlist;let idx=index;">
+                                    <div class="padding-20 white-block">
+                                        <div class="padding-20 border-bottom">
+                                            <div>{{idx+1}}. {{item.title}}</div>
+                                            <div class="flex-row flex-bottom margin-top">
+                                                <div class="flex-1 h5 txt-gray">{{item.object_id_name}}</div>
+                                                <div class="text-right h6 txt-gray">{{item.created_time_formatting}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="height:50px;"></div>
+
+                            </div>
+                        </ion-scroll>
+                    </ion-slide>
+                </ion-slides>
             </ion-slide>
         </ion-slides>
     </div>
