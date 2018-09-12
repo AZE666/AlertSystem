@@ -34,6 +34,10 @@ export class HomePage extends AppBase {
   aeventlist=[];
   beventlist=[];
 
+  seasonrank=[];
+  monthrank=[];
+  weekrank=[];
+
   constructor(public navCtrl: NavController, public modalCtrl: ModalController
     , public statusBar: StatusBar, public viewCtrl: ViewController, public toastCtrl: ToastController
     , public stataapi: StataApi, public commonapi: CommonApi,public navParam:NavParams,
@@ -71,6 +75,15 @@ export class HomePage extends AppBase {
     });
     this.objapi.eventlist({status:"B"}).then((beventlist)=>{
       this.beventlist=beventlist;
+    });
+    this.objapi.rank({rank:"week"}).then((weekrank)=>{
+      this.weekrank=weekrank;
+    });
+    this.objapi.rank({rank:"month"}).then((monthrank)=>{
+      this.monthrank=monthrank;
+    });
+    this.objapi.rank({rank:"season"}).then((seasonrank)=>{
+      this.seasonrank=seasonrank;
     });
 
     this.commonapi.bannerlist({}).then((bannerlist) => {
@@ -136,7 +149,7 @@ export class HomePage extends AppBase {
 
 
 
-
+    //this.gotoEvent(1);
 
 
 
@@ -217,10 +230,14 @@ export class HomePage extends AppBase {
       return;
     }
 
-
+    
   }
   gotoNews(type, title) {
     var modal = this.modalCtrl.create("NewslistPage", { type: type, title: title });
+    modal.present();
+  }
+  gotoEvent(id) {
+    var modal = this.modalCtrl.create("EventPage", { id:id });
     modal.present();
   }
 }

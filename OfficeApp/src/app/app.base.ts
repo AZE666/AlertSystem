@@ -7,9 +7,17 @@ import { HomePage } from "../pages/home/home";
 import { NavController, ModalController, ViewController, App, ToastController,NavParams } from "ionic-angular";
 import { CommonApi } from '../providers/common.api';
 
+
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { AppAvailability } from '@ionic-native/app-availability';
+import { Device } from '@ionic-native/device';
+
 export class AppBase {
     static TabChangeParamCache = null;
     public static commonapi:CommonApi=null;
+    public static appbrowser:InAppBrowser;
+    public static appavailablity:AppAvailability;
+    public static appdevice:Device;
     
 
     public statusBar: StatusBar = null;
@@ -109,8 +117,15 @@ export class AppBase {
         }
         return str.split("\n");
     }
+    gotoObject(id){
+        var model=this.modalCtrl.create(TabsPage,{id:id});
+        model.present();
+    }
     checkLogin() {
         //this.modal("LoginPage", {});
+    }
+    tel(tel){
+        window.location.href="tel:"+tel;
     }
     toast(msg) {
         if (msg == "") {
@@ -121,5 +136,34 @@ export class AppBase {
             duration: ((msg / 3)+1) * 1000
         });
         toast.present();
+    }
+    navtoMap(lat,lng,address){
+        var a=1;
+        a--;
+        if(a==0){
+
+            this.toast("还没弄好");
+            return;
+        }
+         var device=AppBase.appdevice;
+
+         let schemeIntent;   // 地图APP Package Name
+         if(device.platform === 'iOS') {  
+             schemeIntent="iosamap://"
+         }else if(device.platform === 'Android') {  
+             schemeIntent = 'com.autonavi.minimap';  
+         } 
+         var appAvailability=AppBase.appavailablity;
+         var iab=AppBase.appbrowser;
+         appAvailability.check(schemeIntent)     /* 检测微信是否已安卓 */
+         .then(
+             (yes: boolean) => {
+                 iab.create(schemeIntent, '_system');    /* 打开微信 */
+             },
+             (no: boolean) => {
+                 /* 未安装，请编写提示代码或跳转下载 */
+                 this.toast("未检查手机的导航软件");
+             }
+         );
     }
 }

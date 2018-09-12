@@ -12,26 +12,18 @@ import { MemberApi } from '../../providers/member.api';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
   providers: [MemberApi]
 })
-export class LoginPage extends AppBase {
+export class LoginPage  {
 
-  mobile = "";
-  password="";
-  model="v";
-  pswshow=false;
-  verifycode="";
-  retryverifysecond=0;
   constructor(public navCtrl: NavController, public modalCtrl: ModalController
     , public statusBar: StatusBar, public viewCtrl: ViewController, public toastCtrl: ToastController,
     public memberApi: MemberApi,public navParam:NavParams
   ) {
-    super(navCtrl, modalCtrl, viewCtrl, statusBar, toastCtrl,navParam);
-    this.model="v";
+    //super(navCtrl, modalCtrl, viewCtrl, statusBar, toastCtrl,navParam);
   }
 
   onMyShow() {
@@ -42,18 +34,6 @@ export class LoginPage extends AppBase {
 
   }
   gotoVerify() {
-    this.memberApi.sendloginverifycode({ mobile: this.mobile }).then((ret) => {
-      if (ret.code == 0) {
-        this.retryverifysecond=60;
-        var retryhandle=setInterval(()=>{
-          this.retryverifysecond=this.retryverifysecond-1;
-          if(this.retryverifysecond<=0){
-            clearInterval(retryhandle);
-          }
-        },1000);
-      } else {
-        this.toast(ret.return);
-      }
-    });
+    
   }
 }

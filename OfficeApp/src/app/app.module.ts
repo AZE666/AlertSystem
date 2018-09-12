@@ -15,6 +15,10 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { CommonApi } from '../providers/common.api';
 
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { AppAvailability } from '@ionic-native/app-availability';
+import { Device } from '@ionic-native/device';
+
 enableProdMode();
 
 @NgModule({
@@ -55,6 +59,7 @@ enableProdMode();
     StatusBar,
     SplashScreen,
     CommonApi,
+    InAppBrowser,AppAvailability,Device,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

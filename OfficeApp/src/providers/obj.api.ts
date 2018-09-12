@@ -104,4 +104,80 @@ export class ObjApi {
 
 
 
+  //获取所有的广告
+  public event(data, showLoadingModal: boolean = true) {
+    var mod = 'obj/event';
+    var url = ApiConfig.getApiUrl() + mod;
+    var headers = ApiConfig.GetHeader(url, data);
+    let options = new RequestOptions({ headers: headers });
+
+    let body = ApiConfig.ParamUrlencoded(data);
+
+    let loading: Loading = null;
+    if (showLoadingModal) {
+      loading = ApiConfig.GetLoadingModal();
+    }
+
+    return this.http.post(url, body, options).toPromise()
+      .then((res) => {
+        if (ApiConfig.DataLoadedHandle(mod, data, res)) {
+          if (showLoadingModal) {
+            ApiConfig.DimissLoadingModal();
+          }
+          var retjson = res.json();
+          console.log(retjson);
+          return retjson;
+        } else {
+          console.log(res);
+          return Promise.reject(res);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        if (showLoadingModal) {
+          ApiConfig.DimissLoadingModal();
+        }
+        return ApiConfig.ErrorHandle(mod, data, err);
+      });
+
+
+  }
+  public rank(data, showLoadingModal: boolean = true) {
+    var mod = 'obj/rank';
+    var url = ApiConfig.getApiUrl() + mod;
+    var headers = ApiConfig.GetHeader(url, data);
+    let options = new RequestOptions({ headers: headers });
+
+    let body = ApiConfig.ParamUrlencoded(data);
+
+    let loading: Loading = null;
+    if (showLoadingModal) {
+      loading = ApiConfig.GetLoadingModal();
+    }
+
+    return this.http.post(url, body, options).toPromise()
+      .then((res) => {
+        if (ApiConfig.DataLoadedHandle(mod, data, res)) {
+          if (showLoadingModal) {
+            ApiConfig.DimissLoadingModal();
+          }
+          var retjson = res.json();
+          console.log(retjson);
+          return retjson;
+        } else {
+          console.log(res);
+          return Promise.reject(res);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        if (showLoadingModal) {
+          ApiConfig.DimissLoadingModal();
+        }
+        return ApiConfig.ErrorHandle(mod, data, err);
+      });
+
+
+  }
+
 }

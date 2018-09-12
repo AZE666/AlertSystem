@@ -78,23 +78,26 @@ page-home {
         height: px(190);
     }
     .objblock{
-        border-radius: 3px;
+        border-radius: 5px;
         border:1px rgba(211,211,211,.54) solid;
     }
     .objcover{
         width: 100%;
-        height: px(160);
+        height: px(210);
         background-size: 100% 100%;
-        border-top-left-radius: 3px;
-        border-top-right-radius: 3px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
     }
     .objtitle{
-        margin-top: px(80);
+        margin-top: px(130);
     }
     .objtitlebg{
-        border-top-left-radius: 3px;
-        border-top-right-radius: 3px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
         height: 100%;
         background-color: rgba(0,0,0,.54);
+    }
+    .rankfield{
+        width:px(30);
     }
 }

@@ -1,0 +1,80 @@
+<!--
+  Generated template for the EventPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <div class="padding-20 bg-primary ">
+    <div>
+      <div class="flex-row flex-center">
+        <div>
+          <i class="material-icons txt-white h2" (click)="back()">keyboard_arrow_left</i>
+        </div>
+        <div class="flex-1 onerow h4 text-center txt-white txt-bold">
+          事项通知
+        </div>
+        <div>
+          <i class="material-icons txt-primary h2">keyboard_arrow_left</i>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-header>
+
+
+<ion-content>
+  <div class="padding">
+    <div class="txt-bold" (click)="gotoObject(event.object_id)">
+      监测单位
+    </div>
+    <div class="h5 txt-gray margin-top-5">
+      {{event.obj_name}}
+    </div>
+    <div class="border-top margin-top"></div>
+    <div class="txt-bold margin-top-10">
+      执法地址
+    </div>
+    <div class="h5 txt-gray margin-top-5">
+      {{event.obj_address}}
+    </div>
+    <div class="border-top margin-top"></div>
+    <div class="txt-bold margin-top-10">
+      执法原因
+    </div>
+    <div class="h5 txt-gray margin-top-5">
+      {{event.title}}
+    </div>
+    <div class="border-top margin-top"></div>
+    <div class="txt-bold margin-top-10">
+      执法数据从{{event.fromdate_formatting}}至{{event.todate_formatting}}
+    </div>
+    <div class="margin-top">
+      <div #EchartsContent class="height200"></div>
+    </div>
+    <div class="border-top margin-top"></div>
+    <div class="txt-bold margin-top-10">
+      执法起因
+    </div>
+    <div class="nostyle margin-top-5">
+      <div [innerHTML]="event.start"></div>
+    </div>
+    <div class="border-top margin-top" *ngIf="event.status=='B'||event.status=='C'"></div>
+    <div class="txt-bold margin-top-10" *ngIf="event.status=='B'||event.status=='C'">
+      执法经过
+    </div>
+    <div class="nostyle margin-top-5" *ngIf="event.status=='B'||event.status=='C'">
+      <div [innerHTML]="event.process"></div>
+    </div>
+    <div class="border-top margin-top" *ngIf="event.status=='C'"></div>
+    <div class="txt-bold margin-top-10" *ngIf="event.status=='C'">
+      执法结果
+    </div>
+    <div class="nostyle margin-top-5" *ngIf="event.status=='C'">
+      <div [innerHTML]="event.done"></div>
+    </div>
+
+    <div style="height:50px;"></div>
+
+  </div>
+</ion-content>

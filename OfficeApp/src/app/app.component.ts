@@ -8,6 +8,11 @@ import { ListPage } from '../pages/list/list';
 import { CommonApi } from '../providers/common.api';
 import { AppBase } from './app.base';
 
+
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { AppAvailability } from '@ionic-native/app-availability';
+import { Device } from '@ionic-native/device';
+
 @Component({
   templateUrl: 'app.html',
   providers:[CommonApi]
@@ -19,7 +24,9 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,public commonApi:CommonApi) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,public commonApi:CommonApi,
+  
+    public appbrowser: InAppBrowser,public appavailablity: AppAvailability,public appdevice: Device) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -29,6 +36,9 @@ export class MyApp {
     ];
 
     AppBase.commonapi=commonApi;
+    AppBase.appbrowser=appbrowser;
+    AppBase.appavailablity=appavailablity;
+    AppBase.appdevice=appdevice;
 
   }
 

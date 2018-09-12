@@ -8,78 +8,7 @@
 
 
 <ion-content>
-  <div class="padding margin-top" *ngIf="model=='v'">
-    <div class="h3">
-      {{Lang.login_welcome}}
-    </div>
-    <div class="margin-top">
-      <div class="border-bottom padding-10 h3 flex-row flex-center">
-        <div class="padding-10 h5">+86</div>
-        <div class="padding-10 h5  line-height-0">
-          <ion-icon name="arrow-forward" ></ion-icon>
-        </div>
-        <div class="flex-1 padding-10 ">
-          <input class="input width100 h4" [(ngModel)]="mobile" type="tel" maxlength="11" placeholder="{{Lang['login_pleaseinputmobile']}}"  />
-        </div>
-        <div class="padding-10 line-height-0" *ngIf="mobile.length>0" (click)="mobile=''" >
-          <ion-icon name="close" ></ion-icon>
-        </div>
-      </div>
-    </div>
-    <div class="margin-top-10">
-      <div class="border-bottom padding-10 h3 flex-row flex-center">
-        <div class="flex-1 padding-10 ">
-          <input class="input width100 h4" [(ngModel)]="verifycode" type="text" maxlength="6" placeholder="{{Lang['login_pleaseinputverifycode']}}"  />
-        </div>
-        <div class="padding-10  line-height-0"   >
-          <button class="h6" ion-button *ngIf="retryverifysecond<=0" (click)="sendVerify()">{{Lang["login_getverifycode"]}}</button>
-          <button class="h6" color="light" ion-button *ngIf="retryverifysecond>0" disabled="true">{{retryverifysecond}}{{Lang["login_regetverifycode"]}}</button>
-        </div>
-      </div>
-    </div>
-    <div class="padding margin-top">
-      <button (click)="verify()" ion-button round block color="light" [disabled]="!util.IsMobileNo(mobile)||verifycode.length!=6" >{{Lang.login_getverifycode}}</button>
-    </div>
-    <div class="h6" (click)="model='p'">
-      {{Lang.login_passwordlogin}}
-    </div>
-  </div>
-
-  <div class="padding margin-top" *ngIf="model=='p'">
-    <div class="h3">
-      {{Lang.login_welcome}}
-    </div>
-    <div class="margin-top">
-      <div class="border-bottom padding-10 h3 flex-row flex-center">
-        <div class="padding-10 h5">+86</div>
-        <div class="padding-10 h5  line-height-0">
-          <ion-icon name="arrow-forward" ></ion-icon>
-        </div>
-        <div class="flex-1 padding-10 ">
-          <input class="input width100 h4" [(ngModel)]="mobile" type="tel" maxlength="11" placeholder="{{Lang['login_pleaseinputmobile']}}"  />
-        </div>
-        <div class="padding-10 line-height-0" *ngIf="mobile.length>0"  (click)="mobile=''" >
-          <ion-icon name="close" ></ion-icon>
-        </div>
-      </div>
-    </div>
-    <div class="margin-top-10">
-      <div class="border-bottom padding-10 h3 flex-row flex-center">
-        <div class="flex-1 padding-10 ">
-          <input class="input width100 h4" [(ngModel)]="password" [type]="pswshow==true?'text':'password'" maxlength="20" placeholder="{{Lang['login_pleaseinputpassword']}}"  />
-        </div>
-        <div class="padding-10  line-height-0"  (click)="pswshow=!pswshow" >
-          <ion-icon [name]="pswshow==true?'eye':'eye-off'" ></ion-icon>
-        </div>
-      </div>
-    </div>
-    <div class="padding margin-top">
-      <button (click)="gotoVerify()" ion-button round block color="light" [disabled]="!util.IsMobileNo(mobile)||password.length==0" >{{Lang['login_login']}}</button>
-    </div>
-    <div class="h6" (click)="model='v'">
-      {{Lang.login_verifylogin}}
-    </div>
-  </div>
+  
 
 
 </ion-content>
