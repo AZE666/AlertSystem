@@ -4,12 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
+
 Vue.config.productionTip = false
 
-Vue.component('button-counter', {
-  props: ['name'],
-  template: '<button >You clicked me {{ name }} times.</button>'
-})
+
 
 /* eslint-disable no-new */
 new Vue({

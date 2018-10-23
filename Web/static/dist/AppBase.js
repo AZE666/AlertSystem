@@ -9,7 +9,9 @@ class AppBase {
             titlename: "安志",
             projectname: "环保监控",
             msg: 'Hello Vue!',
-            memberinfo: {}
+            memberinfo: {name:"",position:"",instinfo:{name:""}},
+            mainnav:"",
+            subnav:""
         }
     }
 

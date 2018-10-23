@@ -55,6 +55,7 @@ ctx.methods.submit=function(){
             var token=ret.return;
             this.setStore("UserToken",token);
             this.setStore("LastLoginName",this.loginname);
+            window.location.href="/#/";
         }else{
             this.tips=ret.result;
         }
