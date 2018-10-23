@@ -22,7 +22,7 @@
             <li v-bind:class="{ 'active':mainnav=='home' }"><router-link to="/"><i class="fa fa-circle-o "></i> <span>总览</span></router-link></li>
             <li  v-bind:class="{ 'active':mainnav=='map' }"><router-link to="/Map"><i class="fa fa-map"></i> <span>地图</span></router-link></li>
   
-            <li class="treeview">
+            <li class="treeview"  v-bind:class="{ 'active':mainnav=='rpt' }">
               <a href="#">
                 <i class="fa fa-pie-chart"></i>
                 <span>数据报表</span>
@@ -31,23 +31,9 @@
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="rpt1.html"><i class="fa fa-circle-o"></i> 污染物数据历史走势图</a></li>
-                <li><a href="rpt2.html"><i class="fa fa-circle-o"></i> 实时大气污染物组成</a></li>
-                <li><a href="rpt3.html"><i class="fa fa-circle-o"></i> 污染来源预测</a></li>
-              </ul>
-            </li>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-pie-chart"></i>
-                <span>数据比较</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="rpt4.html"><i class="fa fa-circle-o"></i> 周污染物浓度同期比较</a></li>
-                <li><a href="rpt4.html"><i class="fa fa-circle-o"></i> 月污染物浓度同期比较</a></li>
-                <li><a href="rpt4.html"><i class="fa fa-circle-o"></i> 季污染物浓度同期比较</a></li>
+                <li ><router-link to="/rpt1"><i class="fa fa-circle-o"  v-bind:class="{ 'text-aqua':subnav=='rpt1' }" ></i> 污染物数据历史走势图</router-link></li>
+                <li><router-link to="/rpt2"><i class="fa fa-circle-o" v-bind:class="{ 'text-aqua':subnav=='rpt2' }" ></i> 实时大气污染物组成</router-link></li>
+                <li><router-link to="/rpt3"><i class="fa fa-circle-o" v-bind:class="{ 'text-aqua':subnav=='rpt3' }" ></i> 污染来源预测</router-link></li>
               </ul>
             </li>
           </ul>
