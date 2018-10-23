@@ -6,6 +6,7 @@ import { StataApi } from '../../providers/stata.api';
 import { CommonApi } from '../../providers/common.api';
 import { ObjApi } from '../../providers/obj.api';
 import { NewslistPage } from '../newslist/newslist';
+import { MapCreator } from '../../app/app.map';
 
 declare var AMap;
 
@@ -104,36 +105,7 @@ export class HomePage extends AppBase {
         shape: 'normal'
       });
 
-      var list = [];
-      var i = -1, length = dashboard.objects.length;
-      while (++i < length) {
-        var item = dashboard.objects[i];
-        list.push({
-          coordinate: [item.lng, item.lat],
-          count: item.index
-        })
-      }
-
-      layer.setData(list, {
-        lnglat: 'coordinate',
-        value: 'count'
-      });
-
-      layer.setOptions({
-        style: {
-          radius: 25,
-          opacity: [0.1, 0.9],
-        },
-        gradient: {
-          0.5: '#2c7bb6',
-          0.65: '#abd9e9',
-          0.7: '#ffffbf',
-          0.9: '#fde468',
-          1.0: '#d7191c'
-        }
-      });
-
-      layer.render();
+      MapCreator.HeatMap(map,dashboard.objects);
 
     });
 
