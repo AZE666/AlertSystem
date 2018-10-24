@@ -88,6 +88,7 @@ class AppBase {
             data() {
                 return {};
             },
+            watch:{},
             created: function () {
                 this.onMyLoad();
             },

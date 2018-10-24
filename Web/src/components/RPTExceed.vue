@@ -29,8 +29,9 @@
                     <div class="box-header">
                     <h3 class="box-title">{{obj.name}}</h3>
                     </div>
+                        <div style="padding:20px">
                         <div class="row">
-                            <div class="col-md-12" :id="'exceedtd_1'+obj.id">
+                            <div class="col-md-12" :id="'exceedtd_'+obj.id">
                         <table class="table table-bordered table-hover dtexam">
                             <thead>
                             <tr>
@@ -64,16 +65,18 @@
                             </tbody>
                           </table>
                           </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
 
                       <div :id="'rpt1_exceed_'+obj.id" style="height:600px"></div>
 
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
 
                       <div :id="'rpt2_exceed_'+obj.id" style="height:600px"></div>
 
                             </div>
+
+                        </div>
 
                         </div>
                 </div>
@@ -117,18 +120,17 @@ ctx.data=function(){
     return data;
 };
 
-ctx.methods.onMyShow=function(){
-    
-    var objectid=this.$route.query.objectid;
-    
-    if(objectid==undefined){
-        this.subnav="exceed_";
-    }else{
-        this.subnav="exceed_"+objectid;
-    }
-  this.loadapi("airdata","exceed",{objectid:this.objectid},(objects)=>{
-      this.objects=objects;
+ctx.updated=function(){
+//alert($("#exceedtd_1 .dtexam").length);
 
+        //alert($("#exceedtd_1").attr("id"));
+var object_id=1;
+var successbind=$(".dtexam").length>0;
+if(successbind==false){
+    return;
+}
+var objects=this.objects;
+var that=this;
                     for(var k=0;k<objects.length;k++){
                         var object=objects[k];
                         var object_id=object.id;
@@ -143,7 +145,7 @@ ctx.methods.onMyShow=function(){
                                 "aLengthMenu" : [5, 20, 50],   
                                 "iDisplayLength" : 5 
                     });
-                    return;
+                    
                     var series=[{name:"SO2",data:[]},{name:"NO2",data:[]},{name:"CO",data:[]},{name:"H2S",data:[]}
                     ,{name:"O3",data:[]}];
 
@@ -158,7 +160,7 @@ ctx.methods.onMyShow=function(){
                     
                     //alert($("#rpt1_device_"+object_id).html());
 
-                    var chart = Highcharts.chart("rpt2_exceed_"+object_id, {
+                    var chart = Highcharts.chart("rpt1_exceed_"+object_id, {
                     chart: {
                         type: 'spline'
                     },
@@ -316,6 +318,21 @@ ctx.methods.onMyShow=function(){
 
 
                     }
+
+
+};
+
+ctx.methods.onMyShow=function(){
+    var objectid=this.$route.query.objectid;
+    
+    if(objectid==undefined){
+        this.subnav="exceed_";
+    }else{
+        this.subnav="exceed_"+objectid;
+    }
+  this.loadapi("airdata","exceed",{objectid:this.objectid},(objects)=>{
+      this.objects=objects;
+
   });
 
 };

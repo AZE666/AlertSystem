@@ -315,13 +315,14 @@ if(this.map==null){
             });
 }
 ctx.methods.onMyShow=function(){
-    
+    //alert();
     var bodyheight = $(".content-wrapper").height();
     if(bodyheight>this.lastmapheight){
         this.lastmapheight=bodyheight;
     }
+    var c=document.documentElement.clientHeight-50-51;
     //alert(this.lastmapheight);
-    $("#map").height(this.lastmapheight);
+    $("#map").height(c);
 
     var map = new AMap.Map('map', {
         zoom: 12,//级别

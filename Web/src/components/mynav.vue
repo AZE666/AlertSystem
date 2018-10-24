@@ -20,20 +20,8 @@
       <ul class="sidebar-menu" data-widget="tree">
             <li v-bind:class="{ 'active':mainnav=='home' }"><router-link to="/"><i class="fa fa-circle-o "></i> <span>总览</span></router-link></li>
             <li  v-bind:class="{ 'active':mainnav=='map' }"><router-link to="/Map"><i class="fa fa-map"></i> <span>地图</span></router-link></li>
-  
-            <li class="treeview"  v-bind:class="{ 'active':mainnav=='rpt' }">
-              <a href="#">
-                <i class="fa fa-pie-chart"></i>
-                <span>超标数据统计分析</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><router-link v-bind:class="{ 'text-aqua':subnav=='exceed_' }" to="/RPTExceed"><i class="fa fa-circle-o"  v-bind:class="{ 'text-aqua':subnav=='exceed_' }" ></i> 全部</router-link></li>
-                <li v-for="item in memberinfo.objectlist"><router-link v-bind:class="{ 'text-aqua':subnav=='exceed_'+item.id }" :to="{path:'/RPTExceed',query:{objectid:item.id}}"><i class="fa fa-circle-o"  v-bind:class="{ 'text-aqua':subnav=='exceed_'+item.id }" ></i> {{item.name}}</router-link></li>
-              </ul>
-            </li>
+            <li  v-bind:class="{ 'active':mainnav=='rpt' }"><router-link to="/RPTExceed"><i class="fa fa-pie-chart"></i> <span>超标数据统计分析</span></router-link></li>
+
           </ul>
     </section>
     <!-- /.sidebar -->
