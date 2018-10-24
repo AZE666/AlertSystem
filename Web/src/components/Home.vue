@@ -555,7 +555,6 @@ ctx.data=function(){
 };
 
 ctx.methods.onMyShow=function(){
-  alert("?");
   
   // Make the dashboard widgets sortable Using jquery UI
   $('.connectedSortable').sortable({

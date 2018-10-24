@@ -1,8 +1,7 @@
 <template>
-     <div id="head-template">
 
 <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
+  <div class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <!-- Sidebar user panel -->
@@ -39,10 +38,12 @@
           </ul>
     </section>
     <!-- /.sidebar -->
-  </aside>
 
 
-</div>
+    
+  </div>
+
+
 </template>
 
 

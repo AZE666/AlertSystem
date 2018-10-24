@@ -38,7 +38,6 @@
 </template>
 
 <script>
-$("#bodyctx").addClass("lockscreen");
 var base = new AppBase();
 var ctx = base.Gen();
 ctx.name = "Login";
@@ -63,6 +62,10 @@ ctx.methods.submit=function(){
 };
 
 ctx.methods.onMyShow=function(){
+    
+    $("#bodyctx").removeClass("darkbg");
+    $("#bodyctx").addClass("lockscreen");
+
     var loginname=this.getStore("LastLoginName");
     if(loginname!=null){
         this.loginname=loginname;

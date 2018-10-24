@@ -92,7 +92,8 @@ class AppBase {
                 this.onMyLoad();
             },
             mounted: function () {
-
+                $("#bodyctx").addClass("darkbg");
+                $("#bodyctx").removeClass("lockscreen");
                 this.getMyInfo((memberinfo) => {
                     //this.lastloginname=this.getStore("lastloginname");
                     //this.msg="funck";

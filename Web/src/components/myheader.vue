@@ -1,7 +1,6 @@
 <template>
-     <div id="head-template">
       
-  <header class="main-header">
+  <div class="main-header">
     <!-- Logo -->
     <a href="#" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -247,10 +246,9 @@
         </ul>
       </div>
     </nav>
-  </header>
+  </div>
       
 
-          </div>
 </template>
 <script>
 export default
