@@ -24,15 +24,13 @@
             <li class="treeview"  v-bind:class="{ 'active':mainnav=='rpt' }">
               <a href="#">
                 <i class="fa fa-pie-chart"></i>
-                <span>数据报表</span>
+                <span>超标数据统计分析</span>
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li ><router-link to="/rpt1"><i class="fa fa-circle-o"  v-bind:class="{ 'text-aqua':subnav=='rpt1' }" ></i> 污染物数据历史走势图</router-link></li>
-                <li><router-link to="/rpt2"><i class="fa fa-circle-o" v-bind:class="{ 'text-aqua':subnav=='rpt2' }" ></i> 实时大气污染物组成</router-link></li>
-                <li><router-link to="/rpt3"><i class="fa fa-circle-o" v-bind:class="{ 'text-aqua':subnav=='rpt3' }" ></i> 污染来源预测</router-link></li>
+                <li v-for="item in memberinfo.objectlist"><router-link v-bind:class="{ 'text-aqua':subnav=='exceed_'+item.id }" :to="{path:'/RPTExceed',query:{objectid:item.id}}"><i class="fa fa-circle-o"  v-bind:class="{ 'text-aqua':subnav=='exceed_'+item.id }" ></i> {{item.name}}</router-link></li>
               </ul>
             </li>
           </ul>

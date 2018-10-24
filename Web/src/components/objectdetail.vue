@@ -2,7 +2,7 @@
     
 
 
-  <div class="modal fade" id="modal-default" >
+  <div class="modal fade" :id="'modal_device_'+devicedata.id" >
     <div class="modal-dialog" style="width:1000px">
       <div class="modal-content"  >
         <!--
@@ -23,16 +23,11 @@
                       图表 <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#tab_4-1" data-toggle="tab">污染物数据历史走势图</a></li>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#tab_4-2" data-toggle="tab">实时大气污染物组成</a></li>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#tab_4-3" data-toggle="tab">污染来源预测</a></li>
-                      <li role="presentation" class="divider"></li>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#tab_4-4" data-toggle="tab">周污染物浓度同期比较</a></li>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#tab_4-4" data-toggle="tab">月污染物浓度同期比较</a></li>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#tab_4-4" data-toggle="tab">季污染物浓度同期比较</a></li>
+                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#tab_4-1" data-toggle="tab">空气污染物走势图</a></li>
+                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#tab_4-2" data-toggle="tab">可吸入颗粒物走势图</a></li>
                     </ul>
                   </li>
-                  <li class="pull-left header"><i class="fa fa-th"></i> 标记点001</li>
+                  <li class="pull-left header"><i class="fa fa-th"></i> {{devicedata.name}}</li>
                 </ul>
                 <div class="tab-content">
                   <div class="tab-pane active" id="tab_1-1">
@@ -51,11 +46,12 @@
                           <dd v-for="item in devicedata.devicelist">{{item.machineid}} - {{item.name}}</dd>
                         </dl>
 
-                        <table id="example2" class="table table-bordered table-hover">
+                        <table class="table table-bordered table-hover dtexam">
                             <thead>
                             <tr>
                               <th>时间</th>
                               <th>SO2</th>
+                              <th>NO2</th>
                               <th>CO</th>
                               <th>H2S</th>
                               <th>O3</th>
@@ -71,10 +67,11 @@
                               <th>噪声</th>
                             </tr>
                             </thead>
-                            <tbody id="dtDr">
+                            <tbody id="dtDr" >
                               <tr  v-for="item in devicedata.airdata">
-                                <td>{{item.upload_time}}</td>
+                                <td>{{item.df}}时</td>
                                 <td>{{item.SO2}}</td>
+                                <td>{{item.NO2}}</td>
                                 <td>{{item.CO}}</td>
                                 <td>{{item.H2S}}</td>
                                 <td>{{item.O3}}</td>
@@ -121,25 +118,17 @@
                   </div>
                   <!-- /.tab-pane -->
                   <div class="tab-pane" id="tab_3-2">
-                      <h3 class="timeline-header"><a href="#">广东省深圳市福田区上步北路1028号</a></h3>
+                      <h3 class="timeline-header"><a href="#">{{devicedata.address}}</a></h3>
 
                       <div class="timeline-body">
                           <video controls="controls" src="" style="width:640px;height:400px;"></video>
                       </div>
                   </div>
                   <div class="tab-pane" id="tab_4-1">
-                      <div id="p1" style="min-width:700px;height:500px"></div>
+                      <div :id="'rpt1_device_'+devicedata.id" style="min-width:800px;height:600px"></div>
                   </div>
                   <div class="tab-pane" id="tab_4-2">
-                      <div id="p2" style="min-width:700px;height:500px"></div>
-                  </div>
-                  <div class="tab-pane" id="tab_4-3">
-                    
-                      <div id="p3" style="min-width:700px;height:500px"></div>
-                  </div>
-                  <div class="tab-pane" id="tab_4-4">
-                    
-                      <div id="p4" style="min-width:700px;height:500px"></div>
+                      <div :id="'rpt2_device_'+devicedata.id" style="min-width:800px;height:600px"></div>
                   </div>
                     
                   <!-- /.tab-pane -->
@@ -168,6 +157,9 @@ export default
     props:["devicedata"],
     methods:{
         
+    },
+    mounted:function(){
+      
     }
 }
 </script>
