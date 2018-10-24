@@ -120,7 +120,12 @@ ctx.data=function(){
 ctx.methods.onMyShow=function(){
     
     var objectid=this.$route.query.objectid;
-    this.subnav="exceed_"+objectid;
+    
+    if(objectid==undefined){
+        this.subnav="exceed_";
+    }else{
+        this.subnav="exceed_"+objectid;
+    }
   this.loadapi("airdata","exceed",{objectid:this.objectid},(objects)=>{
       this.objects=objects;
 

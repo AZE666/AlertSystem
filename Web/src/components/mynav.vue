@@ -30,6 +30,7 @@
                 </span>
               </a>
               <ul class="treeview-menu">
+                <li><router-link v-bind:class="{ 'text-aqua':subnav=='exceed_' }" to="/RPTExceed"><i class="fa fa-circle-o"  v-bind:class="{ 'text-aqua':subnav=='exceed_' }" ></i> 全部</router-link></li>
                 <li v-for="item in memberinfo.objectlist"><router-link v-bind:class="{ 'text-aqua':subnav=='exceed_'+item.id }" :to="{path:'/RPTExceed',query:{objectid:item.id}}"><i class="fa fa-circle-o"  v-bind:class="{ 'text-aqua':subnav=='exceed_'+item.id }" ></i> {{item.name}}</router-link></li>
               </ul>
             </li>
