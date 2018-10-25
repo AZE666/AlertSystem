@@ -94,8 +94,19 @@
                                     item.TVOC>devicedata.extvoc||
                                     item.PM25>devicedata.expm25||
                                     item.PM10>devicedata.expm10)"
-                                     type="button" class="btn  btn-warning btn-xs" @click="alert(item)">发起报警</button>
-                                     <button v-if="item.alert_id>0" type="button" class="btn  btn-success  btn-xs">已报警</button>
+                                     type="button" class="btn  btn-warning btn-xs" @click="alert(item,'A')">报警</button>
+                                     <button v-if="index>0&&item.alert_id==0&&(item.SO2>devicedata.exso2||
+                                    item.NO2>devicedata.exno2||
+                                    item.CO>devicedata.exco||
+                                    item.H2S>devicedata.exh2s||
+                                    item.O3>devicedata.exo3||
+                                    item.TVOC>devicedata.extvoc||
+                                    item.PM25>devicedata.expm25||
+                                    item.PM10>devicedata.expm10)"
+                                     type="button" class="btn btn-default btn-xs" @click="alert(item,'B')">忽略</button>
+                                     <small v-if="item.alert_id>0&&item.alertstatus=='A'"  class="label bg-blue">已报警</small>
+                                     <small v-if="item.alert_id>0&&item.alertstatus=='B'"  class="label bg-yellow">不处理</small>
+                                     <small v-if="item.alert_id>0&&item.alertstatus=='C'"  class="label bg-green">已完成</small>
                                      </td>
                               </tr>
                             </tbody>
@@ -169,9 +180,10 @@ var base=new AppBase();
 var ctx=base.GenComponent();
 ctx.props.push("devicedata");
 
-ctx.methods.alert=function(item){
+ctx.methods.alert=function(item,status){
     item.alert_id=1;
-    this.loadapi("airdata","alert",{airdata_id:item.df_id},(ret)=>{
+    item.alertstatus=status;
+    this.loadapi("airdata","alert",{airdata_id:item.df_id,status:status,object_id:item.object_id},(ret)=>{
         console.log(ret);
     });
 };;

@@ -26,8 +26,7 @@
 						<!-- small box -->
 						<div class="small-box bg-aqua">
 							<div class="inner">
-								<h3>150</h3>
-
+								<h3>{{memberinfo.alertcount}}</h3>
 								<p>新预警</p>
 							</div>
 							<div class="icon">
@@ -56,9 +55,8 @@
 						<!-- small box -->
 						<div class="small-box bg-yellow">
 							<div class="inner">
-								<h3>133</h3>
-
-								<p>监控点</p>
+								<h3>{{memberinfo.exceedcount}}</h3>
+								<p>超标监控</p>
 							</div>
 							<div class="icon">
 								<i class="ion ion-person-add"></i>
