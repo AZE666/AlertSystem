@@ -4,6 +4,7 @@ import Login from '@/components/Login'
 import Home from '@/components/Home'
 import Map from '@/components/Map'
 import RPTExceed from '@/components/RPTExceed'
+import RPTAlert from '@/components/RPTAlert'
 
 Vue.use(Router)
 
@@ -29,6 +30,11 @@ export default new Router({
       path: '/RPTExceed',
       name: 'RPTExceed',
       component: RPTExceed
+    },
+    {
+      path: '/RPTAlert',
+      name: 'RPTAlert',
+      component: RPTAlert
     }
   ]
 })

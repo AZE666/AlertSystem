@@ -58,33 +58,45 @@
                               <th>TVOC</th>
                               <th>PM2.5</th>
                               <th>PM10</th>
-                              <th>风速</th>
+                              <!--<th>风速</th>
                               <th>风向</th>
                               <th>温度</th>
                               <th>湿度</th>
                               <th>压力</th>
                               <th>雨量</th>
-                              <th>噪声</th>
+                              <th>噪声</th>-->
+                              <th>报警</th>
                             </tr>
                             </thead>
                             <tbody id="dtDr" >
-                              <tr  v-for="item in devicedata.airdata">
+                              <tr  v-for="(item, index) in devicedata.airdata">
                                 <td>{{item.df}}时</td>
-                                <td>{{item.SO2}}</td>
-                                <td>{{item.NO2}}</td>
-                                <td>{{item.CO}}</td>
-                                <td>{{item.H2S}}</td>
-                                <td>{{item.O3}}</td>
-                                <td>{{item.TVOC}}</td>
-                                <td>{{item.PM25}}</td>
-                                <td>{{item.PM10}}</td>
-                                <td>{{item.FS}}</td>
+                                <td  v-bind:class="{ 'text-red':item.SO2>devicedata.exso2 }">{{item.SO2}}</td>
+                                <td v-bind:class="{ 'text-red':item.NO2>devicedata.exno2 }">{{item.NO2}}</td>
+                                <td v-bind:class="{ 'text-red':item.CO>devicedata.exco }">{{item.CO}}</td>
+                                <td v-bind:class="{ 'text-red':item.H2S>devicedata.exh2s }">{{item.H2S}}</td>
+                                <td v-bind:class="{ 'text-red':item.O3>devicedata.exo3 }">{{item.O3}}</td>
+                                <td v-bind:class="{ 'text-red':item.TVOC>devicedata.extvoc }">{{item.TVOC}}</td>
+                                <td v-bind:class="{ 'text-red':item.PM25>devicedata.expm25 }">{{item.PM25}}</td>
+                                <td v-bind:class="{ 'text-red':item.PM10>devicedata.expm10 }">{{item.PM10}}</td>
+                                <!--<td>{{item.FS}}</td>
                                 <td>{{item.FX}}</td>
                                 <td>{{item.WD}}</td>
                                 <td>{{item.SD}}</td>
                                 <td>{{item.SP}}</td>
                                 <td>{{item.YL}}</td>
-                                <td>{{item.ZS}}</td>
+                                <td>{{item.ZS}}</td>-->
+                                <td><button v-if="index>0&&item.alert_id==0&&(item.SO2>devicedata.exso2||
+                                    item.NO2>devicedata.exno2||
+                                    item.CO>devicedata.exco||
+                                    item.H2S>devicedata.exh2s||
+                                    item.O3>devicedata.exo3||
+                                    item.TVOC>devicedata.extvoc||
+                                    item.PM25>devicedata.expm25||
+                                    item.PM10>devicedata.expm10)"
+                                     type="button" class="btn  btn-warning btn-xs" @click="alert(item)">发起报警</button>
+                                     <button v-if="item.alert_id>0" type="button" class="btn  btn-success  btn-xs">已报警</button>
+                                     </td>
                               </tr>
                             </tbody>
                           </table>
@@ -152,14 +164,17 @@
   </div>
 </template>
 <script>
-export default
-{
-    props:["devicedata"],
-    methods:{
-        
-    },
-    mounted:function(){
-      
-    }
-}
+
+var base=new AppBase();
+var ctx=base.GenComponent();
+ctx.props.push("devicedata");
+
+ctx.methods.alert=function(item){
+    item.alert_id=1;
+    this.loadapi("airdata","alert",{airdata_id:item.df_id},(ret)=>{
+        console.log(ret);
+    });
+};;
+
+export default ctx
 </script>

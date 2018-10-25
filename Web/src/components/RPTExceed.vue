@@ -19,7 +19,7 @@
 			</section>
 
 			<!-- Main content -->
-			<section class="content">
+			<section class="content" >
 
                 <div class="row">
                 <div class="col-xs-12">
@@ -46,10 +46,11 @@
                               <th>TVOC</th>
                               <th>PM2.5</th>
                               <th>PM10</th>
+                              <th>状态</th>
                             </tr>
                             </thead>
                             <tbody id="dtDr" >
-                              <tr  v-for="item in obj.airdata">
+                              <tr  v-for="(item,index) in obj.airdata">
                                 <td>{{item.devicename}}</td>
                                 <td>{{item.machineid}}</td>
                                 <td >{{item.df}}时</td>
@@ -61,6 +62,18 @@
                                 <td v-bind:class="{ 'text-red':item.TVOC>obj.extvoc }">{{item.TVOC}}</td>
                                 <td v-bind:class="{ 'text-red':item.PM25>obj.expm25 }">{{item.PM25}}</td>
                                 <td v-bind:class="{ 'text-red':item.PM10>obj.expm10 }">{{item.PM10}}</td>
+
+                                <td><button v-if="item.alert_id==0&&(item.SO2>obj.exso2||
+                                    item.NO2>obj.exno2||
+                                    item.CO>obj.exco||
+                                    item.H2S>obj.exh2s||
+                                    item.O3>obj.exo3||
+                                    item.TVOC>obj.extvoc||
+                                    item.PM25>obj.expm25||
+                                    item.PM10>obj.expm10)"
+                                     type="button" class="btn  btn-warning btn-xs" @click="alert(item)" >报警</button>
+                                     <button v-if="item.alert_id>0" type="button" class="btn  btn-success  btn-xs">已报警</button>
+                                     </td>
                               </tr>
                             </tbody>
                           </table>
@@ -96,6 +109,9 @@
 
       <myfooter v-bind:memberinfo="memberinfo"></myfooter>
 
+    <div v-for='item in objects'>
+      <objectdetail v-bind:devicedata="item"></objectdetail>
+    </div>
   <!-- /.control-sidebar -->
   <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
@@ -130,7 +146,31 @@ if(successbind==false){
     return;
 }
 var objects=this.objects;
-var that=this;
+
+
+
+};
+
+ctx.methods.alert=function(item){
+    item.alert_id=1;
+    this.loadapi("airdata","alert",{airdata_id:item.df_id},(ret)=>{
+        console.log(ret);
+    });
+};;
+
+ctx.methods.onMyShow=function(){
+    var objectid=this.$route.query.objectid;
+    
+    if(objectid==undefined){
+        this.subnav="exceed_";
+    }else{
+        this.subnav="exceed_"+objectid;
+    }
+    
+  this.loadapi("airdata","exceed",{objectid:this.objectid},(objects)=>{
+    this.objects=objects;
+    var that=this;
+    this.$nextTick(()=>{
                     for(var k=0;k<objects.length;k++){
                         var object=objects[k];
                         var object_id=object.id;
@@ -140,10 +180,36 @@ var that=this;
                     'lengthChange': false,
                     'searching'   : false,
                     'ordering'    : true,
+                    "order": [[ 2, "desc" ]],
                     'info'        : true,
                     'autoWidth'   : false,
-                                "aLengthMenu" : [5, 20, 50],   
-                                "iDisplayLength" : 5 
+                    retrieve: true,
+                                "aLengthMenu" : [10, 50, 100],   
+                                "iDisplayLength" : 10,
+                                language: {
+                    "sProcessing": "处理中...",
+                    "sLengthMenu": "显示 _MENU_ 项结果",
+                    "sZeroRecords": "没有匹配结果",
+                    "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                    "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                    "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                    "sInfoPostFix": "",
+                    "sSearch": "搜索:",
+                    "sUrl": "",
+                    "sEmptyTable": "表中数据为空",
+                    "sLoadingRecords": "载入中...",
+                    "sInfoThousands": ",",
+                    "oPaginate": {
+                        "sFirst": "首页",
+                        "sPrevious": "上页",
+                        "sNext": "下页",
+                        "sLast": "末页"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": 以升序排列此列",
+                        "sSortDescending": ": 以降序排列此列"
+                    }
+                }
                     });
                     
                     var series=[{name:"SO2",data:[]},{name:"NO2",data:[]},{name:"CO",data:[]},{name:"H2S",data:[]}
@@ -168,7 +234,7 @@ var that=this;
                         text: '空气污染物走势图'
                     },
                     subtitle: {
-                        text: '48小时内非规律性时间内的变化'
+                        text: '非规律性时间内的变化'
                     },
                     xAxis: {
                         type: 'datetime',
@@ -197,7 +263,7 @@ var that=this;
                 });
 
 
-                    var series2=[{name:"TVOC(mg/m3)",data:[]},{name:"PM25(ug/m3)",data:[]},{name:"PM10(ug/m3)",data:[]}];
+                    var series2=[{name:"TVOC(mg/m3)",data:[]},{name:"PM2.5(ug/m3)",data:[]},{name:"PM10(ug/m3)",data:[]}];
 
                     for(var i=0;i<object.airdata.length;i++){
                         var item=object.airdata[i];
@@ -213,7 +279,7 @@ var that=this;
                         text: '可吸入颗粒物走势图'
                     },
                     subtitle: {
-                        text: '48小时内非规律性时间内的变化'
+                        text: '非规律性时间内的变化'
                     },
                     xAxis: {
                         type: 'datetime',
@@ -318,21 +384,7 @@ var that=this;
 
 
                     }
-
-
-};
-
-ctx.methods.onMyShow=function(){
-    var objectid=this.$route.query.objectid;
-    
-    if(objectid==undefined){
-        this.subnav="exceed_";
-    }else{
-        this.subnav="exceed_"+objectid;
-    }
-  this.loadapi("airdata","exceed",{objectid:this.objectid},(objects)=>{
-      this.objects=objects;
-
+    });
   });
 
 };

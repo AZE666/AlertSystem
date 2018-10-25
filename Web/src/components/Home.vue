@@ -33,7 +33,7 @@
 							<div class="icon">
 								<i class="ion ion-alert"></i>
 							</div>
-							<a href="#" class="small-box-footer">更多<i class="fa fa-arrow-circle-right"></i></a>
+							<router-link to="/RPTAlert" class="small-box-footer">更多<i class="fa fa-arrow-circle-right"></i></router-link>
 						</div>
 					</div>
 					<!-- ./col -->
@@ -63,7 +63,7 @@
 							<div class="icon">
 								<i class="ion ion-person-add"></i>
 							</div>
-							<a href="#" class="small-box-footer">更多 <i class="fa fa-arrow-circle-right"></i></a>
+							<router-link to="/RPTExceed" class="small-box-footer">更多 <i class="fa fa-arrow-circle-right"></i></router-link>
 						</div>
 					</div>
 					<!-- ./col -->

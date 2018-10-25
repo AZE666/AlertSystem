@@ -106,4 +106,63 @@ class AppBase {
         };
     }
 
+
+    GenComponent(){
+        return {
+            props:[],
+            methods: {
+                loadapi: function (modu, action, postData, callback) {
+                    var url = this.api + modu + "/" + action;
+                    console.log(url);
+
+                    var that = this;
+
+                    var headers={
+                        'Content-Type':"application/x-www-form-urlencoded"
+                    };
+                    var token = that.getStore("UserToken");
+                    if (token != null) {
+                        headers.TOKEN=token;
+                    }
+                    //alert(headers);
+
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: postData,
+                        headers:headers,
+                        success: function (result) {
+                            console.log(result);
+                            if (callback != undefined) {
+                                var json = JSON.parse(result);
+                                console.log(json);
+                                callback(json);
+                            }
+                        }
+                    });
+                },
+                getStore(key) {
+                    return window.localStorage.getItem(key);
+                },
+                setStore(key, val) {
+                    window.localStorage.setItem(key, val);
+                }
+            },
+            data() {
+                return {
+                    api: "https://cmsdev.app-link.org/alucard263096/aze/api/",
+                    uploadpath: "https://alioss.app-link.org/alucard263096/aze/",
+                    fileupload: "https://cmsdev.app-link.org/alucard263096/aze/fileupload",
+                    name: "安志环保监控",
+                    titlename: "安志",
+                    projectname: "环保监控",
+                    msg: 'Hello Vue!',
+                    memberinfo: {name:"",position:"",instinfo:{name:""}},
+                    mainnav:"",
+                    subnav:""
+                };
+            }
+        };
+    }
+
 }

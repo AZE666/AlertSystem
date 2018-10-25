@@ -21,6 +21,7 @@
             <li v-bind:class="{ 'active':mainnav=='home' }"><router-link to="/"><i class="fa fa-circle-o "></i> <span>总览</span></router-link></li>
             <li  v-bind:class="{ 'active':mainnav=='map' }"><router-link to="/Map"><i class="fa fa-map"></i> <span>地图</span></router-link></li>
             <li  v-bind:class="{ 'active':mainnav=='rpt' }"><router-link to="/RPTExceed"><i class="fa fa-pie-chart"></i> <span>超标数据统计分析</span></router-link></li>
+            <li  v-bind:class="{ 'active':mainnav=='rptalert' }"><router-link to="/RPTAlert"><i class="fa fa-pie-chart"></i> <span>预警数据统计分析</span></router-link></li>
 
           </ul>
     </section>
