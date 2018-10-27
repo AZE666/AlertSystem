@@ -65,20 +65,22 @@
                               <th>压力</th>
                               <th>雨量</th>
                               <th>噪声</th>-->
+                              <th>环境</th>
+                              <th>状态</th>
                               <th>报警</th>
                             </tr>
                             </thead>
                             <tbody id="dtDr" >
                               <tr  v-for="(item, index) in devicedata.airdata">
                                 <td>{{item.df}}时</td>
-                                <td  v-bind:class="{ 'text-red':item.SO2>devicedata.exso2 }">{{item.SO2}}</td>
-                                <td v-bind:class="{ 'text-red':item.NO2>devicedata.exno2 }">{{item.NO2}}</td>
-                                <td v-bind:class="{ 'text-red':item.CO>devicedata.exco }">{{item.CO}}</td>
-                                <td v-bind:class="{ 'text-red':item.H2S>devicedata.exh2s }">{{item.H2S}}</td>
-                                <td v-bind:class="{ 'text-red':item.O3>devicedata.exo3 }">{{item.O3}}</td>
-                                <td v-bind:class="{ 'text-red':item.TVOC>devicedata.extvoc }">{{item.TVOC}}</td>
-                                <td v-bind:class="{ 'text-red':item.PM25>devicedata.expm25 }">{{item.PM25}}</td>
-                                <td v-bind:class="{ 'text-red':item.PM10>devicedata.expm10 }">{{item.PM10}}</td>
+                                <td  v-bind:class="{ 'text-red':item.SO2_s=='l4','text-yellow':item.SO2_s=='l3','text-blue':item.SO2_s=='l2','text-green':item.SO2_s=='l1' }">{{item.SO2}}</td>
+                                <td  v-bind:class="{ 'text-red':item.NO2_s=='l4','text-yellow':item.NO2_s=='l3','text-blue':item.NO2_s=='l2','text-green':item.NO2_s=='l1' }">{{item.NO2}}</td>
+                                <td  v-bind:class="{ 'text-red':item.CO_s=='l4','text-yellow':item.CO_s=='l3','text-blue':item.CO_s=='l2','text-green':item.CO_s=='l1' }">{{item.CO}}</td>
+                                <td  v-bind:class="{ 'text-red':item.H2S_s=='l4','text-yellow':item.H2S_s=='l3','text-blue':item.H2S_s=='l2','text-green':item.H2S_s=='l1' }">{{item.H2S}}</td>
+                                <td  v-bind:class="{ 'text-red':item.O3_s=='l4','text-yellow':item.O3_s=='l3','text-blue':item.O3_s=='l2','text-green':item.O3_s=='l1' }">{{item.O3}}</td>
+                                <td  v-bind:class="{ 'text-red':item.TVOC_s=='l4','text-yellow':item.TVOC_s=='l3','text-blue':item.TVOC_s=='l2','text-green':item.TVOC_s=='l1' }">{{item.TVOC}}</td>
+                                <td  v-bind:class="{ 'text-red':item.PM25_s=='l4','text-yellow':item.PM25_s=='l3','text-blue':item.PM25_s=='l2','text-green':item.PM25_s=='l1' }">{{item.PM25}}</td>
+                                <td  v-bind:class="{ 'text-red':item.PM10_s=='l4','text-yellow':item.PM10_s=='l3','text-blue':item.PM10_s=='l2','text-green':item.PM10_s=='l1' }">{{item.PM10}}</td>
                                 <!--<td>{{item.FS}}</td>
                                 <td>{{item.FX}}</td>
                                 <td>{{item.WD}}</td>
@@ -86,6 +88,29 @@
                                 <td>{{item.SP}}</td>
                                 <td>{{item.YL}}</td>
                                 <td>{{item.ZS}}</td>-->
+                                <td ><a href="#" v-if="item.showenv!='Y'" @click="clickToShowEnv(item)" >查看</a>
+                                <div  v-if="item.showenv=='Y'" >
+                                  <div>风速：{{item.FS}}m/s</div>
+                                  <div>风向：{{item.FX}}&#176;</div>
+                                  <div>温度：{{item.WD}}&#8451;</div>
+                                  <div>湿度：{{item.SD}}RH%</div>
+                                  <div>压力：{{item.SP}}百帕</div>
+                                  <div>雨量：{{item.YL}}mm</div>
+                                  <div>噪声：{{item.ZS}}dB</div>
+                                </div>
+                                </td>
+                                <td v-if="item.status=='l1'" >
+                                  <small class="label  bg-green">优</small>
+                                </td>
+                                <td v-if="item.status=='l2'" >
+                                  <small class="label  bg-blue">良</small>
+                                </td>
+                                <td v-if="item.status=='l3'">
+                                  <small class="label  bg-yellow">中</small>
+                                </td>
+                                <td v-if="item.status=='l4'">
+                                  <small class="label  bg-red">差</small>
+                                </td>
                                 <td><button v-if="index>0&&item.alert_id==0&&(item.SO2>devicedata.exso2||
                                     item.NO2>devicedata.exno2||
                                     item.CO>devicedata.exco||
@@ -187,6 +212,8 @@ ctx.methods.alert=function(item,status){
         console.log(ret);
     });
 };;
-
+ctx.methods.clickToShowEnv=function(item){
+    item.showenv="Y";
+};;
 export default ctx
 </script>

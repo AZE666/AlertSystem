@@ -103,7 +103,7 @@
 
 
   <div class="modal fade" id="alerinfo_modal"  >
-    <div class="modal-dialog" style="width:800px" >
+    <div class="modal-dialog" style="width:1000px" >
       <div class="modal-content"  >
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -127,7 +127,7 @@
                                 <table class="table table-bordered  table-hover " id="example1">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th></th>
                                             <th>SO2</th>
                                             <th>NO2</th>
                                             <th>CO</th>

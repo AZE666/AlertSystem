@@ -80,7 +80,14 @@ ctx.methods.loaddata = function() {
         19: 0,
         20: 0
       };
-      var imgurl = this.uploadpath + "object/" + objects[i].cover;
+
+    var icons = [];
+    
+      var logo = this.uploadpath + "object/" + objects[i].cover;
+      var imgurl = this.uploadpath + "resource/" +object.statuslogo;
+
+      //if(object)
+
       //console.log(objects[i]);
       var position = new AMap.LngLat(
         parseFloat(objects[i].lng),
@@ -88,7 +95,7 @@ ctx.methods.loaddata = function() {
       );
       var icon = new AMap.Icon({
         size: new AMap.Size(50, 50), // 图标尺寸
-        image: this.uploadpath + "object/" + objects[i].cover, // Icon的图像
+        image: imgurl, // Icon的图像
         imageOffset: new AMap.Pixel(0, -60), // 图像相对展示区域的偏移量，适于雪碧图等
         imageSize: new AMap.Size(50, 50) // 根据所设置的大小拉伸或压缩图片
       });
