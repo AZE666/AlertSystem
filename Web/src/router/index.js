@@ -5,6 +5,8 @@ import Home from '@/components/Home'
 import Map from '@/components/Map'
 import RPTExceed from '@/components/RPTExceed'
 import RPTAlert from '@/components/RPTAlert'
+import ObjectList from '@/components/ObjectList'
+import ObjectA from '@/components/ObjectA'
 
 Vue.use(Router)
 
@@ -25,6 +27,16 @@ export default new Router({
       path: '/Map',
       name: 'Map',
       component: Map
+    },
+    {
+      path: '/ObjectList',
+      name: 'ObjectList',
+      component: ObjectList
+    },
+    {
+      path: '/ObjectA',
+      name: 'ObjectA',
+      component: ObjectA
     },
     {
       path: '/RPTExceed',

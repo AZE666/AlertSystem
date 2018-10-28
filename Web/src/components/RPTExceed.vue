@@ -144,6 +144,7 @@ var data = base.GenData();
 data.mainnav = "rpt";
 data.subnav = "rpt";
 data.objects = [];
+data.objectid = 0;
 ctx.data = function() {
   return data;
 };
@@ -174,10 +175,13 @@ ctx.methods.onMyShow = function() {
   if (objectid == undefined) {
     this.subnav = "exceed_";
   } else {
+    
     this.subnav = "exceed_" + objectid;
   }
+  this.objectid=objectid;
 
-  this.loadapi("airdata", "exceed", { objectid: this.objectid }, objects => {
+  this.loadapi("airdata", "exceed", { object_id: this.objectid }, objects => {
+    
     this.objects = objects;
     var that = this;
     this.$nextTick(() => {
@@ -223,12 +227,13 @@ ctx.methods.onMyShow = function() {
         });
 
         var series = [
-          { name: "SO2", data: [] },
-          { name: "NO2", data: [] },
-          { name: "CO", data: [] },
-          { name: "H2S", data: [] },
-          { name: "O3", data: [] }
+          { name: "SO2(ppm)", data: [] },
+          { name: "NO2(ppm)", data: [] },
+          { name: "CO(ppm)", data: [] },
+          { name: "H2S(ppm)", data: [] },
+          { name: "O3(ppm)", data: [] }
         ];
+
 
         for (var i = 0; i < object.airdata.length; i++) {
           var item = object.airdata[i];
@@ -262,10 +267,6 @@ ctx.methods.onMyShow = function() {
               text: "ppm"
             },
             min: 0
-          },
-          tooltip: {
-            headerFormat: "<b>{series.name}</b><br>",
-            pointFormat: "{point.y:.2f} ppm"
           },
           plotOptions: {
             spline: {

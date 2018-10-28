@@ -20,6 +20,7 @@
       <ul class="sidebar-menu" data-widget="tree">
             <li v-bind:class="{ 'active':mainnav=='home' }"><router-link to="/"><i class="fa fa-circle-o "></i> <span>总览</span></router-link></li>
             <li  v-bind:class="{ 'active':mainnav=='map' }"><router-link to="/Map"><i class="fa fa-map"></i> <span>地图</span></router-link></li>
+            <li  v-bind:class="{ 'active':mainnav=='obj' }"><router-link to="/ObjectList"><i class="fa fa-list"></i> <span>监控企业</span></router-link></li>
             <li  v-bind:class="{ 'active':mainnav=='rpt' }"><router-link to="/RPTExceed"><i class="fa fa-pie-chart"></i> <span>超标数据统计分析</span>
             <span class="pull-right-container">
               <small class="label pull-right bg-blue">{{memberinfo.exceedcount}}</small>

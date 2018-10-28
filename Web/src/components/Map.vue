@@ -174,11 +174,11 @@ ctx.methods.loaddata = function() {
         });
 
         var series = [
-          { name: "SO2", data: [] },
-          { name: "NO2", data: [] },
-          { name: "CO", data: [] },
-          { name: "H2S", data: [] },
-          { name: "O3", data: [] }
+          { name: "SO2(ppm)", data: [] },
+          { name: "NO2(ppm)", data: [] },
+          { name: "CO(ppm)", data: [] },
+          { name: "H2S(ppm)", data: [] },
+          { name: "O3(ppm)", data: [] }
         ];
 
         for (var i = 0; i < object.airdata.length; i++) {
@@ -213,10 +213,6 @@ ctx.methods.loaddata = function() {
               text: "ppm"
             },
             min: 0
-          },
-          tooltip: {
-            headerFormat: "<b>{series.name}</b><br>",
-            pointFormat: "{point.y:.2f} ppm"
           },
           plotOptions: {
             spline: {
