@@ -34,36 +34,49 @@
                             <thead>
                             <tr>
                               <th>预警对象</th>
-                              <th>设备</th>
-                              <th>机器编号</th>
+                              <th v-if="ispc==true">设备</th>
+                              <th v-if="ispc==true">机器编号</th>
                               <th>提交时间</th>
                               <th>报警时间</th>
-                              <th>SO2</th>
-                              <th>NO2</th>
-                              <th>CO</th>
-                              <th>H2S</th>
-                              <th>O3</th>
-                              <th>TVOC</th>
-                              <th>PM2.5</th>
-                              <th>PM10</th>
+                              <th v-if="ispc==true">SO2</th>
+                              <th v-if="ispc==true">NO2</th>
+                              <th v-if="ispc==true">CO</th>
+                              <th v-if="ispc==true">H2S</th>
+                              <th v-if="ispc==true">O3</th>
+                              <th v-if="ispc==true">TVOC</th>
+                              <th v-if="ispc==true">PM2.5</th>
+                              <th v-if="ispc==true">PM10</th>
+                              <th v-if="ispc==false">污染因子</th>
                               <th>处理</th>
                             </tr>
                             </thead>
                             <tbody id="dtDr" >
                               <tr  v-for="(item,index) in alertdata">
-                                <td>{{item.objectname}}</td>
-                                <td>{{item.devicename}}</td>
-                                <td>{{item.machineid}}</td>
+                                <td >{{item.objectname}}</td>
+                                <td v-if="ispc==true">{{item.devicename}}</td>
+                                <td v-if="ispc==true">{{item.machineid}}</td>
                                 <td>{{item.submit_time}}</td>
                                 <td >{{item.df}}时</td>
-                                <td  v-bind:class="{ 'text-red':item.SO2>item.exso2 }">{{item.SO2}}</td>
-                                <td v-bind:class="{ 'text-red':item.NO2>item.exno2 }">{{item.NO2}}</td>
-                                <td v-bind:class="{ 'text-red':item.CO>item.exco }">{{item.CO}}</td>
-                                <td v-bind:class="{ 'text-red':item.H2S>item.exh2s }">{{item.H2S}}</td>
-                                <td v-bind:class="{ 'text-red':item.O3>item.exo3 }">{{item.O3}}</td>
-                                <td v-bind:class="{ 'text-red':item.TVOC>item.extvoc }">{{item.TVOC}}</td>
-                                <td v-bind:class="{ 'text-red':item.PM25>item.expm25 }">{{item.PM25}}</td>
-                                <td v-bind:class="{ 'text-red':item.PM10>item.expm10 }">{{item.PM10}}</td>
+                                <td  v-if="ispc==false">
+                                  
+                                  <span  v-bind:class="{ 'text-red':item.SO2>item.exso2 }">SO2: {{item.SO2}}</span>
+                                  <span v-bind:class="{ 'text-red':item.NO2>item.exno2 }">NO2: {{item.NO2}}</span>
+                                  <span v-bind:class="{ 'text-red':item.CO>item.exco }">CO: {{item.CO}}</span>
+                                  <span v-bind:class="{ 'text-red':item.H2S>item.exh2s }">H2S: {{item.H2S}}</span>
+                                  <span v-bind:class="{ 'text-red':item.O3>item.exo3 }">O3: {{item.O3}}</span>
+                                  <span v-bind:class="{ 'text-red':item.TVOC>item.extvoc }">TVOC: {{item.TVOC}}</span>
+                                  <span v-bind:class="{ 'text-red':item.PM25>item.expm25 }">PM2.5: {{item.PM25}}</span>
+                                  <span v-bind:class="{ 'text-red':item.PM10>item.expm10 }">PM10: {{item.PM10}}</span>
+
+                                </td>
+                                <td v-if="ispc==true"  v-bind:class="{ 'text-red':item.SO2>item.exso2 }">{{item.SO2}}</td>
+                                <td v-if="ispc==true" v-bind:class="{ 'text-red':item.NO2>item.exno2 }">{{item.NO2}}</td>
+                                <td v-if="ispc==true" v-bind:class="{ 'text-red':item.CO>item.exco }">{{item.CO}}</td>
+                                <td v-if="ispc==true" v-bind:class="{ 'text-red':item.H2S>item.exh2s }">{{item.H2S}}</td>
+                                <td v-if="ispc==true" v-bind:class="{ 'text-red':item.O3>item.exo3 }">{{item.O3}}</td>
+                                <td v-if="ispc==true" v-bind:class="{ 'text-red':item.TVOC>item.extvoc }">{{item.TVOC}}</td>
+                                <td v-if="ispc==true" v-bind:class="{ 'text-red':item.PM25>item.expm25 }">{{item.PM25}}</td>
+                                <td v-if="ispc==true" v-bind:class="{ 'text-red':item.PM10>item.expm10 }">{{item.PM10}}</td>
 
                                 <td>
                                     <button v-if="item.status=='A'"
@@ -103,7 +116,7 @@
 
 
   <div class="modal fade" id="alerinfo_modal"  >
-    <div class="modal-dialog" style="width:1000px" >
+    <div class="modal-dialog"  :class="{t100:ispc}" >
       <div class="modal-content"  >
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -123,7 +136,7 @@
                           <dt>预警时间</dt>
                           <dd>{{alertinfo.airdata.df}}时</dd>
                           <dt>数据详情</dt>
-                          <dd>
+                          <dd class="table-responsive">
                                 <table class="table table-bordered  table-hover " id="example1">
                                     <thead>
                                         <tr>

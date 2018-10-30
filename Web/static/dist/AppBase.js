@@ -1,4 +1,13 @@
-
+function IsPC(){  
+    var userAgentInfo = navigator.userAgent;
+    var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");  
+    var flag = true;  
+    for (var v = 0; v < Agents.length; v++) {  
+        if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }  
+    }  
+    return flag;  
+}
+var ispc=IsPC();
 class AppBase {
     GenData() {
         return {
@@ -9,6 +18,7 @@ class AppBase {
             titlename: "安志",
             projectname: "环保监控",
             msg: 'Hello Vue!',
+            ispc:ispc,
             memberinfo: {name:"",position:"",instinfo:{name:""}},
             mainnav:"",
             subnav:""
@@ -155,9 +165,9 @@ class AppBase {
                     fileupload: "https://cmsdev.app-link.org/alucard263096/aze/fileupload",
                     name: "安志环保监控",
                     titlename: "安志",
+                    ispc:ispc,
                     projectname: "环保监控",
                     msg: 'Hello Vue!',
-                    memberinfo: {name:"",position:"",instinfo:{name:""}},
                     mainnav:"",
                     subnav:""
                 };

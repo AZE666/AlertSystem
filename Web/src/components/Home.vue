@@ -86,21 +86,25 @@
 				<div class="row">
 					<!-- Left col -->
 					<section class="col-lg-7 connectedSortable">
-						<!-- Custom tabs (Charts with tabs)-->
-						<div class="nav-tabs-custom">
-							<!-- Tabs within a box -->
-							<ul class="nav nav-tabs pull-right">
-								<li class="active"><a href="#revenue-chart" data-toggle="tab">监控</a></li>
-								<li><a href="#sales-chart" data-toggle="tab">比例</a></li>
-								<li class="pull-left header"><i class="fa fa-inbox"></i> 走势</li>
-							</ul>
-							<div class="tab-content no-padding">
-								<!-- Morris chart - Sales -->
-								<div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
-								<div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
+						<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+							<ol class="carousel-indicators">
+							<li data-target="#carousel-example-generic" data-slide-to="0" :class="{active:index==0}" v-for="(item,index) in objects"></li>
+							</ol>
+							<div class="carousel-inner">
+
+							<div class="item" :class="{active:index==0}" v-for="(item,index) in objects">
+								<div style="height:400px;width:100%" :id="'pm25_chart_'+item.id" class="pm25_chart">
+									
+								</div>
 							</div>
+							</div>
+							<a class="left carousel-control" href="#carousel-example-generic" data-slide="prev" style="height: 100px;top: 100px;">
+							<span class="fa fa-angle-left"></span>
+							</a>
+							<a class="right carousel-control" href="#carousel-example-generic" data-slide="next" style="height: 100px;top: 100px;">
+							<span class="fa fa-angle-right" ></span>
+							</a>
 						</div>
-						<!-- /.nav-tabs-custom -->
 
 						<!-- Chat box -->
 						<div class="box box-success">
@@ -473,11 +477,115 @@ ctx.name="Home";
 
 var data=base.GenData();
 data.mainnav="home";
+data.objects=[];
 ctx.data=function(){
     return data;
 };
 
 ctx.methods.onMyShow=function(){
+
+	this.loadapi("airdata", "summary", {daydetail:"Y"}, objects => {
+		this.objects=objects;
+		this.$nextTick(()=>{
+			var width=0;
+			for(var i=0;i<this.objects.length;i++){
+				/* Morris.js Charts */
+				// Sales chart
+				var obj=this.objects[i];
+				
+				var data=[];
+				var airdataline=obj.airdataline;
+				for(var line of airdataline){
+					//alert(line);
+					//break;
+					//1370131200000
+					//1540800420
+					//console.log();
+					var pm25=Number( line.PM25);
+					if(pm25>0){
+						data.push([line.timespan*1000,pm25]);
+					}
+				}
+				//alert(data[0][1]);
+				var chart = Highcharts.chart('pm25_chart_'+obj.id, {
+						chart: {
+							zoomType: 'x'
+						},
+						title: {
+							text: '24小时内PM2.5走势图 - '+obj.name
+						},
+						subtitle: {
+							text: document.ontouchstart === undefined ?
+							'鼠标拖动可以进行缩放' : '手势操作进行缩放'
+						},
+						xAxis: {
+							type: 'datetime',
+							dateTimeLabelFormats: {
+								millisecond: '%H:%M:%S.%L',
+								second: '%H:%M:%S',
+								minute: '%H:%M',
+								hour: '%H:%M',
+								day: '%m-%d',
+								week: '%m-%d',
+								month: '%Y-%m',
+								year: '%Y'
+							}
+						},
+						tooltip: {
+							dateTimeLabelFormats: {
+								millisecond: '%H:%M:%S.%L',
+								second: '%H:%M:%S',
+								minute: '%H:%M',
+								hour: '%H:%M',
+								day: '%Y-%m-%d',
+								week: '%m-%d',
+								month: '%Y-%m',
+								year: '%Y'
+							}
+						},
+						yAxis: {
+							title: {
+								text: 'PM2.5'
+							}
+						},
+						legend: {
+							enabled: false
+						},
+						plotOptions: {
+							area: {
+								fillColor: {
+									linearGradient: {
+										x1: 0,
+										y1: 0,
+										x2: 0,
+										y2: 1
+									},
+									stops: [
+										[0, Highcharts.getOptions().colors[0]],
+										[1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+									]
+								},
+								marker: {
+									radius: 2
+								},
+								lineWidth: 1,
+								states: {
+									hover: {
+										lineWidth: 1
+									}
+								},
+								threshold: null
+							}
+						},
+						series: [{
+							type: 'area',
+							name: 'PM2.5(mg/m3)',
+							data: data
+						}]
+					});
+			}
+		});
+	});
   
   // Make the dashboard widgets sortable Using jquery UI
   $('.connectedSortable').sortable({
@@ -518,47 +626,6 @@ ctx.methods.onMyShow=function(){
   /* jQueryKnob */
   $('.knob').knob();
 
-  // jvectormap data
-  var visitorsData = {
-    US: 398, // USA
-    SA: 400, // Saudi Arabia
-    CA: 1000, // Canada
-    DE: 500, // Germany
-    FR: 760, // France
-    AU: 700, // Australia
-    BR: 600, // Brazil
-    IN: 800, // India
-    GB: 320, // Great Britain
-    RU: 3000 // Russia
-  };
-  // World map by jvectormap//
-   // CN: 300, // China
-  $('#world-map').vectorMap({
-    map              : 'world_mill_en',
-    backgroundColor  : 'transparent',
-    regionStyle      : {
-      initial: {
-        fill            : 'green',
-        'fill-opacity'  : 1,
-        stroke          : 'none',
-        'stroke-width'  : 0,
-        'stroke-opacity': 1
-      }
-    },
-    series           : {
-      regions: [
-        {
-          values           : visitorsData,
-          scale            : ['#92c1dc', '#ebf4f9'],
-          normalizeFunction: 'polynomial'
-        }
-      ]
-    },
-    onRegionLabelShow: function (e, el, code) {
-      if (typeof visitorsData[code] != 'undefined')
-        el.html(el.html() + ': ' + visitorsData[code] + ' new visitors');
-    }
-  });
 
   // Sparkline charts
   var myvalues = [1000, 1200, 920, 927, 931, 1027, 819, 930, 1021];
@@ -594,74 +661,7 @@ ctx.methods.onMyShow=function(){
     height: '250px'
   });
 
-  /* Morris.js Charts */
-  // Sales chart
-  var area = new Morris.Area({
-    element   : 'revenue-chart',
-    resize    : true,
-    data      : [
-      { y: '2016 Q1', item1: 2666, item2: 2666 },
-      { y: '2016 Q2', item1: 2778, item2: 2294 },
-      { y: '2016 Q3', item1: 4912, item2: 1969 },
-      { y: '2016 Q4', item1: 3767, item2: 3597 },
-      { y: '2017 Q1', item1: 6810, item2: 1914 },
-      { y: '2017 Q2', item1: 5670, item2: 4293 },
-      { y: '2017 Q3', item1: 4820, item2: 3795 },
-      { y: '2017 Q4', item1: 15073, item2: 5967 },
-      { y: '2018 Q1', item1: 10687, item2: 4460 },
-      { y: '2018 Q2', item1: 8432, item2: 5713 }
-    ],
-    xkey      : 'y',
-    ykeys     : ['item1', 'item2'],
-    labels    : ['正常', '异常'],
-    lineColors: ['#a0d0e0', '#3c8dbc'],
-    hideHover : 'auto'
-  });
-  var line = new Morris.Line({
-    element          : 'line-chart',
-    resize           : true,
-    data             : [
-      { y: '2016 Q1', item1: 2666, item2: 2666 },
-      { y: '2016 Q2', item1: 2778, item2: 2294 },
-      { y: '2016 Q3', item1: 4912, item2: 1969 },
-      { y: '2016 Q4', item1: 3767, item2: 3597 },
-      { y: '2017 Q1', item1: 6810, item2: 1914 },
-      { y: '2017 Q2', item1: 5670, item2: 4293 },
-      { y: '2017 Q3', item1: 4820, item2: 3795 },
-      { y: '2017 Q4', item1: 15073, item2: 5967 },
-      { y: '2018 Q1', item1: 10687, item2: 4460 },
-      { y: '2018 Q2', item1: 8432, item2: 5713 }
-    ],
-    xkey             : 'y',
-    ykeys            : ['item1'],
-    labels           : ['Item 1'],
-    lineColors       : ['#efefef'],
-    lineWidth        : 2,
-    hideHover        : 'auto',
-    gridTextColor    : '#fff',
-    gridStrokeWidth  : 0.4,
-    pointSize        : 4,
-    pointStrokeColors: ['#efefef'],
-    gridLineColor    : '#efefef',
-    gridTextFamily   : 'Open Sans',
-    gridTextSize     : 10
-  });
 
-  // Donut Chart
-  var donut = new Morris.Donut({
-    element  : 'sales-chart',
-    resize   : true,
-    colors   : ['green', 'yellow', 'red', 'black', 'blue', 'gray'],
-    data     : [
-      { label: '正常', value: 67 },
-      { label: '预警', value: 30 },
-      { label: '报警', value: 13 },
-      { label: '离线', value: 20 },
-      { label: '异常', value: 1 },
-      { label: '未接入', value: 4 }
-    ],
-    hideHover: 'auto'
-  });
 
   // Fix for charts under tabs
   $('.box ul.nav a').on('shown.bs.tab', function () {

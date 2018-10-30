@@ -44,6 +44,7 @@ data.map = null;
 data.lastmapheight = 0;
 data.datarunning = false;
 data.objects = [];
+data.isdefaultcenter=false;
 ctx.data = function() {
   return data;
 };
@@ -57,9 +58,13 @@ ctx.methods.loaddata = function() {
     this.map.clearMap();
     this.objects = objects;
     var markers = [];
+    var clat=0;
+    var clng=0;
+    
     for (var i = 0; i < objects.length; i++) {
       var object = objects[i];
-
+      clat+=Number(object.lat);
+      clng+=Number(object.lng);
       var zoomStyleMapping1 = {
         3: 0,
         4: 0,
@@ -360,6 +365,17 @@ ctx.methods.loaddata = function() {
       });
       markers.push(marker);
     }
+
+    if(this.isdefaultcenter==false&&objects.length>0){
+      clat=clat/objects.length;
+      clng=clng/objects.length;
+
+      var position = new AMap.LngLat(clng, clat);  // 标准写法
+      // 简写 var position = [116, 39]; 
+      this.map.setCenter(position);
+      this.isdefaultcenter=true;
+    }
+
     //alert(markers.length);
     this.map.add(markers);
   });

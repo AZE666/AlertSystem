@@ -65,14 +65,15 @@
                             <thead>
                             <tr>
                               <th>时间</th>
-                              <th>SO2</th>
-                              <th>NO2</th>
-                              <th>CO</th>
-                              <th>H2S</th>
-                              <th>O3</th>
-                              <th>TVOC</th>
-                              <th>PM2.5</th>
-                              <th>PM10</th>
+                              <th v-if="ispc==true">SO2</th>
+                              <th v-if="ispc==true">NO2</th>
+                              <th v-if="ispc==true">CO</th>
+                              <th v-if="ispc==true">H2S</th>
+                              <th v-if="ispc==true">O3</th>
+                              <th v-if="ispc==true">TVOC</th>
+                              <th v-if="ispc==true">PM2.5</th>
+                              <th v-if="ispc==true">PM10</th>
+                              <th v-if="ispc==false">污染因子</th>
                               <!--<th>风速</th>
                               <th>风向</th>
                               <th>温度</th>
@@ -88,14 +89,26 @@
                             <tbody id="dtDr" >
                               <tr  v-for="(item, index) in devicedata.airdata">
                                 <td>{{item.df}}时</td>
-                                <td  v-bind:class="{ 'text-red':item.SO2_s=='l4','text-yellow':item.SO2_s=='l3','text-blue':item.SO2_s=='l2','text-green':item.SO2_s=='l1' }">{{item.SO2}}</td>
-                                <td  v-bind:class="{ 'text-red':item.NO2_s=='l4','text-yellow':item.NO2_s=='l3','text-blue':item.NO2_s=='l2','text-green':item.NO2_s=='l1' }">{{item.NO2}}</td>
-                                <td  v-bind:class="{ 'text-red':item.CO_s=='l4','text-yellow':item.CO_s=='l3','text-blue':item.CO_s=='l2','text-green':item.CO_s=='l1' }">{{item.CO}}</td>
-                                <td  v-bind:class="{ 'text-red':item.H2S_s=='l4','text-yellow':item.H2S_s=='l3','text-blue':item.H2S_s=='l2','text-green':item.H2S_s=='l1' }">{{item.H2S}}</td>
-                                <td  v-bind:class="{ 'text-red':item.O3_s=='l4','text-yellow':item.O3_s=='l3','text-blue':item.O3_s=='l2','text-green':item.O3_s=='l1' }">{{item.O3}}</td>
-                                <td  v-bind:class="{ 'text-red':item.TVOC_s=='l4','text-yellow':item.TVOC_s=='l3','text-blue':item.TVOC_s=='l2','text-green':item.TVOC_s=='l1' }">{{item.TVOC}}</td>
-                                <td  v-bind:class="{ 'text-red':item.PM25_s=='l4','text-yellow':item.PM25_s=='l3','text-blue':item.PM25_s=='l2','text-green':item.PM25_s=='l1' }">{{item.PM25}}</td>
-                                <td  v-bind:class="{ 'text-red':item.PM10_s=='l4','text-yellow':item.PM10_s=='l3','text-blue':item.PM10_s=='l2','text-green':item.PM10_s=='l1' }">{{item.PM10}}</td>
+                                <td v-if="ispc==false">
+                                  
+                                  <span  v-bind:class="{ 'text-red':item.SO2_s=='l4','text-yellow':item.SO2_s=='l3','text-blue':item.SO2_s=='l2','text-green':item.SO2_s=='l1' }">{{item.SO2}}</span>
+                                  <span  v-bind:class="{ 'text-red':item.NO2_s=='l4','text-yellow':item.NO2_s=='l3','text-blue':item.NO2_s=='l2','text-green':item.NO2_s=='l1' }">{{item.NO2}}</span>
+                                  <span  v-bind:class="{ 'text-red':item.CO_s=='l4','text-yellow':item.CO_s=='l3','text-blue':item.CO_s=='l2','text-green':item.CO_s=='l1' }">{{item.CO}}</span>
+                                  <span  v-bind:class="{ 'text-red':item.H2S_s=='l4','text-yellow':item.H2S_s=='l3','text-blue':item.H2S_s=='l2','text-green':item.H2S_s=='l1' }">{{item.H2S}}</span>
+                                  <span  v-bind:class="{ 'text-red':item.O3_s=='l4','text-yellow':item.O3_s=='l3','text-blue':item.O3_s=='l2','text-green':item.O3_s=='l1' }">{{item.O3}}</span>
+                                  <span  v-bind:class="{ 'text-red':item.TVOC_s=='l4','text-yellow':item.TVOC_s=='l3','text-blue':item.TVOC_s=='l2','text-green':item.TVOC_s=='l1' }">{{item.TVOC}}</span>
+                                  <span  v-bind:class="{ 'text-red':item.PM25_s=='l4','text-yellow':item.PM25_s=='l3','text-blue':item.PM25_s=='l2','text-green':item.PM25_s=='l1' }">{{item.PM25}}</span>
+                                  <span  v-bind:class="{ 'text-red':item.PM10_s=='l4','text-yellow':item.PM10_s=='l3','text-blue':item.PM10_s=='l2','text-green':item.PM10_s=='l1' }">{{item.PM10}}</span>
+
+                                </td>
+                                <td v-if="ispc==true"  v-bind:class="{ 'text-red':item.SO2_s=='l4','text-yellow':item.SO2_s=='l3','text-blue':item.SO2_s=='l2','text-green':item.SO2_s=='l1' }">{{item.SO2}}</td>
+                                <td  v-if="ispc==true"  v-bind:class="{ 'text-red':item.NO2_s=='l4','text-yellow':item.NO2_s=='l3','text-blue':item.NO2_s=='l2','text-green':item.NO2_s=='l1' }">{{item.NO2}}</td>
+                                <td v-if="ispc==true"   v-bind:class="{ 'text-red':item.CO_s=='l4','text-yellow':item.CO_s=='l3','text-blue':item.CO_s=='l2','text-green':item.CO_s=='l1' }">{{item.CO}}</td>
+                                <td v-if="ispc==true"   v-bind:class="{ 'text-red':item.H2S_s=='l4','text-yellow':item.H2S_s=='l3','text-blue':item.H2S_s=='l2','text-green':item.H2S_s=='l1' }">{{item.H2S}}</td>
+                                <td v-if="ispc==true"   v-bind:class="{ 'text-red':item.O3_s=='l4','text-yellow':item.O3_s=='l3','text-blue':item.O3_s=='l2','text-green':item.O3_s=='l1' }">{{item.O3}}</td>
+                                <td v-if="ispc==true"   v-bind:class="{ 'text-red':item.TVOC_s=='l4','text-yellow':item.TVOC_s=='l3','text-blue':item.TVOC_s=='l2','text-green':item.TVOC_s=='l1' }">{{item.TVOC}}</td>
+                                <td v-if="ispc==true"   v-bind:class="{ 'text-red':item.PM25_s=='l4','text-yellow':item.PM25_s=='l3','text-blue':item.PM25_s=='l2','text-green':item.PM25_s=='l1' }">{{item.PM25}}</td>
+                                <td v-if="ispc==true"   v-bind:class="{ 'text-red':item.PM10_s=='l4','text-yellow':item.PM10_s=='l3','text-blue':item.PM10_s=='l2','text-green':item.PM10_s=='l1' }">{{item.PM10}}</td>
                                 <!--<td>{{item.FS}}</td>
                                 <td>{{item.FX}}</td>
                                 <td>{{item.WD}}</td>
