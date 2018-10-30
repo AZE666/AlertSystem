@@ -130,7 +130,7 @@ ctx.methods.loaddata = function() {
         var object_id = object.id;
         //alert(that.devicedata.lastupdatetime);
         $("#modal_device_" + object_id).modal("show");
-
+        
         if (object.inited != undefined) {
           return;
         }

@@ -31,6 +31,13 @@
                 </ul>
                 <div class="tab-content">
                   <div class="tab-pane active" id="tab_1-1">
+                      
+                  <div class="row">
+                    <div class="col-md-2">
+                      <img :src="uploadpath+'object/'+devicedata.cover" class="img-responsive img-rounded">
+                    </div>
+                    <div class="col-md-10">
+                      
                       <dl  class="dl-horizontal">
                           <dt>监控时间</dt>
                           <dd>{{devicedata.lastupdatetime}}</dd>
@@ -46,6 +53,8 @@
                           <dd v-for="item in devicedata.devicelist">{{item.machineid}} - {{item.name}}</dd>
                         </dl>
 
+                    </div>
+                  </div>
                         <table class="table table-bordered table-hover dtexam">
                             <thead>
                             <tr>

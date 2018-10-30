@@ -71,7 +71,7 @@
                                     item.TVOC>obj.extvoc||
                                     item.PM25>obj.expm25||
                                     item.PM10>obj.expm10)"
-                                     type="button" class="btn  btn-warning btn-xs" @click="alert(item,'A')">报警</button>
+                                     type="button" class="btn  btn-warning btn-xs" @click="showalert(item,'A')">报警</button>
                                      <button v-if="index>0&&item.alert_id==0&&(item.SO2>obj.exso2||
                                     item.NO2>obj.exno2||
                                     item.CO>obj.exco||
@@ -80,7 +80,7 @@
                                     item.TVOC>obj.extvoc||
                                     item.PM25>obj.expm25||
                                     item.PM10>obj.expm10)"
-                                     type="button" class="btn btn-default btn-xs" @click="alert(item,'B')">忽略</button>
+                                     type="button" class="btn btn-default btn-xs" @click="showalert(item,'B')">忽略</button>
                                      <small v-if="item.alert_id>0&&item.alertstatus=='A'"  class="label bg-blue">已报警</small>
                                      <small v-if="item.alert_id>0&&item.alertstatus=='B'"  class="label bg-yellow">不处理</small>
                                      <small v-if="item.alert_id>0&&item.alertstatus=='C'"  class="label bg-green">已完成</small>
@@ -123,6 +123,29 @@
     <div v-for='item in objects'>
       <objectdetail v-bind:devicedata="item"></objectdetail>
     </div>
+
+    
+      <div class="modal fade" id="modal-handletips">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">系统提示</h4>
+              </div>
+              <div class="modal-body">
+                <p v-if="opt_status=='B'">是否确定不处理该预警？</p>
+                <p v-if="opt_status=='A'">是否确定发起预警？</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary"  @click="alert(opt_obj,opt_status)" >确定</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
   <!-- /.control-sidebar -->
   <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
@@ -145,6 +168,8 @@ data.mainnav = "rpt";
 data.subnav = "rpt";
 data.objects = [];
 data.objectid = 0;
+data.opt_obj={};
+data.opt_status="";
 ctx.data = function() {
   return data;
 };
@@ -161,12 +186,20 @@ ctx.updated = function() {
   var objects = this.objects;
 };
 
+
+ctx.methods.showalert=function(item,status){
+  this.opt_obj=item;
+  this.opt_status=status;
+    $("#modal-handletips").modal("show");
+};;
+
 ctx.methods.alert=function(item,status){
     item.alert_id=1;
     item.alertstatus=status;
     this.loadapi("airdata","alert",{airdata_id:item.df_id,status:status,object_id:item.object_id},(ret)=>{
         console.log(ret);
     });
+    $("#modal-handletips").modal("hide");
 };;
 
 ctx.methods.onMyShow = function() {
