@@ -186,7 +186,7 @@
                                             <td>{{alertinfo.objectinfo.expm10}}</td>
                                         </tr>
                                         <tr>
-                                            <td>峰值超标</td>
+                                            <td >峰值超标</td>
                                             <td :class="{'text-red':alertinfo.airdata.SO2*100.0/alertinfo.objectinfo.exso2>100}">{{(alertinfo.airdata.SO2*100.0/alertinfo.objectinfo.exso2).toFixed(2)}}%</td>
                                             <td :class="{'text-red':alertinfo.airdata.NO2*100.0/alertinfo.objectinfo.exno2>100}">{{(alertinfo.airdata.NO2*100.0/alertinfo.objectinfo.exno2).toFixed(2)}}%</td>
                                             <td :class="{'text-red':alertinfo.airdata.CO*100.0/alertinfo.objectinfo.exco>100}">{{(alertinfo.airdata.CO*100.0/alertinfo.objectinfo.exco).toFixed(2)}}%</td>
@@ -334,6 +334,9 @@ ctx.methods.onMyShow = function() {
 ctx.components = { myheader, mynav, myfooter };
 
 export default ctx;
+
+
+
 </script>
 
 
