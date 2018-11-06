@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Login from '@/components/Login'
 import Home from '@/components/Home'
 import Map from '@/components/Map'
+import CarMap from '@/components/CarMap'
 import RPTExceed from '@/components/RPTExceed'
 import RPTAlert from '@/components/RPTAlert'
 import ObjectList from '@/components/ObjectList'
@@ -27,6 +28,11 @@ export default new Router({
       path: '/Map',
       name: 'Map',
       component: Map
+    },
+    {
+      path: '/CarMap',
+      name: 'CarMap',
+      component: CarMap
     },
     {
       path: '/ObjectList',
