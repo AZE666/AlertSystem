@@ -28,6 +28,7 @@
                       {{car.name}}{{car.checked}}
                     </div>
                   </div>
+                  <div class="margin-top"><button type="button" @click="showCar(car)" class="btn btn-xs btn-primary">查看详情</button></div>
                 </div>
               </div>
             </div>
@@ -39,6 +40,114 @@
 	
   </div>
   <!-- /.content-wrapper -->
+
+  
+
+  <div class="modal fade" id="cardetail" >
+    <div class="modal-dialog" :class="{t100:ispc}">
+      <div class="modal-content"  >
+        <!--
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">监控点</h4>
+        </div>
+        -->
+        <div class="modal-body">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs pull-right">
+                  <li class="active"><a href="#tab_1-1" data-toggle="tab">数据</a></li>
+                  <li><a href="#tab_2-2" data-toggle="tab">实时图片</a></li>
+                  <li><a href="#tab_3-2" data-toggle="tab">实时视频</a></li>
+                  <li class="pull-left header"><i class="fa fa-th"></i> {{currCar.name}}</li>
+                </ul>
+                <div class="tab-content">
+                  <div class="tab-pane active" id="tab_1-1">
+                      
+                  <div class="row">
+                    <div class="col-md-2">
+                      <img :src="uploadpath+'car/'+currCar.logo" class="img-responsive img-rounded">
+                    </div>
+                    <div class="col-md-10">
+                      
+                      <dl  class="dl-horizontal">
+                          <dt>监控时间</dt>
+                          <dd>{{currCar.lastupdatetime}}</dd>
+                          <dt>监控位置</dt>
+                          <dd>{{currCar.address}}</dd>
+                          <dt>监控位置坐标</dt>
+                          <dd>{{currCar.lng}}, {{currCar.lat}}</dd>
+                          <dt>监控负责人</dt>
+                          <dd>{{currCar.manager}}</dd>
+                          <dt>监控负责人电话</dt>
+                          <dd>{{currCar.tel}}</dd>
+                          <dt>相关监控设备</dt>
+                          <dd>{{currCar.devicetype_name}}</dd>
+                        </dl>
+                        
+                        <div id="rpt_car" style="min-width:640px;height:400px;"></div>
+                    </div>
+                  </div>
+                        
+                  </div>
+                  <!-- /.tab-pane -->
+                  <div class="tab-pane" id="tab_2-2">
+                      <h3 class="timeline-header"><a href="#">刚刚</a> 上传了照片</h3>
+
+                      <div class="timeline-body">
+                        <img src="static/dist/t/1.jpeg" alt="..." class="margin">
+                        <img src="static/dist/t/2.jpeg" alt="..." class="margin">
+                        <img src="static/dist/t/3.jpeg" alt="..." class="margin">
+                        <img src="static/dist/t/4.jpeg" alt="..." class="margin">
+                      </div>
+                      <h3 class="timeline-header"><a href="#">1小时前</a> 上传了照片</h3>
+
+                      <div class="timeline-body">
+                        <img src="static/dist/t/5.jpeg" alt="..." class="margin">
+                        <img src="static/dist/t/6.jpeg" alt="..." class="margin">
+                        <img src="static/dist/t/7.jpeg" alt="..." class="margin">
+                        <img src="static/dist/t/8.jpeg" alt="..." class="margin">
+                      </div>
+                      <h3 class="timeline-header"><a href="#">5小时前</a> 上传了照片</h3>
+
+                      <div class="timeline-body">
+                          <img src="static/dist/t/9.jpeg" alt="..." class="margin">
+                          <img src="static/dist/t/10.jpeg" alt="..." class="margin">
+                          <img src="static/dist/t/1.jpeg" alt="..." class="margin">
+                          <img src="static/dist/t/5.jpeg" alt="..." class="margin">
+                      </div>
+                  </div>
+                  <!-- /.tab-pane -->
+                  <div class="tab-pane" id="tab_3-2">
+                      <h3 class="timeline-header"><a href="#">{{currCar.address}}</a></h3>
+
+                      <div class="timeline-body">
+                          <video controls="controls" src="" style="width:640px;height:400px;"></video>
+                      </div>
+                  </div>
+                    
+                  <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+              </div>
+              <!-- nav-tabs-custom -->
+
+
+
+              
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="button" v-if="false" class="btn btn-primary" >报警</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+
+
+
 
       <myfooter v-bind:memberinfo="memberinfo"></myfooter>
 
@@ -63,6 +172,7 @@ data.mainnav = "carmap";
 data.map = null;
 data.layer=null;
 data.carlist=[];
+data.currCar={};
 data.datarunning=false;
 data.datarunning2=false;
 ctx.data = function() {
@@ -129,7 +239,7 @@ ctx.methods.loadCarTrack=function(){
   for(let car of this.carlist){
     if(car.checked=='Y'){
       for(let item of car.trackline){
-        list.push({coord:item.lng+","+item.lat,value:item.tvoc});
+        list.push({coord:item.lng+","+item.lat,value:item.TVOC});
       }
     }
   }
@@ -228,6 +338,138 @@ var bodyheight = $(".content-wrapper").height();
 
 };
 
+ctx.methods.showCar=function(car){
+  this.currCar=car;
+  this.$nextTick(()=>{
+    $("#cardetail").modal("show");
+
+        var series2 = [
+          { name: "TVOC(ug/m3)", data: [] },
+          { name: "PM25(ug/m3)", data: [] },
+          { name: "PM10(ug/m3)", data: [] }
+        ];
+
+        for (var i = 0; i < car.trackline.length; i++) {
+          var item = car.trackline[i];
+          series2[0].data.push([item.timespan * 1000, Number(item.TVOC)]);
+          series2[1].data.push([item.timespan * 1000, Number(item.PM25)]);
+          series2[2].data.push([item.timespan * 1000, Number(item.PM10)]);
+        }
+var chart = Highcharts.chart("rpt_car", {
+          chart: {
+            type: "spline"
+          },
+          title: {
+            text: "可吸入颗粒物走势图"
+          },
+          subtitle: {
+            text: "48小时内非规律性时间内的变化"
+          },
+          xAxis: {
+            type: "datetime",
+            labels: {
+              overflow: "justify"
+            }
+          },
+          yAxis: {
+            title: {
+              text: "浓度"
+            },
+            min: 0,
+            minorGridLineWidth: 0,
+            gridLineWidth: 0,
+            alternateGridColor: null,
+            plotBands: [
+              {
+                // Light air
+                from: 0,
+                to: 300,
+                color: "rgba(68, 170, 213,0.3)",
+                label: {
+                  text: "优",
+                  style: {
+                    color: "#606060"
+                  }
+                }
+              },
+              {
+                // Light breeze
+                from: 301,
+                to: 600,
+                color: "rgba(154,206,64,0.3)",
+                label: {
+                  text: "良",
+                  style: {
+                    color: "#606060"
+                  }
+                }
+              },
+              {
+                // Gentle breeze
+                from: 601,
+                to: 2000,
+                color: "rgba(255,253,85,0.3)",
+                label: {
+                  text: "轻度污染",
+                  style: {
+                    color: "#606060"
+                  }
+                }
+              },
+              {
+                // Moderate breeze
+                from: 2001,
+                to: 4000,
+                color: "rgba(241,134,51,0.3)",
+                label: {
+                  text: "中度污染",
+                  style: {
+                    color: "#606060"
+                  }
+                }
+              },
+              {
+                // Fresh breeze
+                from: 4001,
+                to: 20000,
+                color: "rgba(236,51,35,0.3)",
+                label: {
+                  text: "重度污染",
+                  style: {
+                    color: "#606060"
+                  }
+                }
+              }
+            ]
+          },
+          plotOptions: {
+            spline: {
+              lineWidth: 4,
+              states: {
+                hover: {
+                  lineWidth: 5
+                }
+              },
+              marker: {
+                enabled: false
+              },
+              pointInterval: 3600000, // one hour
+              pointStart: Date.UTC(2009, 9, 6, 0, 0, 0)
+            }
+          },
+          series: series2,
+          navigation: {
+            menuItemStyle: {
+              fontSize: "10px"
+            }
+          }
+        });
+
+
+
+  });
+};
+
 ctx.components = { myheader, mynav, myfooter };
 
 export default ctx;
@@ -251,7 +493,7 @@ export default ctx;
   padding:10px;
 }
 .bg-car{
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.7);
   border-radius: 10px;
 }
 .car-item{
@@ -265,5 +507,8 @@ export default ctx;
 }
 .margin-left{
   margin-left: 5px;
+}
+.margin-top{
+  margin-top:5px;
 }
 </style>
