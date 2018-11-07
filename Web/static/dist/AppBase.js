@@ -7,6 +7,275 @@ function IsPC(){
     }  
     return flag;  
 }
+function DT(spec,order){
+    
+    $(spec).DataTable({
+        paging: true,
+        lengthChange: false,
+        searching: false,
+        ordering: true,
+        order: order,
+        info: true,
+        autoWidth: false,
+        retrieve: true,
+        aLengthMenu: [10, 50, 100],
+        iDisplayLength: 10,
+        language: {
+            sProcessing: "处理中...",
+            sLengthMenu: "显示 _MENU_ 项结果",
+            sZeroRecords: "没有匹配结果",
+            sInfo: "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+            sInfoEmpty: "显示第 0 至 0 项结果，共 0 项",
+            sInfoFiltered: "(由 _MAX_ 项结果过滤)",
+            sInfoPostFix: "",
+            sSearch: "搜索:",
+            sUrl: "",
+            sEmptyTable: "表中数据为空",
+            sLoadingRecords: "载入中...",
+            sInfoThousands: ",",
+            oPaginate: {
+            sFirst: "首页",
+            sPrevious: "上页",
+            sNext: "下页",
+            sLast: "末页"
+            },
+            oAria: {
+            sSortAscending: ": 以升序排列此列",
+            sSortDescending: ": 以降序排列此列"
+            }
+        }
+        });
+}
+function Rpt1(id,title,subtitle,unit,series){
+    
+    var chart = Highcharts.chart(id, {
+        chart: {
+          type: "spline"
+        },
+        title: {
+          text: title
+        },
+        subtitle: {
+          text: subtitle
+        },
+        xAxis: {
+          type: "datetime",
+          title: {
+            text: null
+          }
+        },
+        yAxis: {
+          title: {
+            text: unit
+          },
+          min: 0
+        },
+        plotOptions: {
+          spline: {
+            marker: {
+              enabled: true
+            }
+          }
+        },
+        series: series
+      });
+
+    return chart;
+}
+
+function Rpt2(id,title,subtitle,unit,series,type){
+    var plotBands=[];
+    if(type=="tvoc"){
+        plotBands=[
+            {
+              // Light air
+              from: 0,
+              to: 300,
+              color: "rgba(68, 170, 213,0.3)",
+              label: {
+                text: "优",
+                style: {
+                  color: "#606060"
+                }
+              }
+            },
+            {
+              // Light breeze
+              from: 301,
+              to: 600,
+              color: "rgba(154,206,64,0.3)",
+              label: {
+                text: "良",
+                style: {
+                  color: "#606060"
+                }
+              }
+            },
+            {
+              // Gentle breeze
+              from: 601,
+              to: 2000,
+              color: "rgba(255,253,85,0.3)",
+              label: {
+                text: "轻度污染",
+                style: {
+                  color: "#606060"
+                }
+              }
+            },
+            {
+              // Moderate breeze
+              from: 2001,
+              to: 4000,
+              color: "rgba(241,134,51,0.3)",
+              label: {
+                text: "中度污染",
+                style: {
+                  color: "#606060"
+                }
+              }
+            },
+            {
+              // Fresh breeze
+              from: 4001,
+              to: 20000,
+              color: "rgba(236,51,35,0.3)",
+              label: {
+                text: "重度污染",
+                style: {
+                  color: "#606060"
+                }
+              }
+            }
+          ];
+    }else{
+        plotBands=[
+            {
+              // Light air
+              from: 0,
+              to: 35,
+              color: "rgba(68, 170, 213, 0.1)",
+              label: {
+                text: "优",
+                style: {
+                  color: "#606060"
+                }
+              }
+            },
+            {
+              // Light breeze
+              from: 35,
+              to: 75,
+              color: "rgba(0, 0, 0, 0)",
+              label: {
+                text: "良",
+                style: {
+                  color: "#606060"
+                }
+              }
+            },
+            {
+              // Gentle breeze
+              from: 75,
+              to: 115,
+              color: "rgba(68, 170, 213, 0.1)",
+              label: {
+                text: "轻度污染",
+                style: {
+                  color: "#606060"
+                }
+              }
+            },
+            {
+              // Moderate breeze
+              from: 115,
+              to: 150,
+              color: "rgba(0, 0, 0, 0)",
+              label: {
+                text: "中度污染",
+                style: {
+                  color: "#606060"
+                }
+              }
+            },
+            {
+              // Fresh breeze
+              from: 150,
+              to: 250,
+              color: "rgba(68, 170, 213, 0.1)",
+              label: {
+                text: "重度污染",
+                style: {
+                  color: "#606060"
+                }
+              }
+            },
+            {
+              // Strong breeze
+              from: 250,
+              to: 1000,
+              color: "rgba(0, 0, 0, 0)",
+              label: {
+                text: "严重污染",
+                style: {
+                  color: "#606060"
+                }
+              }
+            }
+          ];
+    }
+
+
+    var chart = Highcharts.chart(id, {
+        chart: {
+          type: "spline"
+        },
+        title: {
+          text: title
+        },
+        subtitle: {
+          text: subtitle
+        },
+        xAxis: {
+          type: "datetime",
+          labels: {
+            overflow: "justify"
+          }
+        },
+        yAxis: {
+          title: {
+            text: unit
+          },
+          min: 0,
+          minorGridLineWidth: 0,
+          gridLineWidth: 0,
+          alternateGridColor: null,
+          plotBands: plotBands
+        },
+        plotOptions: {
+          spline: {
+            lineWidth: 4,
+            states: {
+              hover: {
+                lineWidth: 5
+              }
+            },
+            marker: {
+              enabled: false
+            },
+            pointInterval: 3600000, // one hour
+            pointStart: Date.UTC(2009, 9, 6, 0, 0, 0)
+          }
+        },
+        series: series,
+        navigation: {
+          menuItemStyle: {
+            fontSize: "10px"
+          }
+        }
+      });
+}
+
 var ispc=IsPC();
 class AppBase {
     GenData() {
