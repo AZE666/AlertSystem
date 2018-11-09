@@ -15,22 +15,22 @@
         <div class="modal-body">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs pull-right">
-                  <li class="active"><a href="#tab_1-1" data-toggle="tab">数据</a></li>
-                  <li><a href="#tab_2-2" data-toggle="tab">实时图片</a></li>
-                  <li><a href="#tab_3-2" data-toggle="tab">实时视频</a></li>
+                  <li class="active"><a :href="'#tab_1-1_'+devicedata.id" data-toggle="tab">数据</a></li>
+                  <li><a :href="'#tab_2-2_'+devicedata.id" data-toggle="tab">实时图片</a></li>
+                  <li><a :href="'#tab_3-2_'+devicedata.id" data-toggle="tab">实时视频</a></li>
                   <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                       图表 <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#tab_4-1" data-toggle="tab">空气污染物走势图</a></li>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#tab_4-2" data-toggle="tab">可吸入颗粒物走势图</a></li>
+                      <li role="presentation"><a role="menuitem" tabindex="-1" :href="'#tab_4-1_'+devicedata.id" data-toggle="tab">空气污染物走势图</a></li>
+                      <li role="presentation"><a role="menuitem" tabindex="-1" :href="'#tab_4-2_'+devicedata.id" data-toggle="tab">可吸入颗粒物走势图</a></li>
                     </ul>
                   </li>
                   <li class="pull-left header"><i class="fa fa-th"></i> {{devicedata.name}}</li>
                 </ul>
                 <div class="tab-content">
-                  <div class="tab-pane active" id="tab_1-1">
+                  <div class="tab-pane active" :id="'tab_1-1_'+devicedata.id">
                       
                   <div class="row">
                     <div class="col-md-2">
@@ -162,7 +162,7 @@
                           </table>
                   </div>
                   <!-- /.tab-pane -->
-                  <div class="tab-pane" id="tab_2-2">
+                  <div class="tab-pane"  :id="'tab_2-2_'+devicedata.id">
                       <h3 class="timeline-header"><a href="#">刚刚</a> 上传了照片</h3>
 
                       <div class="timeline-body">
@@ -189,17 +189,17 @@
                       </div>
                   </div>
                   <!-- /.tab-pane -->
-                  <div class="tab-pane" id="tab_3-2">
+                  <div class="tab-pane"  :id="'tab_3-2_'+devicedata.id">
                       <h3 class="timeline-header"><a href="#">{{devicedata.address}}</a></h3>
 
                       <div class="timeline-body">
                           <video controls="controls" src="" style="width:640px;height:400px;"></video>
                       </div>
                   </div>
-                  <div class="tab-pane" id="tab_4-1">
+                  <div class="tab-pane"  :id="'tab_4-1_'+devicedata.id">
                       <div :id="'rpt1_device_'+devicedata.id" style="min-width:800px;height:600px"></div>
                   </div>
-                  <div class="tab-pane" id="tab_4-2">
+                  <div class="tab-pane"  :id="'tab_4-2_'+devicedata.id">
                       <div :id="'rpt2_device_'+devicedata.id" style="min-width:800px;height:600px"></div>
                   </div>
                     

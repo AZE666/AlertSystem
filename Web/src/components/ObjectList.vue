@@ -95,7 +95,7 @@
                               <th v-if="ispc==true">TVOC</th>
                               <th v-if="ispc==true">PM2.5</th>
                               <th v-if="ispc==true">PM10</th>
-                              <th>状态</th>
+                              <th v-if="false">状态</th>
                             </tr>
                             </thead>
                             <tbody id="dtDr" >
@@ -124,7 +124,7 @@
                                 <td v-if="ispc==true" v-bind:class="{ 'text-red':item.PM25>obj.expm25 }">{{item.PM25}}</td>
                                 <td v-if="ispc==true" v-bind:class="{ 'text-red':item.PM10>obj.expm10 }">{{item.PM10}}</td>
 
-                                <td><button v-if="index>0&&item.alert_id==0&&(item.SO2>obj.exso2||
+                                <td  v-if="false"><button v-if="index>0&&item.alert_id==0&&(item.SO2>obj.exso2||
                                     item.NO2>obj.exno2||
                                     item.CO>obj.exco||
                                     item.H2S>obj.exh2s||
@@ -159,32 +159,46 @@
                   <li><a href="#tab_1-3" data-toggle="tab">CO</a></li>
                   <li><a href="#tab_1-4" data-toggle="tab">H2S</a></li>
                   <li><a href="#tab_1-5" data-toggle="tab">O3</a></li>
-                  <li class="pull-left header"><i class="fa fa-th"></i> 空气污染物走势图</li>
+                  <li class="pull-left header"><i class="fa fa-th"></i> 空气污染物走势图 </li>
                 </ul>
                 <div class="tab-content">
+                    <div class="flex-row">
+                        <div class="flex-1"></div>
+                        <div>
+                            <div class="btn-group">
+                                <button type="button" @click="rpt1r='T'" class="btn " :class="{'btn-primary':rpt1r=='T','btn-default':rpt1r=='D'}">小时</button>
+                                <button type="button" @click="rpt1r='D'" class="btn" :class="{'btn-default':rpt1r=='T','btn-primary':rpt1r=='D'}">日期</button>
+                            </div>
+                        </div>
+                    </div>
                   <div class="tab-pane active" id="tab_1-1">
 
-                        <div id="rptso2" style="height:400px"></div>
+                        <div id="rptso2" :class="{'hide':rpt1r!='T'}" style="height:400px"></div>
+                        <div id="rptso2_d" :class="{'hide':rpt1r!='D'}" style="height:400px"></div>
 
 
                             </div>
 
                   <div class="tab-pane " id="tab_1-2">
                         
-                        <div id="rptno2" style="height:400px"></div>
+                        <div id="rptno2" :class="{'hide':rpt1r!='T'}"  style="height:400px"></div>
+                        <div id="rptno2_d" :class="{'hide':rpt1r!='D'}"  style="height:400px"></div>
 
                             </div>
                   <div class="tab-pane " id="tab_1-3">
                       
-                        <div id="rptco" style="height:400px"></div>
+                        <div id="rptco" :class="{'hide':rpt1r!='T'}"  style="height:400px"></div>
+                        <div id="rptco_d" :class="{'hide':rpt1r!='D'}"  style="height:400px"></div>
                             </div>
                   <div class="tab-pane " id="tab_1-4">
                       
-                        <div id="rpth2s" style="height:400px"></div>
+                        <div id="rpth2s" :class="{'hide':rpt1r!='T'}"  style="height:400px"></div>
+                        <div id="rpth2s_d" :class="{'hide':rpt1r!='D'}"  style="height:400px"></div>
                             </div>
                   <div class="tab-pane " id="tab_1-5">
                       
-                        <div id="rpto3" style="height:400px"></div>
+                        <div id="rpto3" :class="{'hide':rpt1r!='T'}"  style="height:400px"></div>
+                        <div id="rpto3_d" :class="{'hide':rpt1r!='D'}" style="height:400px"></div>
                             </div>
 
 
@@ -207,21 +221,34 @@
                   <li class="pull-left header"><i class="fa fa-th"></i>可吸入颗粒物走势图</li>
                 </ul>
                 <div class="tab-content">
+                    
+                    <div class="flex-row">
+                        <div class="flex-1"></div>
+                        <div>
+                            <div class="btn-group">
+                                <button type="button" @click="rpt2r='T'" class="btn " :class="{'btn-primary':rpt2r=='T','btn-default':rpt2r=='D'}">小时</button>
+                                <button type="button" @click="rpt2r='D'" class="btn" :class="{'btn-default':rpt2r=='T','btn-primary':rpt2r=='D'}">日期</button>
+                            </div>
+                        </div>
+                    </div>
                   <div class="tab-pane active" id="tab_2-1">
 
-                        <div id="rpttvoc" style="height:400px"></div>
+                        <div id="rpttvoc" :class="{'hide':rpt2r!='T'}"   style="height:400px"></div>
+                        <div id="rpttvoc_d" :class="{'hide':rpt2r!='D'}"  style="height:400px"></div>
 
 
                             </div>
 
                   <div class="tab-pane " id="tab_2-2">
                         
-                        <div id="rptpm25" style="height:400px"></div>
+                        <div id="rptpm25" :class="{'hide':rpt2r!='T'}"   style="height:400px"></div>
+                        <div id="rptpm25_d" :class="{'hide':rpt2r!='D'}"  style="height:400px"></div>
 
                             </div>
                   <div class="tab-pane " id="tab_2-3">
                       
-                        <div id="rptpm10" style="height:400px"></div>
+                        <div id="rptpm10" :class="{'hide':rpt2r!='T'}"   style="height:400px"></div>
+                        <div id="rptpm10_d" :class="{'hide':rpt2r!='D'}"  style="height:400px"></div>
                             </div>
                   
 
@@ -289,105 +316,254 @@ import myheader from "./myheader";
 import mynav from "./mynav";
 import myfooter from "./myfooter";
 
-var base=new AppBase();
-var ctx=base.Gen();
-ctx.name="ObjectList";
+var base = new AppBase();
+var ctx = base.Gen();
+ctx.name = "ObjectList";
 
-var data=base.GenData();
-data.mainnav="obj";
-data.devicelist=[];
-data.opt_obj={};
-data.opt_status="";
-data.obj=null;
+var data = base.GenData();
+data.mainnav = "obj";
+data.devicelist = [];
+data.rpt1r = "T";
+data.rpt2r = "T";
+data.opt_obj = {};
+data.opt_status = "";
+data.obj = null;
 
-ctx.data=function(){
-    return data;
+ctx.data = function() {
+  return data;
 };
 
-ctx.methods.onMyShow=function(){
-  
-    this.loadapi("obj","list",{needdevice:"Y"},(devicelist)=>{
-        this.devicelist=devicelist;
+ctx.methods.onMyShow = function() {
+  this.loadapi("obj", "list", { needdevice: "Y" }, devicelist => {
+    this.devicelist = devicelist;
+  });
+};
+
+ctx.methods.showalert = function(item, status) {
+  this.opt_obj = item;
+  this.opt_status = status;
+  $("#modal-handletips").modal("show");
+};
+
+ctx.methods.alert = function(item, status) {
+  item.alert_id = 1;
+  item.alertstatus = status;
+  this.loadapi(
+    "airdata",
+    "alert",
+    { airdata_id: item.df_id, status: status, object_id: item.object_id },
+    ret => {
+      console.log(ret);
+    }
+  );
+  $("#modal-handletips").modal("hide");
+};
+
+ctx.methods.showObj = function(item) {
+  this.loadapi("airdata", "exceed", { object_id: item.id }, objects => {
+    this.obj = objects[0];
+    var object = objects[0];
+    this.$nextTick(() => {
+      DT("#exceedtd .dtexam", [[2, "desc"]]);
+
+      var seriesso2 = [{ name: "SO2(ppm)", data: [] }];
+      var seriesno2 = [{ name: "NO2(ppm)", data: [] }];
+      var seriesco = [{ name: "CO(ppm)", data: [] }];
+      var seriesh2s = [{ name: "H2S(ppm)", data: [] }];
+      var serieso3 = [{ name: "O3(ppm)", data: [] }];
+
+      for (var i = 0; i < object.airdata.length; i++) {
+        var item = object.airdata[i];
+        seriesso2[0].data.push([item.timespan * 1000, Number(item.SO2) * 1000]);
+        seriesno2[0].data.push([item.timespan * 1000, Number(item.NO2) * 1000]);
+        seriesco[0].data.push([item.timespan * 1000, Number(item.CO) * 1000]);
+        seriesh2s[0].data.push([item.timespan * 1000, Number(item.H2S) * 1000]);
+        serieso3[0].data.push([item.timespan * 1000, Number(item.O3) * 1000]);
+      }
+
+      Rpt1(
+        "rptso2",
+        "SO2空气污染物走势图",
+        "内非规律性时间内的变化（小时）",
+        "ppm",
+        seriesso2
+      );
+      Rpt1(
+        "rptno2",
+        "NO2空气污染物走势图",
+        "非规律性时间内的变化（小时）",
+        "ppm",
+        seriesno2
+      );
+      Rpt1(
+        "rptco",
+        "CO空气污染物走势图",
+        "非规律性时间内的变化（小时）",
+        "ppm",
+        seriesco
+      );
+      Rpt1(
+        "rpth2s",
+        "H2s空气污染物走势图",
+        "非规律性时间内的变化（小时）",
+        "ppm",
+        seriesh2s
+      );
+      Rpt1(
+        "rpto3",
+        "SO2空气污染物走势图",
+        "非规律性时间内的变化（小时）",
+        "ppm",
+        serieso3
+      );
+
+      var seriesso2 = [{ name: "SO2(ppm)", data: [] }];
+      var seriesno2 = [{ name: "NO2(ppm)", data: [] }];
+      var seriesco = [{ name: "CO(ppm)", data: [] }];
+      var seriesh2s = [{ name: "H2S(ppm)", data: [] }];
+      var serieso3 = [{ name: "O3(ppm)", data: [] }];
+
+      for (var i = 0; i < object.airdata_day.length; i++) {
+        var item = object.airdata_day[i];
+        seriesso2[0].data.push([item.timespan * 1000, Number(item.SO2) * 1000]);
+        seriesno2[0].data.push([item.timespan * 1000, Number(item.NO2) * 1000]);
+        seriesco[0].data.push([item.timespan * 1000, Number(item.CO) * 1000]);
+        seriesh2s[0].data.push([item.timespan * 1000, Number(item.H2S) * 1000]);
+        serieso3[0].data.push([item.timespan * 1000, Number(item.O3) * 1000]);
+      }
+
+      Rpt1(
+        "rptso2_d",
+        "SO2空气污染物走势图",
+        "非规律性时间内的变化（日期）",
+        "ppm",
+        seriesso2
+      );
+      Rpt1(
+        "rptno2_d",
+        "NO2空气污染物走势图",
+        "非规律性时间内的变化（日期）",
+        "ppm",
+        seriesno2
+      );
+      Rpt1(
+        "rptco_d",
+        "CO空气污染物走势图",
+        "非规律性时间内的变化（日期）",
+        "ppm",
+        seriesco
+      );
+      Rpt1(
+        "rpth2s_d",
+        "H2s空气污染物走势图",
+        "非规律性时间内的变化（日期）",
+        "ppm",
+        seriesh2s
+      );
+      Rpt1(
+        "rpto3_d",
+        "SO2空气污染物走势图",
+        "非规律性时间内的变化（日期）",
+        "ppm",
+        serieso3
+      );
+
+      var seriestvoc = [{ name: "TVOC(ug/m3)", data: [] }];
+      var seriespm25 = [{ name: "PM2.5(ug/m3)", data: [] }];
+      var seriespm10 = [{ name: "PM10(ug/m3)", data: [] }];
+
+      for (var i = 0; i < object.airdata.length; i++) {
+        var item = object.airdata[i];
+        seriestvoc[0].data.push([
+          item.timespan * 1000,
+          Number(item.TVOC) * 1000
+        ]);
+        seriespm25[0].data.push([item.timespan * 1000, Number(item.PM25)]);
+        seriespm10[0].data.push([item.timespan * 1000, Number(item.PM10)]);
+      }
+      Rpt2(
+        "rpttvoc",
+        "TVOC可吸入颗粒物走势图",
+        "非规律性时间内的变化（小时）",
+        "ug/m3",
+        seriestvoc,
+        "tvoc"
+      );
+      Rpt2(
+        "rptpm25",
+        "PM2.5可吸入颗粒物走势图",
+        "非规律性时间内的变化（小时）",
+        "ug/m3",
+        seriespm25
+      );
+      Rpt2(
+        "rptpm10",
+        "PM10可吸入颗粒物走势图",
+        "非规律性时间内的变化（小时）",
+        "ug/m3",
+        seriespm10
+      );
+
+
+      var seriestvoc = [{ name: "TVOC(ug/m3)", data: [] }];
+      var seriespm25 = [{ name: "PM2.5(ug/m3)", data: [] }];
+      var seriespm10 = [{ name: "PM10(ug/m3)", data: [] }];
+
+      for (var i = 0; i < object.airdata_day.length; i++) {
+        var item = object.airdata_day[i];
+        seriestvoc[0].data.push([
+          item.timespan * 1000,
+          Number(item.TVOC) * 1000
+        ]);
+        seriespm25[0].data.push([item.timespan * 1000, Number(item.PM25)]);
+        seriespm10[0].data.push([item.timespan * 1000, Number(item.PM10)]);
+      }
+      Rpt2(
+        "rpttvoc_d",
+        "TVOC可吸入颗粒物走势图",
+        "非规律性时间内的变化（日期）",
+        "ug/m3",
+        seriestvoc,
+        "tvoc"
+      );
+      Rpt2(
+        "rptpm25_d",
+        "PM2.5可吸入颗粒物走势图",
+        "非规律性时间内的变化（日期）",
+        "ug/m3",
+        seriespm25
+      );
+      Rpt2(
+        "rptpm10_d",
+        "PM10可吸入颗粒物走势图",
+        "非规律性时间内的变化（日期）",
+        "ug/m3",
+        seriespm10
+      );
+
+
     });
+  });
 };
 
-
-ctx.methods.showalert=function(item,status){
-  this.opt_obj=item;
-  this.opt_status=status;
-    $("#modal-handletips").modal("show");
-};
-
-ctx.methods.alert=function(item,status){
-    item.alert_id=1;
-    item.alertstatus=status;
-    this.loadapi("airdata","alert",{airdata_id:item.df_id,status:status,object_id:item.object_id},(ret)=>{
-        console.log(ret);
-    });
-    $("#modal-handletips").modal("hide");
-};;
-
-ctx.methods.showObj=function(item){
-    this.loadapi("airdata", "exceed", { object_id: item.id }, objects => {
-        this.obj=objects[0];
-        var object=objects[0];
-        this.$nextTick(()=>{
-            DT("#exceedtd .dtexam",[[2, "desc"]]);
-
-            var seriesso2 = [{ name: "SO2(ppm)", data: [] }];
-            var seriesno2 = [{ name: "NO2(ppm)", data: [] }];
-            var seriesco = [{ name: "CO(ppm)", data: [] }];
-            var seriesh2s = [{ name: "H2S(ppm)", data: [] }];
-            var serieso3 = [{ name: "O3(ppm)", data: [] }];
-
-
-            for (var i = 0; i < object.airdata.length; i++) {
-                var item = object.airdata[i];
-                seriesso2[0].data.push([item.timespan * 1000, Number(item.SO2)]);
-                seriesno2[0].data.push([item.timespan * 1000, Number(item.NO2)]);
-                seriesco[0].data.push([item.timespan * 1000, Number(item.CO)]);
-                seriesh2s[0].data.push([item.timespan * 1000, Number(item.H2S)]);
-                serieso3[0].data.push([item.timespan * 1000, Number(item.O3)]);
-            }
-            
-            
-            Rpt1("rptso2","SO2空气污染物走势图","非规律性时间内的变化","ppm",seriesso2);
-            Rpt1("rptno2","NO2空气污染物走势图","非规律性时间内的变化","ppm",seriesno2);
-            Rpt1("rptco","CO空气污染物走势图","非规律性时间内的变化","ppm",seriesco);
-            Rpt1("rpth2s","H2s空气污染物走势图","非规律性时间内的变化","ppm",seriesh2s);
-            Rpt1("rpto3","SO2空气污染物走势图","非规律性时间内的变化","ppm",serieso3);
-
-                var seriestvoc = [{ name: "TVOC(mg/m3)", data: [] }];
-                var seriespm25 = [{ name: "PM2.5(ug/m3)", data: [] }];
-                var seriespm10 = [{ name: "PM10(ug/m3)", data: [] }];
-
-                for (var i = 0; i < object.airdata.length; i++) {
-                    var item = object.airdata[i];
-                    seriestvoc[0].data.push([item.timespan * 1000, Number(item.TVOC)*1000]);
-                    seriespm25[0].data.push([item.timespan * 1000, Number(item.PM25)]);
-                    seriespm10[0].data.push([item.timespan * 1000, Number(item.PM10)]);
-                }
-            Rpt2("rpttvoc","TVOC可吸入颗粒物走势图","非规律性时间内的变化","ug/m3",seriestvoc,"tvoc");
-            Rpt2("rptpm25","PM2.5可吸入颗粒物走势图","非规律性时间内的变化","ug/m3",seriespm25);
-            Rpt2("rptpm10","PM10可吸入颗粒物走势图","非规律性时间内的变化","ug/m3",seriespm10);
-        });
-    });
-};
-
-
-
-ctx.components={myheader,mynav,myfooter};
-
-
+ctx.components = { myheader, mynav, myfooter };
 
 export default ctx;
-
-
-
 </script>
 <style>
-.table-bordered{border:1px solid #f4f4f4}
-.table-bordered>thead>tr>th,.table-bordered>tbody>tr>th,.table-bordered>tfoot>tr>th,.table-bordered>thead>tr>td,.table-bordered>tbody>tr>td,.table-bordered>tfoot>tr>td
-{border:1px solid #f4f4f4}
-.table-bordered>thead>tr>th,.table-bordered>thead>tr>td{border-bottom-width:2px}
+.table-bordered {
+  border: 1px solid #f4f4f4;
+}
+.table-bordered > thead > tr > th,
+.table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > th,
+.table-bordered > thead > tr > td,
+.table-bordered > tbody > tr > td,
+.table-bordered > tfoot > tr > td {
+  border: 1px solid #f4f4f4;
+}
+.table-bordered > thead > tr > th,
+.table-bordered > thead > tr > td {
+  border-bottom-width: 2px;
+}
 </style>

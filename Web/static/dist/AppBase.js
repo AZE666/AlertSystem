@@ -72,9 +72,17 @@ function Rpt1(id,title,subtitle,unit,series){
         },
         plotOptions: {
           spline: {
+            lineWidth: 4,
+            states: {
+              hover: {
+                lineWidth: 5
+              }
+            },
             marker: {
-              enabled: true
-            }
+              enabled: false
+            },
+            pointInterval: 3600000, // one hour
+            pointStart: Date.UTC(2009, 9, 6, 0, 0, 0)
           }
         },
         series: series

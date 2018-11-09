@@ -36,8 +36,8 @@
                               <th>预警对象</th>
                               <th v-if="ispc==true">设备</th>
                               <th v-if="ispc==true">机器编号</th>
-                              <th>提交时间</th>
                               <th>报警时间</th>
+                              <th>描述</th>
                               <th v-if="ispc==true">SO2</th>
                               <th v-if="ispc==true">NO2</th>
                               <th v-if="ispc==true">CO</th>
@@ -55,8 +55,8 @@
                                 <td >{{item.objectname}}</td>
                                 <td v-if="ispc==true">{{item.devicename}}</td>
                                 <td v-if="ispc==true">{{item.machineid}}</td>
-                                <td>{{item.submit_time}}</td>
                                 <td >{{item.df}}时</td>
+                                <td >{{item.msg}}</td>
                                 <td  v-if="ispc==false">
                                   
                                   <span  v-bind:class="{ 'text-red':item.SO2>item.exso2 }">SO2: {{item.SO2}}</span>
@@ -80,15 +80,18 @@
 
                                 <td>
                                     <button v-if="item.status=='A'"
-                                     type="button" class="btn btn-primary btn-xs" @click="showalertinfo(item)">等待处理</button>
+                                     type="button" class="btn btn-warning btn-xs" @click="showalertinfo(item)">一超标</button>
                                     <button v-if="item.status!='A'"
-                                     type="button" class="btn btn-success btn-xs" @click="showalertinfo(item)">已完成</button>
+                                     type="button" class="btn btn-success btn-xs" @click="showalertinfo(item)">没超标</button>
                                 </td>
 
 
                               </tr>
                             </tbody>
                           </table>
+
+                          <button type="button" class="btn btn-warning btn-xs" @click="forin" >数据补全</button>
+                          <button type="button" class="btn btn-warning btn-xs" @click="sendmsg" >短信体验</button>
                           </div>
                             
 
@@ -256,12 +259,24 @@ ctx.data = function() {
   return data;
 };
 
+ctx.methods.forin=function(){
+  var now=(new Date()).getTime();
+  var start=(new Date(2018,9,22,0,0,0)).getTime();
+  for(var i=0;i<5000&&start+i*3600*1000<now;i++){
+    var ttime=(new Date(start+i*3600*1000));
+    var tstr=ttime.getFullYear()+"-"+(ttime.getMonth()+1).toString()+"-"+ttime.getDate()+" "+ttime.getHours()+":15:16";
+    this.loadapi("airdata", "alert",{device_id:"AQ000002",checktime:tstr});
+  }
+};
+ctx.methods.sendmsg=function(){
+  this.loadapi("airdata", "alert",{device_id:"SZZT0001"});
+};
+
 ctx.methods.showalertinfo = function(alertinfo) {
   this.loadapi("airdata", "alertinfo", { id: alertinfo.id }, alertinfo => {
     this.alertinfo = alertinfo;
     this.$nextTick(function() {
       $("#alerinfo_modal").modal("show");
-      
     });
   });
 };
