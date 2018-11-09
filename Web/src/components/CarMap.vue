@@ -8,7 +8,6 @@
   <div class="content-wrapper" id="bodycontent">
 
 
-
       <div style="width:100%;height:100%;" id="map"></div>
 
       <div class="carlist">

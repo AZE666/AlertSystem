@@ -98,7 +98,7 @@
           <!-- Notifications: style can be found in dropdown.less -->
           <li class="dropdown notifications-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-bell-o"> 预警提醒</i>
+              <i class="fa fa-bell-o" > 预警提醒</i>
               <span class="label label-warning">10</span>
             </a>
             <ul class="dropdown-menu">
@@ -155,7 +155,7 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">个人资料</a>
+                  <a class="btn btn-default btn-flat"  data-toggle="modal" data-target="#dialog_password">个人资料</a>
                 </div>
                 <div class="pull-right">
                   <a href="#" @click="logout" class="btn btn-default btn-flat">退出</a>
@@ -170,6 +170,8 @@
         </ul>
       </div>
     </nav>
+
+
   </div>
       
 
@@ -178,7 +180,9 @@
 var base=new AppBase();
 var ctx=base.GenComponent();
 ctx.props.push("memberinfo");
+ctx.methods.changePassword=function(){
 
+};
 ctx.methods.logout=function(item,status){
     window.localStorage.removeItem("UserToken");
           window.location.href="/#/Login";

@@ -384,7 +384,7 @@ ctx.methods.showObj = function(item) {
       Rpt1(
         "rptso2",
         "SO2空气污染物走势图",
-        "内非规律性时间内的变化（小时）",
+        "非规律性时间内的变化（小时）",
         "ppm",
         seriesso2
       );

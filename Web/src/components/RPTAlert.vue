@@ -203,23 +203,13 @@
                                 </table>
                           </dd>
                         </dl>
-                <div class="modal-header" style="padding-top:0px">
-                    <h4 class="modal-title">处理信息</h4>
-                </div>
-
-                <dl  class="dl-horizontal">
-                          <dt>处理结果</dt>
-                          <dd>
-                              <div class="form-group">
-                                <textarea  v-model="alertinfo.description" :readonly="alertinfo.status!='A'" class="form-control" rows="3" placeholder="请输入处理详情"></textarea>
-                              </div>
-                          </dd>
-                </dl>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <!--
           <span>提交后无法再修改处理结果，请仔细确认后提交</span>
-          <button type="button" v-if="alertinfo.status=='A'" class="btn btn-primary" @click="processAlert(alertinfo)">提交处理</button>
+          <button type="button" v-if="alertinfo.status=='A'" class="btn btn-primary  pull-left" @click="processAlert(alertinfo)">提交处理</button>
+          -->
         </div>
       </div>
       <!-- /.modal-content -->

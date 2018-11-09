@@ -453,3 +453,38 @@ class AppBase {
     }
 
 }
+
+$(document).ready(function(){
+    $("#dialog_boxBtnChangePassword").click(function ()
+    {
+        var oldpassword = $("#dialog_password_oldpassword").val();
+        var newpassword = $("#dialog_password_newpassword").val();
+
+        var json = { oldpassword: oldpassword, newpassword: newpassword };
+        var headers={
+            'Content-Type':"application/x-www-form-urlencoded"
+        };
+        var token = window.localStorage.getItem("UserToken");
+        if (token != null) {
+            headers.TOKEN=token;
+        }
+        $.ajax({
+            type: "POST",
+            url: "https://cmsdev.app-link.org/alucard263096/aze/api/inst/changepassword",
+            data: json,
+            headers:headers,
+            success: function (data) {
+                if (data == "current_password_diff")
+                {
+                    $("#dialog_boxBtnChangePassword_tips").text("当前密码错误，请重新输入，注意大小写");
+                } else if (data == "success")
+                {
+                    $("#dialog_password").modal('hide');
+                } else
+                {
+                    $("#dialog_boxBtnChangePassword_tips").text("系统错误，请联系管理员" + data);
+                }
+            }
+        });
+    });
+});
