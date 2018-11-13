@@ -7,19 +7,24 @@ function IsPC(){
     }  
     return flag;  
 }
-function DT(spec,order){
-    
+function DT(spec,order,displaylength,searching){
+    if(displaylength==undefined){
+      displaylength=10;
+    }
+    if(searching==undefined){
+      searching=false;
+    }
     $(spec).DataTable({
         paging: true,
         lengthChange: false,
-        searching: false,
+        searching: searching,
         ordering: true,
         order: order,
         info: true,
         autoWidth: false,
         retrieve: true,
-        aLengthMenu: [10, 50, 100],
-        iDisplayLength: 10,
+        aLengthMenu: [3, 5, 10],
+        iDisplayLength: displaylength,
         language: {
             sProcessing: "处理中...",
             sLengthMenu: "显示 _MENU_ 项结果",
@@ -46,9 +51,9 @@ function DT(spec,order){
         }
         });
 }
-function Rpt1(id,title,subtitle,unit,series){
+function Rpt1(id,title,subtitle,unit,series,color){
     
-    var chart = Highcharts.chart(id, {
+   var chartopt=  {
         chart: {
           type: "spline"
         },
@@ -86,12 +91,15 @@ function Rpt1(id,title,subtitle,unit,series){
           }
         },
         series: series
-      });
-
+      };
+      if(color!=undefined){
+        chartopt.plotOptions.spline.lineColor=color;
+      }
+      var chart = Highcharts.chart(id,chartopt);
     return chart;
 }
 
-function Rpt2(id,title,subtitle,unit,series,type){
+function Rpt2(id,title,subtitle,unit,series,type,color){
     var plotBands=[];
     if(type=="tvoc"){
         plotBands=[
@@ -234,7 +242,7 @@ function Rpt2(id,title,subtitle,unit,series,type){
     }
 
 
-    var chart = Highcharts.chart(id, {
+    var chartopt={
         chart: {
           type: "spline"
         },
@@ -281,7 +289,11 @@ function Rpt2(id,title,subtitle,unit,series,type){
             fontSize: "10px"
           }
         }
-      });
+      };
+      if(color!=undefined){
+        chartopt.plotOptions.spline.lineColor=color;
+      }
+      var chart = Highcharts.chart(id, chartopt);
 }
 
 var ispc=IsPC();
@@ -343,9 +355,16 @@ class AppBase {
                         success: function (result) {
                             console.log(result);
                             if (callback != undefined) {
+                              try{
+
                                 var json = JSON.parse(result);
                                 console.log(json);
                                 callback(json);
+                              }catch(e){
+
+                                console.log(result);
+                                callback(result);
+                              }
                             }
                         }
                     });

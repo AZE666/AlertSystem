@@ -91,14 +91,14 @@
                                 <td>{{item.df}}时</td>
                                 <td v-if="ispc==false">
                                   
-                                  <span  v-bind:class="{ 'text-red':item.SO2_s=='l4','text-yellow':item.SO2_s=='l3','text-blue':item.SO2_s=='l2','text-green':item.SO2_s=='l1' }">{{item.SO2}}</span>
-                                  <span  v-bind:class="{ 'text-red':item.NO2_s=='l4','text-yellow':item.NO2_s=='l3','text-blue':item.NO2_s=='l2','text-green':item.NO2_s=='l1' }">{{item.NO2}}</span>
-                                  <span  v-bind:class="{ 'text-red':item.CO_s=='l4','text-yellow':item.CO_s=='l3','text-blue':item.CO_s=='l2','text-green':item.CO_s=='l1' }">{{item.CO}}</span>
-                                  <span  v-bind:class="{ 'text-red':item.H2S_s=='l4','text-yellow':item.H2S_s=='l3','text-blue':item.H2S_s=='l2','text-green':item.H2S_s=='l1' }">{{item.H2S}}</span>
-                                  <span  v-bind:class="{ 'text-red':item.O3_s=='l4','text-yellow':item.O3_s=='l3','text-blue':item.O3_s=='l2','text-green':item.O3_s=='l1' }">{{item.O3}}</span>
-                                  <span  v-bind:class="{ 'text-red':item.TVOC_s=='l4','text-yellow':item.TVOC_s=='l3','text-blue':item.TVOC_s=='l2','text-green':item.TVOC_s=='l1' }">{{item.TVOC}}</span>
-                                  <span  v-bind:class="{ 'text-red':item.PM25_s=='l4','text-yellow':item.PM25_s=='l3','text-blue':item.PM25_s=='l2','text-green':item.PM25_s=='l1' }">{{item.PM25}}</span>
-                                  <span  v-bind:class="{ 'text-red':item.PM10_s=='l4','text-yellow':item.PM10_s=='l3','text-blue':item.PM10_s=='l2','text-green':item.PM10_s=='l1' }">{{item.PM10}}</span>
+                                  <span  v-bind:class="{ 'text-red':item.SO2_s=='l4','text-yellow':item.SO2_s=='l3','text-blue':item.SO2_s=='l2','text-green':item.SO2_s=='l1' }">SO2:{{item.SO2}}</span>
+                                  <span  v-bind:class="{ 'text-red':item.NO2_s=='l4','text-yellow':item.NO2_s=='l3','text-blue':item.NO2_s=='l2','text-green':item.NO2_s=='l1' }">NO2:{{item.NO2}}</span>
+                                  <span  v-bind:class="{ 'text-red':item.CO_s=='l4','text-yellow':item.CO_s=='l3','text-blue':item.CO_s=='l2','text-green':item.CO_s=='l1' }">CO:{{item.CO}}</span>
+                                  <span  v-bind:class="{ 'text-red':item.H2S_s=='l4','text-yellow':item.H2S_s=='l3','text-blue':item.H2S_s=='l2','text-green':item.H2S_s=='l1' }">H2S:{{item.H2S}}</span>
+                                  <span  v-bind:class="{ 'text-red':item.O3_s=='l4','text-yellow':item.O3_s=='l3','text-blue':item.O3_s=='l2','text-green':item.O3_s=='l1' }">O3:{{item.O3}}</span>
+                                  <span  v-bind:class="{ 'text-red':item.TVOC_s=='l4','text-yellow':item.TVOC_s=='l3','text-blue':item.TVOC_s=='l2','text-green':item.TVOC_s=='l1' }">TVOC:{{item.TVOC}}</span>
+                                  <span  v-bind:class="{ 'text-red':item.PM25_s=='l4','text-yellow':item.PM25_s=='l3','text-blue':item.PM25_s=='l2','text-green':item.PM25_s=='l1' }">PM2.5:{{item.PM25}}</span>
+                                  <span  v-bind:class="{ 'text-red':item.PM10_s=='l4','text-yellow':item.PM10_s=='l3','text-blue':item.PM10_s=='l2','text-green':item.PM10_s=='l1' }">PM10:{{item.PM10}}</span>
 
                                 </td>
                                 <td v-if="ispc==true"  v-bind:class="{ 'text-red':item.SO2_s=='l4','text-yellow':item.SO2_s=='l3','text-blue':item.SO2_s=='l2','text-green':item.SO2_s=='l1' }">{{item.SO2}}</td>
@@ -116,7 +116,7 @@
                                 <td>{{item.SP}}</td>
                                 <td>{{item.YL}}</td>
                                 <td>{{item.ZS}}</td>-->
-                                <td ><a href="#" v-if="item.showenv!='Y'" @click="clickToShowEnv(item)" >查看</a>
+                                <td ><a  v-if="item.showenv!='Y'" @click="clickToShowEnv(item)" >查看</a>
                                 <div  v-if="item.showenv=='Y'" >
                                   <div>风速：{{item.FS}}m/s</div>
                                   <div>风向：{{item.FX}}&#176;</div>
@@ -125,6 +125,7 @@
                                   <div>压力：{{item.SP}}百帕</div>
                                   <div>雨量：{{item.YL}}mm</div>
                                   <div>噪声：{{item.ZS}}dB</div>
+                                  <a href="#" v-if="item.showenv=='Y'" @click="clickToShowEnv(item)" >收起</a>
                                 </div>
                                 </td>
                                 <td v-if="item.status=='l1'" >
@@ -197,14 +198,14 @@
                       <h3 class="timeline-header"><a href="#">{{devicedata.address}}</a></h3>
 
                       <div class="timeline-body">
-                          <video controls="controls" src="" style="width:640px;height:400px;"></video>
+                          <video controls="controls" src="" style="width:100%;height:400px;"></video>
                       </div>
                   </div>
                   <div class="tab-pane" id="tab_4-1">
-                      <div :id="'rpt1_device_'+devicedata.id" style="min-width:800px;height:600px"></div>
+                      <div :id="'rpt1_device_'+devicedata.id" style="height:600px"></div>
                   </div>
                   <div class="tab-pane" id="tab_4-2">
-                      <div :id="'rpt2_device_'+devicedata.id" style="min-width:800px;height:600px"></div>
+                      <div :id="'rpt2_device_'+devicedata.id" style="height:600px"></div>
                   </div>
                     
                   <!-- /.tab-pane -->
@@ -529,6 +530,10 @@ var chart = Highcharts.chart("rpt1_device_" + object_id, {
 
 ctx.components={myheader,mynav,myfooter};
 
+ctx.methods.clickToShowEnv=function(item){
+    item.showenv=item.showenv=="Y"?"N":"Y";
+    //alert(item.showenv);
+};;
 export default ctx;
 
 

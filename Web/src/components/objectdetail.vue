@@ -193,14 +193,14 @@
                       <h3 class="timeline-header"><a href="#">{{devicedata.address}}</a></h3>
 
                       <div class="timeline-body">
-                          <video controls="controls" src="" style="height:400px;"></video>
+                          <video controls="controls" src="" style="height:400px;width:100%;"></video>
                       </div>
                   </div>
                   <div class="tab-pane"  :id="'tab_4-1_'+devicedata.id">
-                      <div :id="'rpt1_device_'+devicedata.id" style="height:600px"></div>
+                      <div :id="'rpt1_device_'+devicedata.id"></div>
                   </div>
                   <div class="tab-pane"  :id="'tab_4-2_'+devicedata.id">
-                      <div :id="'rpt2_device_'+devicedata.id" style="height:600px"></div>
+                      <div :id="'rpt2_device_'+devicedata.id" ></div>
                   </div>
                     
                   <!-- /.tab-pane -->

@@ -155,7 +155,7 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a class="btn btn-default btn-flat"  data-toggle="modal" data-target="#dialog_password">个人资料</a>
+                  <a class="btn btn-default btn-flat"  data-toggle="modal" data-target="#dialog_password">修改密码</a>
                 </div>
                 <div class="pull-right">
                   <a href="#" @click="logout" class="btn btn-default btn-flat">退出</a>

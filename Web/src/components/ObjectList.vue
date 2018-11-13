@@ -34,22 +34,20 @@
                         <table class="table table-bordered table-hover dtexam">
                             <thead>
                             <tr>
-                              <th>#</th>
-                              <th>设备号</th>
-                              <th>设备名称</th>
-                              <th>公司名称</th>
-                              <th>历史数据</th>
-                              <th>报警数据</th>
+                              <th style="width:60px;">公司</th>
+                              <th style="width:60px;">设备号</th>
+                              <th style="width:60px;">设备</th>
+                              <th style="width:60px;">报警</th>
+                              <th style="width:60px;">历史</th>
                             </tr>
                             </thead>
                             <tbody id="dtDr" >
                               <tr v-for="(item,index) in devicelist">
-                                <td>{{index+1}}</td>
+                                <td>{{item.name}}</td>
                                 <td>{{item.machineid}}</td>
                                 <td>{{item.device_name}}</td>
-                                <td>{{item.name}}</td>
-                                <td><router-link :to="'/ObjectA?id='+item.id">查看详情</router-link></td>
-                                <td><button type="button" @click="showObj(item)" class="btn btn-primary  btn-xs">查看历史</button></td>
+                                <td><router-link :to="'/ObjectA?id='+item.id">查看</router-link></td>
+                                <td><a  @click="showObj(item)" >查看</a></td>
                               </tr>
                             </tbody>
                           </table>
@@ -173,32 +171,32 @@
                     </div>
                   <div class="tab-pane active" id="tab_1-1">
 
-                        <div id="rptso2" :class="{'hide':rpt1r!='T'}" style="height:400px"></div>
-                        <div id="rptso2_d" :class="{'hide':rpt1r!='D'}" style="height:400px"></div>
+                        <div id="rptso2" :class="{'hide':rpt1r!='T'}" style=""></div>
+                        <div id="rptso2_d" :class="{'hide':rpt1r!='D'}" style=""></div>
 
 
                             </div>
 
                   <div class="tab-pane " id="tab_1-2">
                         
-                        <div id="rptno2" :class="{'hide':rpt1r!='T'}"  style="height:400px"></div>
-                        <div id="rptno2_d" :class="{'hide':rpt1r!='D'}"  style="height:400px"></div>
+                        <div id="rptno2" :class="{'hide':rpt1r!='T'}"  style=""></div>
+                        <div id="rptno2_d" :class="{'hide':rpt1r!='D'}"  style=""></div>
 
                             </div>
                   <div class="tab-pane " id="tab_1-3">
                       
-                        <div id="rptco" :class="{'hide':rpt1r!='T'}"  style="height:400px"></div>
-                        <div id="rptco_d" :class="{'hide':rpt1r!='D'}"  style="height:400px"></div>
+                        <div id="rptco" :class="{'hide':rpt1r!='T'}"  style=""></div>
+                        <div id="rptco_d" :class="{'hide':rpt1r!='D'}"  style=""></div>
                             </div>
                   <div class="tab-pane " id="tab_1-4">
                       
-                        <div id="rpth2s" :class="{'hide':rpt1r!='T'}"  style="height:400px"></div>
-                        <div id="rpth2s_d" :class="{'hide':rpt1r!='D'}"  style="height:400px"></div>
+                        <div id="rpth2s" :class="{'hide':rpt1r!='T'}"  style=""></div>
+                        <div id="rpth2s_d" :class="{'hide':rpt1r!='D'}"  style=""></div>
                             </div>
                   <div class="tab-pane " id="tab_1-5">
                       
-                        <div id="rpto3" :class="{'hide':rpt1r!='T'}"  style="height:400px"></div>
-                        <div id="rpto3_d" :class="{'hide':rpt1r!='D'}" style="height:400px"></div>
+                        <div id="rpto3" :class="{'hide':rpt1r!='T'}"  style=""></div>
+                        <div id="rpto3_d" :class="{'hide':rpt1r!='D'}" style=""></div>
                             </div>
 
 
@@ -233,22 +231,22 @@
                     </div>
                   <div class="tab-pane active" id="tab_2-1">
 
-                        <div id="rpttvoc" :class="{'hide':rpt2r!='T'}"   style="height:400px"></div>
-                        <div id="rpttvoc_d" :class="{'hide':rpt2r!='D'}"  style="height:400px"></div>
+                        <div id="rpttvoc" :class="{'hide':rpt2r!='T'}"   style=""></div>
+                        <div id="rpttvoc_d" :class="{'hide':rpt2r!='D'}"  style=""></div>
 
 
                             </div>
 
                   <div class="tab-pane " id="tab_2-2">
                         
-                        <div id="rptpm25" :class="{'hide':rpt2r!='T'}"   style="height:400px"></div>
-                        <div id="rptpm25_d" :class="{'hide':rpt2r!='D'}"  style="height:400px"></div>
+                        <div id="rptpm25" :class="{'hide':rpt2r!='T'}"   style=""></div>
+                        <div id="rptpm25_d" :class="{'hide':rpt2r!='D'}"  style=""></div>
 
                             </div>
                   <div class="tab-pane " id="tab_2-3">
                       
-                        <div id="rptpm10" :class="{'hide':rpt2r!='T'}"   style="height:400px"></div>
-                        <div id="rptpm10_d" :class="{'hide':rpt2r!='D'}"  style="height:400px"></div>
+                        <div id="rptpm10" :class="{'hide':rpt2r!='T'}"   style=""></div>
+                        <div id="rptpm10_d" :class="{'hide':rpt2r!='D'}"  style=""></div>
                             </div>
                   
 
@@ -487,21 +485,26 @@ ctx.methods.showObj = function(item) {
         "非规律性时间内的变化（小时）",
         "ug/m3",
         seriestvoc,
-        "tvoc"
+        "tvoc",
+        "#689F38"
       );
       Rpt2(
         "rptpm25",
         "PM2.5可吸入颗粒物走势图",
         "非规律性时间内的变化（小时）",
         "ug/m3",
-        seriespm25
+        seriespm25,
+        "",
+        "#689F38"
       );
       Rpt2(
         "rptpm10",
         "PM10可吸入颗粒物走势图",
         "非规律性时间内的变化（小时）",
         "ug/m3",
-        seriespm10
+        seriespm10,
+        "",
+        "#689F38"
       );
 
 
@@ -524,21 +527,26 @@ ctx.methods.showObj = function(item) {
         "非规律性时间内的变化（日期）",
         "ug/m3",
         seriestvoc,
-        "tvoc"
+        "tvoc",
+        "#689F38",
       );
       Rpt2(
         "rptpm25_d",
         "PM2.5可吸入颗粒物走势图",
         "非规律性时间内的变化（日期）",
         "ug/m3",
-        seriespm25
+        seriespm25,
+        "",
+        "#689F38",
       );
       Rpt2(
         "rptpm10_d",
         "PM10可吸入颗粒物走势图",
         "非规律性时间内的变化（日期）",
         "ug/m3",
-        seriespm10
+        seriespm10,
+        "",
+        "#689F38",
       );
 
 

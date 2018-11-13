@@ -11,29 +11,47 @@
       <div style="width:100%;height:100%;" id="map"></div>
 
       <div class="carlist">
-        <div class="flex-row">
-          <div class="padding " >
-            <div class="flex-row bg-car">
-              <div v-for="car of carlist">
-                <div class="padding car-item">
-                  <div>
-                    <img class="carlogo" :src="uploadpath+'car/'+car.logo">
-                  </div>
-                  <div class="flex-row"   >
-                    <div>
-                      <input :id="'icheck_'+car.id" type="checkbox" class="flat-red" :checked="car.checked=='Y'">
-                    </div>
-                    <div class="flex-1 margin-left" @click="checkCar(car,false)" >
-                      {{car.name}}{{car.checked}}
-                    </div>
-                  </div>
-                  <div class="margin-top"><button type="button" @click="showCar(car)" class="btn btn-xs btn-primary">查看详情</button></div>
-                </div>
+        <!-- DIRECT CHAT PRIMARY -->
+          <div class="box box-primary direct-chat direct-chat-primary collapsed-box">
+            <div class="box-header with-border">
+              <h3 class="box-title">监控车列表</h3>
+
+              <div class="box-tools pull-right">
+                <span data-toggle="tooltip" class="badge bg-light-blue">{{carlist.length}}</span>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                </button>
               </div>
             </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="row">
+                            <div class="col-md-12" >
+                        <table class="table" id="dtcarlist">
+                            <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>监控车</th>
+                              <th>设备号</th>
+                              <th>日期</th>
+                            </tr>
+                            </thead>
+                            <tbody id="dtDr" >
+                              <tr v-for="(item,index) in carlist">
+                                <td><input type="checkbox" :checked="item.checked=='Y'" @change="checkNewData(item) " /></td>
+                                <td>{{item.name}}</td>
+                                <td>{{item.machineid}}</td>
+                                <td>{{item.upload_date}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          </div>
+                            
+
+                        </div>
+            </div>
+            
           </div>
-          <div class="flex-1"></div>
-        </div>
+          <!--/.direct-chat -->
       </div>
 
 	
@@ -180,101 +198,61 @@ ctx.data = function() {
 ctx.methods.onMyLoad = function() {};
 ctx.methods.loaddata = function() {
   this.loadapi("car", "summary", {}, carlist => {
-    if(this.carlist.length==0){
-      for(let car of carlist){
-        car.checked="Y";
-      }
-    }else{
-      
-      for(let car of carlist){
-        for(var i=0;i<this.carlist.length;i++){
-          if(this.carlist[i].id==car.id){
-            car.checked=this.carlist[i].checked;
-            break;
-          }
-        }
-      }
-    }
+    
     this.carlist=carlist;
     this.loadCarTrack();
     var that=this;
     this.$nextTick(()=>{
-        if(that.datarunning2==false){
-          that.datarunning2=true;
-          $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-            checkboxClass: 'icheckbox_flat-green',
-            radioClass   : 'iradio_flat-green'
-          });
-          $('input[type="checkbox"]').on('ifChecked', function(event){
-              var id=event.target.id;
-                for(let car of that.carlist){
-                  if("icheck_"+car.id==id){
-                    car.checked="Y";
-                    that.checkCar(car,true);
-                    break;
-                  }
-                }
-          });
-          $('input[type="checkbox"]').on('ifUnchecked', function(event){
-              var id=event.target.id;
-                for(let car of that.carlist){
-                  if("icheck_"+car.id==id){
-                    car.checked="N";
-                    that.checkCar(car,true);
-                    break;
-                  }
-                }
-          });
-        }
+        $(".carlist").css("margin-top",100-document.body.clientHeight);
+        DT("#dtcarlist",[[3, "desc"]],4,false);
     });
   });
 };
 
 ctx.methods.loadCarTrack=function(){
   //alert(this.carlist.length);
-
-
-  var list=[];
+  var str=[];
   for(let car of this.carlist){
     if(car.checked=='Y'){
-      for(let item of car.trackline){
-        list.push({coord:item.lng+","+item.lat,value:item.TVOC});
-      }
+      str.push(car.id+":"+car.upload_date);
     }
   }
-  //{coord:"115,44",value:1}
-  this.layer.setData(list, {
-        lnglat: 'coord'
-  });
+//alert(str.join(","));
+  this.loadapi("car","trackline",{str:str.join(",")},(data)=>{
+      //alert(data);
+      var layer = Loca.visualLayer({
+            container: this.map,
+            type: 'heatmap',
+            shape: 'hexagon'
+        });
 
-   var colors = [
-        '#499824',
-        '#8AC732',
-        '#FFFF44',
-        '#EB7227',
-        '#E41B1B'
-    ];
 
-    this.layer.setOptions({
-        // 单位米
-        unit: 'meter',
-        style: {
-            // 正多边形半径
-            radius: 40,
-            // 高度为 0 即可贴地面
-            height: 0,
-            // 顶面颜色
-            color: {
-                key: 'value',
-                scale: 'quantile',
-                value: colors
+
+        layer.setData(data, {
+            lnglat: function (obj) {
+                var val = obj.value;
+                return [val['lng'], val['lat']]
             },
-            opacity: 0.85
-        }
-    });
+            value: 'count',
+            type: 'tsv'
+        });
 
-    this.layer.render();
-  
+        layer.setOptions({
+            unit: 'meter',
+            style: {
+                color: ['#ecda9a', '#efc47e', '#f3ad6a', '#f7945d', '#f97b57', '#f66356', '#ee4d5a'],
+                radius: 200,
+                opacity: 0.9,
+                gap: 200,
+                height: [0, 50000]
+            }
+        });
+
+        layer.render();
+
+
+
+  });
 };
 
 ctx.methods.checkCar=function(car,noture){
@@ -306,7 +284,7 @@ var bodyheight = $(".content-wrapper").height();
   //   viewMode: "3D" //使用3D视图
   // });
     var map = Loca.create('map', {
-        mapStyle: 'amap://styles/midnight',
+        mapStyle: 'amap://styles/dark',
         viewMode: '3D',
         pitch: 50,
         zoom: 13,
@@ -316,25 +294,20 @@ var bodyheight = $(".content-wrapper").height();
 
   this.map = map;
 
-  var layer = Loca.visualLayer({
-        container: map,
-        type: 'point',
-        shape: 'prism',
-        // 设置正多边形顶点数量。
-        // 拆分 32 个顶点就可以近似看做是圆形，拆分越多越平滑，但会有性能损耗。
-        vertex: 32
+  
+
+  map.on('mapload', function () {
+        map.getMap().plugin(['AMap.ControlBar'], function () {
+            var controlBar = new AMap.ControlBar();
+            map.getMap().addControl(controlBar);
+        });
     });
-  this.layer=layer;
   
   this.loaddata();
-  if (this.datarunning == false) {
-    this.datarunning = true;
-    setInterval(() => {
-      this.loaddata();
-    }, 1000 * 60);
-  }
-
-
+};
+ctx.methods.checkNewData=function(item){
+  item.checked=item.checked=='Y'?'N':"Y";
+  this.loadCarTrack();
 };
 
 ctx.methods.showCar=function(car){
@@ -479,8 +452,16 @@ export default ctx;
 <style>
 .carlist{
   position: absolute;
-  width:100%;
-  margin-top:-200px;
+  width:400px;
+}
+.carlist div{
+  background: rgba(255, 255, 255, 0.5);
+}
+.carlist .box-tools{
+  background: transparent !important; 
+}
+.carlist table,th,td,tr{
+  background: transparent !important; 
 }
 .flex-row{
   display: flex;
