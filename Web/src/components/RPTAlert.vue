@@ -34,25 +34,18 @@
                             <thead>
                             <tr>
                               <th>预警对象</th>
-                              <th v-if="ispc==true">设备</th>
-                              <th v-if="ispc==true">机器编号</th>
-                              <th>报警时间</th>
-                              <th>描述</th>
-                              <th>处理</th>
+                              <th>预警时间</th>
+                              <th>检测分析</th>
+                              <th>详情</th>
                             </tr>
                             </thead>
                             <tbody id="dtDr" >
                               <tr  v-for="(item,index) in alertdata">
                                 <td >{{item.objectname}}</td>
-                                <td v-if="ispc==true">{{item.devicename}}</td>
-                                <td v-if="ispc==true">{{item.machineid}}</td>
                                 <td >{{item.df}}时</td>
-                                <td >{{item.msg}}</td>
+                                <td >{{item.status=='A'?'超标':"正常"}}</td>
                                 <td>
-                                    <button v-if="item.status=='A'"
-                                     type="button" class="btn btn-warning btn-xs" @click="showalertinfo(item)">超标</button>
-                                    <button v-if="item.status!='A'"
-                                     type="button" class="btn btn-success btn-xs" @click="showalertinfo(item)">没超标</button>
+                                    <a @click="showalertinfo(item)">查看</a>
                                 </td>
 
 
@@ -112,15 +105,37 @@
 
                           <dt>污染因子</dt>
                           <dd>
-<span  v-bind:class="{ 'text-red':alertinfo.avgairdata.SO2>alertinfo.avgairdata.exso2 }">SO2: {{alertinfo.avgairdata.SO2}}</span>
-                                  <span style="margin-left:20px;" v-bind:class="{ 'text-red':alertinfo.avgairdata.NO2>alertinfo.avgairdata.exno2 }">NO2: {{alertinfo.avgairdata.NO2}}</span><br />
-                                  <span v-bind:class="{ 'text-red':alertinfo.avgairdata.CO>alertinfo.avgairdata.exco }">CO: {{alertinfo.avgairdata.CO}}</span>
-                                  <span style="margin-left:20px;" v-bind:class="{ 'text-red':alertinfo.avgairdata.H2S>alertinfo.avgairdata.exh2s }">H2S: {{alertinfo.avgairdata.H2S}}</span><br />
-                                  <span v-bind:class="{ 'text-red':alertinfo.avgairdata.O3>alertinfo.avgairdata.exo3 }">O3: {{alertinfo.avgairdata.O3}}</span>
-                                  <span style="margin-left:20px;" v-bind:class="{ 'text-red':alertinfo.avgairdata.TVOC>alertinfo.avgairdata.extvoc }">TVOC: {{alertinfo.avgairdata.TVOC}}</span><br />
-                                  <span v-bind:class="{ 'text-red':alertinfo.avgairdata.PM25>alertinfo.avgairdata.expm25 }">PM2.5: {{alertinfo.avgairdata.PM25}}</span>
-                                  <span style="margin-left:20px;" v-bind:class="{ 'text-red':alertinfo.avgairdata.PM10>alertinfo.avgairdata.expm10 }">PM10: {{alertinfo.avgairdata.PM10}}</span><br />
+                            <div class="row">
+                              <div class="col-md-1">SO2:</div>
+                              <div class="col-md-1"><span  v-bind:class="{ 'text-red':alertinfo.avgairdata.SO2>alertinfo.avgairdata.exso2 }"> {{alertinfo.avgairdata.SO2}}</span></div>
+                              <div class="col-md-1"></div>
+                              <div class="col-md-1">NO2: </div>
+                              <div class="col-md-1"><span style="margin-left:20px;" v-bind:class="{ 'text-red':alertinfo.avgairdata.NO2>alertinfo.avgairdata.exno2 }">{{alertinfo.avgairdata.NO2}}</span></div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-1">CO: </div>
+                              <div class="col-md-1"><span v-bind:class="{ 'text-red':alertinfo.avgairdata.CO>alertinfo.avgairdata.exco }">{{alertinfo.avgairdata.CO}}</span></div>
+                              <div class="col-md-1"></div>
+                              <div class="col-md-1">H2S: </div>
+                              <div class="col-md-1"><span style="margin-left:20px;" v-bind:class="{ 'text-red':alertinfo.avgairdata.H2S>alertinfo.avgairdata.exh2s }">{{alertinfo.avgairdata.H2S}}</span></div>
+                            </div>
 
+                            <div class="row">
+                              <div class="col-md-1">O3: </div>
+                              <div class="col-md-1"><span v-bind:class="{ 'text-red':alertinfo.avgairdata.O3>alertinfo.avgairdata.exo3 }">{{alertinfo.avgairdata.O3}}</span></div>
+                              <div class="col-md-1"></div>
+                              <div class="col-md-1">TVOC: </div>
+                              <div class="col-md-1"><span style="margin-left:20px;" v-bind:class="{ 'text-red':alertinfo.avgairdata.TVOC>alertinfo.avgairdata.extvoc }">{{alertinfo.avgairdata.TVOC}}</span></div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-md-1">PM2.5: </div>
+                              <div class="col-md-1"><span v-bind:class="{ 'text-red':alertinfo.avgairdata.PM25>alertinfo.avgairdata.expm25 }">{{alertinfo.avgairdata.PM25}}</span></div>
+                              <div class="col-md-1"></div>
+                              <div class="col-md-1">PM10: </div>
+                              <div class="col-md-1"><span style="margin-left:20px;" v-bind:class="{ 'text-red':alertinfo.avgairdata.PM10>alertinfo.avgairdata.expm10 }">{{alertinfo.avgairdata.PM10}}</span></div>
+                            </div>
+                                  
                           </dd>
                         </dl>
         </div>
@@ -171,7 +186,7 @@ ctx.data = function() {
 
 ctx.methods.forin=function(){
   var now=(new Date()).getTime();
-  var start=(new Date(2018,10,2,0,0,0)).getTime();
+  var start=(new Date(2018,10,8,0,0,0)).getTime();
   for(var i=0;i<5000&&start+i*3600*1000<now;i++){
     var ttime=(new Date(start+i*3600*1000));
     var tstr=ttime.getFullYear()+"-"+(ttime.getMonth()+1).toString()+"-"+ttime.getDate()+" "+ttime.getHours()+":15:16";

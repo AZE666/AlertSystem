@@ -171,32 +171,32 @@
                     </div>
                   <div class="tab-pane active" id="tab_1-1">
 
-                        <div id="rptso2" :class="{'hide':rpt1r!='T'}" style=""></div>
-                        <div id="rptso2_d" :class="{'hide':rpt1r!='D'}" style=""></div>
+                        <div id="rptso2" :class="{'hide':rpt1r!='T'}" style="height:400px;"></div>
+                        <div id="rptso2_d" :class="{'hide':rpt1r!='D'}" style="height:400px;"></div>
 
 
                             </div>
 
                   <div class="tab-pane " id="tab_1-2">
                         
-                        <div id="rptno2" :class="{'hide':rpt1r!='T'}"  style=""></div>
-                        <div id="rptno2_d" :class="{'hide':rpt1r!='D'}"  style=""></div>
+                        <div id="rptno2" :class="{'hide':rpt1r!='T'}"  style="height:400px;"></div>
+                        <div id="rptno2_d" :class="{'hide':rpt1r!='D'}"  style="height:400px;"></div>
 
                             </div>
                   <div class="tab-pane " id="tab_1-3">
                       
-                        <div id="rptco" :class="{'hide':rpt1r!='T'}"  style=""></div>
-                        <div id="rptco_d" :class="{'hide':rpt1r!='D'}"  style=""></div>
+                        <div id="rptco" :class="{'hide':rpt1r!='T'}"  style="height:400px;"></div>
+                        <div id="rptco_d" :class="{'hide':rpt1r!='D'}"  style="height:400px;"></div>
                             </div>
                   <div class="tab-pane " id="tab_1-4">
                       
-                        <div id="rpth2s" :class="{'hide':rpt1r!='T'}"  style=""></div>
-                        <div id="rpth2s_d" :class="{'hide':rpt1r!='D'}"  style=""></div>
+                        <div id="rpth2s" :class="{'hide':rpt1r!='T'}"  style="height:400px;"></div>
+                        <div id="rpth2s_d" :class="{'hide':rpt1r!='D'}"  style="height:400px;"></div>
                             </div>
                   <div class="tab-pane " id="tab_1-5">
                       
-                        <div id="rpto3" :class="{'hide':rpt1r!='T'}"  style=""></div>
-                        <div id="rpto3_d" :class="{'hide':rpt1r!='D'}" style=""></div>
+                        <div id="rpto3" :class="{'hide':rpt1r!='T'}"  style="height:400px;"></div>
+                        <div id="rpto3_d" :class="{'hide':rpt1r!='D'}" style="height:400px;"></div>
                             </div>
 
 
@@ -364,56 +364,61 @@ ctx.methods.showObj = function(item) {
     this.$nextTick(() => {
       DT("#exceedtd .dtexam", [[2, "desc"]]);
 
-      var seriesso2 = [{ name: "SO2(ppm)", data: [] }];
-      var seriesno2 = [{ name: "NO2(ppm)", data: [] }];
-      var seriesco = [{ name: "CO(ppm)", data: [] }];
-      var seriesh2s = [{ name: "H2S(ppm)", data: [] }];
-      var serieso3 = [{ name: "O3(ppm)", data: [] }];
+      var seriesso2 = [ ];
+      var seriesno2 = [];
+      var seriesco = [];
+      var seriesh2s = [];
+      var serieso3 = [];
 
       for (var i = 0; i < object.airdata.length; i++) {
         var item = object.airdata[i];
-        seriesso2[0].data.push([item.timespan * 1000, Number(item.SO2) * 1000]);
-        seriesno2[0].data.push([item.timespan * 1000, Number(item.NO2) * 1000]);
-        seriesco[0].data.push([item.timespan * 1000, Number(item.CO) * 1000]);
-        seriesh2s[0].data.push([item.timespan * 1000, Number(item.H2S) * 1000]);
-        serieso3[0].data.push([item.timespan * 1000, Number(item.O3) * 1000]);
+        seriesso2.push([item.df2, Number(item.SO2) ]);
+        seriesno2.push([item.df2 , Number(item.NO2)]);
+        seriesco.push([item.df2 , Number(item.CO)]);
+        seriesh2s.push([item.df2 , Number(item.H2S) ]);
+        serieso3.push([item.df2 , Number(item.O3) ]);
       }
+        RPT3("rptso2","SO2(ppm)空气污染物走势图",seriesso2,
+        [this.memberinfo.alertset.so2_avg_h_1,
+        this.memberinfo.alertset.so2_avg_h_2,
+        this.memberinfo.alertset.so2_avg_h_3,
+        this.memberinfo.alertset.so2_avg_h_4,
+        this.memberinfo.alertset.so2_avg_h_5,
+        this.memberinfo.alertset.so2_avg_h_6]);
 
-      Rpt1(
-        "rptso2",
-        "SO2空气污染物走势图",
-        "非规律性时间内的变化（小时）",
-        "ppm",
-        seriesso2
-      );
-      Rpt1(
-        "rptno2",
-        "NO2空气污染物走势图",
-        "非规律性时间内的变化（小时）",
-        "ppm",
-        seriesno2
-      );
-      Rpt1(
-        "rptco",
-        "CO空气污染物走势图",
-        "非规律性时间内的变化（小时）",
-        "ppm",
-        seriesco
-      );
-      Rpt1(
-        "rpth2s",
-        "H2s空气污染物走势图",
-        "非规律性时间内的变化（小时）",
-        "ppm",
-        seriesh2s
-      );
-      Rpt1(
-        "rpto3",
-        "SO2空气污染物走势图",
-        "非规律性时间内的变化（小时）",
-        "ppm",
-        serieso3
-      );
+        RPT3("rptno2","NO2(ppm)空气污染物走势图",seriesno2,
+        [this.memberinfo.alertset.no2_avg_h_1,
+        this.memberinfo.alertset.no2_avg_h_2,
+        this.memberinfo.alertset.no2_avg_h_3,
+        this.memberinfo.alertset.no2_avg_h_4,
+        this.memberinfo.alertset.no2_avg_h_5,
+        this.memberinfo.alertset.no2_avg_h_6]);
+
+        RPT3("rptco","CO2(ppm)空气污染物走势图",seriesco,
+        [this.memberinfo.alertset.co_avg_h_1,
+        this.memberinfo.alertset.co_avg_h_2,
+        this.memberinfo.alertset.co_avg_h_3,
+        this.memberinfo.alertset.co_avg_h_4,
+        this.memberinfo.alertset.co_avg_h_5,
+        this.memberinfo.alertset.co_avg_h_6]);
+
+        
+        RPT3("rpth2s","H2S(ppm)空气污染物走势图",seriesh2s,
+        [this.memberinfo.alertset.h2s_avg_h_1,
+        this.memberinfo.alertset.h2s_avg_h_2,
+        this.memberinfo.alertset.h2s_avg_h_3,
+        this.memberinfo.alertset.h2s_avg_h_4,
+        this.memberinfo.alertset.h2s_avg_h_5,
+        this.memberinfo.alertset.h2s_avg_h_6]);
+
+        RPT3("rpto3","O3(ppm)空气污染物走势图",serieso3,
+        [this.memberinfo.alertset.o3_avg_h_1,
+        this.memberinfo.alertset.o3_avg_h_2,
+        this.memberinfo.alertset.o3_avg_h_3,
+        this.memberinfo.alertset.o3_avg_h_4,
+        this.memberinfo.alertset.o3_avg_h_5,
+        this.memberinfo.alertset.o3_avg_h_6]);
+
 
       var seriesso2 = [{ name: "SO2(ppm)", data: [] }];
       var seriesno2 = [{ name: "NO2(ppm)", data: [] }];

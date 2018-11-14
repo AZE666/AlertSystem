@@ -33,6 +33,7 @@
                               <th>监控车</th>
                               <th>设备号</th>
                               <th>日期</th>
+                              <th>数据</th>
                             </tr>
                             </thead>
                             <tbody id="dtDr" >
@@ -41,6 +42,7 @@
                                 <td>{{item.name}}</td>
                                 <td>{{item.machineid}}</td>
                                 <td>{{item.upload_date}}</td>
+                                <td><a @click="showCar(item)">查看</a></td>
                               </tr>
                             </tbody>
                           </table>
@@ -220,15 +222,18 @@ ctx.methods.loadCarTrack=function(){
 //alert(str.join(","));
   this.loadapi("car","trackline",{str:str.join(",")},(data)=>{
       //alert(data);
-      var layer = Loca.visualLayer({
+        if(this.layer!=null){
+          
+        this.layer.destroy();
+        this.layer=null;
+        }
+        this.layer = Loca.visualLayer({
             container: this.map,
             type: 'heatmap',
             shape: 'hexagon'
         });
 
-
-
-        layer.setData(data, {
+        this.layer.setData(data, {
             lnglat: function (obj) {
                 var val = obj.value;
                 return [val['lng'], val['lat']]
@@ -237,7 +242,7 @@ ctx.methods.loadCarTrack=function(){
             type: 'tsv'
         });
 
-        layer.setOptions({
+        this.layer.setOptions({
             unit: 'meter',
             style: {
                 color: ['#ecda9a', '#efc47e', '#f3ad6a', '#f7945d', '#f97b57', '#f66356', '#ee4d5a'],
@@ -247,9 +252,9 @@ ctx.methods.loadCarTrack=function(){
                 height: [0, 50000]
             }
         });
+        console.log(this.layer);
 
-        layer.render();
-
+        this.layer.render();
 
 
   });
@@ -294,7 +299,9 @@ var bodyheight = $(".content-wrapper").height();
 
   this.map = map;
 
-  
+
+       
+
 
   map.on('mapload', function () {
         map.getMap().plugin(['AMap.ControlBar'], function () {
@@ -312,130 +319,30 @@ ctx.methods.checkNewData=function(item){
 
 ctx.methods.showCar=function(car){
   this.currCar=car;
-  this.$nextTick(()=>{
+  this.loadapi("car","trackline2",{car_id:car.id,date:car.upload_date}, trackline => {
+    
     $("#cardetail").modal("show");
 
         var series2 = [
-          { name: "TVOC(ug/m3)", data: [] },
-          { name: "PM25(ug/m3)", data: [] },
-          { name: "PM10(ug/m3)", data: [] }
+          { name: "TVOC(ug/m3)", data: [] }
         ];
 
-        for (var i = 0; i < car.trackline.length; i++) {
-          var item = car.trackline[i];
-          series2[0].data.push([item.timespan * 1000, Number(item.TVOC)]);
-          series2[1].data.push([item.timespan * 1000, Number(item.PM25)]);
-          series2[2].data.push([item.timespan * 1000, Number(item.PM10)]);
-        }
-var chart = Highcharts.chart("rpt_car", {
-          chart: {
-            type: "spline"
-          },
-          title: {
-            text: "可吸入颗粒物走势图"
-          },
-          subtitle: {
-            text: "48小时内非规律性时间内的变化"
-          },
-          xAxis: {
-            type: "datetime",
-            labels: {
-              overflow: "justify"
-            }
-          },
-          yAxis: {
-            title: {
-              text: "浓度"
-            },
-            min: 0,
-            minorGridLineWidth: 0,
-            gridLineWidth: 0,
-            alternateGridColor: null,
-            plotBands: [
-              {
-                // Light air
-                from: 0,
-                to: 300,
-                color: "rgba(68, 170, 213,0.3)",
-                label: {
-                  text: "优",
-                  style: {
-                    color: "#606060"
-                  }
-                }
-              },
-              {
-                // Light breeze
-                from: 301,
-                to: 600,
-                color: "rgba(154,206,64,0.3)",
-                label: {
-                  text: "良",
-                  style: {
-                    color: "#606060"
-                  }
-                }
-              },
-              {
-                // Gentle breeze
-                from: 601,
-                to: 2000,
-                color: "rgba(255,253,85,0.3)",
-                label: {
-                  text: "轻度污染",
-                  style: {
-                    color: "#606060"
-                  }
-                }
-              },
-              {
-                // Moderate breeze
-                from: 2001,
-                to: 4000,
-                color: "rgba(241,134,51,0.3)",
-                label: {
-                  text: "中度污染",
-                  style: {
-                    color: "#606060"
-                  }
-                }
-              },
-              {
-                // Fresh breeze
-                from: 4001,
-                to: 20000,
-                color: "rgba(236,51,35,0.3)",
-                label: {
-                  text: "重度污染",
-                  style: {
-                    color: "#606060"
-                  }
-                }
-              }
-            ]
-          },
-          plotOptions: {
-            spline: {
-              lineWidth: 4,
-              states: {
-                hover: {
-                  lineWidth: 5
-                }
-              },
-              marker: {
-                enabled: false
-              },
-              pointInterval: 3600000, // one hour
-              pointStart: Date.UTC(2009, 9, 6, 0, 0, 0)
-            }
-          },
-          series: series2,
-          navigation: {
-            menuItemStyle: {
-              fontSize: "10px"
-            }
+        for (var i = 0; i < trackline.length; i++) {
+          var item = trackline[i];
+          if(item.TVOC>0){
+            series2[0].data.push([item.timespan * 1000, Number(item.TVOC)*1000]);
           }
-        });
+        }
+
+
+      Rpt2(
+        "rpt_car",
+        "TVOC可吸入颗粒物走势图",
+        "24小时内非规律性时间内的变化",
+        "ug/m3",
+        series2,
+        "tvoc"
+      );
 
 
 

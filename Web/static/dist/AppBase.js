@@ -51,6 +51,92 @@ function DT(spec,order,displaylength,searching){
         }
         });
 }
+
+function RPT3(id,title,data,marker){
+    //alert(marker);
+    var myChart = echarts.init(document.getElementById(id)); 
+    myChart.setOption(option = {
+        title: {
+            text:title
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        xAxis: {
+            data: data.map(function (item) {
+                return item[0];
+            })
+        },
+        yAxis: {
+            splitLine: {
+                show: false
+            }
+        },
+        toolbox: {
+            left: 'center',
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        visualMap: {
+            top: 10,
+            right: 10,
+            pieces: [{
+                lte: parseInt( marker[0]),
+                color: '#096'
+            }, {
+                lte:parseInt(  marker[1]),
+                color: '#ffde33'
+            }, {
+                lte: parseInt( marker[2]),
+                color: '#ff9933'
+            }, {
+                lte: parseInt( marker[3]),
+                color: '#cc0033'
+            }, {
+                lte: parseInt( marker[4]),
+                color: '#660099'
+            }, {
+                lte: parseInt( marker[5]),
+                color: '#7e0023'
+            }],
+            outOfRange: {
+                color: '#999'
+            }
+        },
+        series: {
+            name: title,
+            type: 'line',
+            data: data.map(function (item) {
+                return item[1];
+            }),
+            markLine: {
+                silent: true,
+                data: [{
+                    yAxis: marker[0]
+                }, {
+                    yAxis: marker[1]
+                }, {
+                    yAxis: marker[2]
+                }, {
+                    yAxis: marker[3]
+                }, {
+                    yAxis: marker[4]
+                }, {
+                    yAxis: marker[5]
+                }]
+            }
+        }
+    });
+}
+
+
+
+
 function Rpt1(id,title,subtitle,unit,series,color){
     
    var chartopt=  {
@@ -101,6 +187,15 @@ function Rpt1(id,title,subtitle,unit,series,color){
 
 function Rpt2(id,title,subtitle,unit,series,type,color){
     var plotBands=[];
+    console.log("series.length");
+    console.log(series.length);
+    for(var i=0;i<series.length;i++){
+        console.log("series[i].length");
+        console.log(series[i].data.length);
+        for(var j=0;j<series[i].data.length;j++){
+            series[i].data[j][0]=series[i].data[j][0]+8*3600*1000;
+        }
+    }
     if(type=="tvoc"){
         plotBands=[
             {
@@ -278,9 +373,7 @@ function Rpt2(id,title,subtitle,unit,series,type,color){
             },
             marker: {
               enabled: false
-            },
-            pointInterval: 3600000, // one hour
-            pointStart: Date.UTC(2009, 9, 6, 0, 0, 0)
+            }
           }
         },
         series: series,
