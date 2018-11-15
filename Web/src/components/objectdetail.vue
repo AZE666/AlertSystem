@@ -68,6 +68,7 @@
                               <th v-if="ispc==true">TVOC</th>
                               <th v-if="ispc==true">PM2.5</th>
                               <th v-if="ispc==true">PM10</th>
+                              <th >AQI</th>
                               <!--<th>风速</th>
                               <th>风向</th>
                               <th>温度</th>
@@ -103,6 +104,7 @@
                                 <td v-if="ispc==true"  v-bind:class="{ 'text-red':item.TVOC_s=='l4','text-yellow':item.TVOC_s=='l3','text-blue':item.TVOC_s=='l2','text-green':item.TVOC_s=='l1' }">{{item.TVOC}}</td>
                                 <td  v-if="ispc==true" v-bind:class="{ 'text-red':item.PM25_s=='l4','text-yellow':item.PM25_s=='l3','text-blue':item.PM25_s=='l2','text-green':item.PM25_s=='l1' }">{{item.PM25}}</td>
                                 <td  v-if="ispc==true" v-bind:class="{ 'text-red':item.PM10_s=='l4','text-yellow':item.PM10_s=='l3','text-blue':item.PM10_s=='l2','text-green':item.PM10_s=='l1' }">{{item.PM10}}</td>
+                                <td  >{{item.aqi}}</td>
                                 <!--<td>{{item.FS}}</td>
                                 <td>{{item.FX}}</td>
                                 <td>{{item.WD}}</td>
@@ -123,17 +125,13 @@
                                   <a href="#" v-if="item.showenv=='Y'" @click="clickToShowEnv(item)" >收起</a>
                                 </div>
                                 </td>
-                                <td v-if="item.status=='l1'" >
-                                  <small class="label  bg-green">优</small>
-                                </td>
-                                <td v-if="item.status=='l2'" >
-                                  <small class="label  bg-blue">良</small>
-                                </td>
-                                <td v-if="item.status=='l3'">
-                                  <small class="label  bg-yellow">中</small>
-                                </td>
-                                <td v-if="item.status=='l4'">
-                                  <small class="label  bg-red">差</small>
+                                <td >
+                                  <small v-if="item.aqi<=50" class="label" style="background:#096">优</small>
+                                  <small v-if="50<item.aqi&&item.aqi<=100"  class="label" style="background:#ffde33">良</small>
+                                  <small v-if="100<item.aqi&&item.aqi<=150"  class="label" style="background:#ff9933">轻度污染</small>
+                                  <small v-if="150<item.aqi&&item.aqi<=200"  class="label" style="background:#cc0033">中度污染</small>
+                                  <small v-if="200<item.aqi&&item.aqi<=300"  class="label" style="background:#660099">重度污染</small>
+                                  <small v-if="300<item.aqi"  class="label" style="background:#7e0023">严重污染</small>
                                 </td>
                                 <td><button v-if="index>0&&item.alert_id==0&&(item.SO2>devicedata.exso2||
                                     item.NO2>devicedata.exno2||

@@ -171,32 +171,32 @@
                     </div>
                   <div class="tab-pane active" id="tab_1-1">
 
-                        <div id="rptso2" :class="{'hide':rpt1r!='T'}" style="height:400px;"></div>
-                        <div id="rptso2_d" :class="{'hide':rpt1r!='D'}" style="height:400px;"></div>
+                        <div id="rptso2" class="rpt" :class="{'hide':rpt1r!='T'}" style="height:400px;"></div>
+                        <div id="rptso2_d" class="rpt" :class="{'hide':rpt1r!='D'}" style="height:400px;"></div>
 
 
                             </div>
 
                   <div class="tab-pane " id="tab_1-2">
                         
-                        <div id="rptno2" :class="{'hide':rpt1r!='T'}"  style="height:400px;"></div>
-                        <div id="rptno2_d" :class="{'hide':rpt1r!='D'}"  style="height:400px;"></div>
+                        <div id="rptno2" class="rpt" :class="{'hide':rpt1r!='T'}"  style="height:400px;"></div>
+                        <div id="rptno2_d" class="rpt" :class="{'hide':rpt1r!='D'}"  style="height:400px;"></div>
 
                             </div>
                   <div class="tab-pane " id="tab_1-3">
                       
-                        <div id="rptco" :class="{'hide':rpt1r!='T'}"  style="height:400px;"></div>
-                        <div id="rptco_d" :class="{'hide':rpt1r!='D'}"  style="height:400px;"></div>
+                        <div id="rptco" class="rpt" :class="{'hide':rpt1r!='T'}"  style="height:400px;"></div>
+                        <div id="rptco_d" class="rpt" :class="{'hide':rpt1r!='D'}"  style="height:400px;"></div>
                             </div>
                   <div class="tab-pane " id="tab_1-4">
                       
-                        <div id="rpth2s" :class="{'hide':rpt1r!='T'}"  style="height:400px;"></div>
-                        <div id="rpth2s_d" :class="{'hide':rpt1r!='D'}"  style="height:400px;"></div>
+                        <div id="rpth2s" class="rpt" :class="{'hide':rpt1r!='T'}"  style="height:400px;"></div>
+                        <div id="rpth2s_d" class="rpt" :class="{'hide':rpt1r!='D'}"  style="height:400px;"></div>
                             </div>
                   <div class="tab-pane " id="tab_1-5">
                       
-                        <div id="rpto3" :class="{'hide':rpt1r!='T'}"  style="height:400px;"></div>
-                        <div id="rpto3_d" :class="{'hide':rpt1r!='D'}" style="height:400px;"></div>
+                        <div id="rpto3" class="rpt" :class="{'hide':rpt1r!='T'}"  style="height:400px;"></div>
+                        <div id="rpto3_d" class="rpt" :class="{'hide':rpt1r!='D'}" style="height:400px;"></div>
                             </div>
 
 
@@ -231,22 +231,22 @@
                     </div>
                   <div class="tab-pane active" id="tab_2-1">
 
-                        <div id="rpttvoc" :class="{'hide':rpt2r!='T'}"   style=""></div>
-                        <div id="rpttvoc_d" :class="{'hide':rpt2r!='D'}"  style=""></div>
+                        <div id="rpttvoc" class="rpt" :class="{'hide':rpt2r!='T'}"   style="height:400px;"></div>
+                        <div id="rpttvoc_d" class="rpt" :class="{'hide':rpt2r!='D'}"  style="height:400px;"></div>
 
 
                             </div>
 
                   <div class="tab-pane " id="tab_2-2">
                         
-                        <div id="rptpm25" :class="{'hide':rpt2r!='T'}"   style=""></div>
-                        <div id="rptpm25_d" :class="{'hide':rpt2r!='D'}"  style=""></div>
+                        <div id="rptpm25" class="rpt" :class="{'hide':rpt2r!='T'}"   style="height:400px;"></div>
+                        <div id="rptpm25_d" class="rpt" :class="{'hide':rpt2r!='D'}"  style="height:400px;"></div>
 
                             </div>
                   <div class="tab-pane " id="tab_2-3">
                       
-                        <div id="rptpm10" :class="{'hide':rpt2r!='T'}"   style=""></div>
-                        <div id="rptpm10_d" :class="{'hide':rpt2r!='D'}"  style=""></div>
+                        <div id="rptpm10" class="rpt" :class="{'hide':rpt2r!='T'}"   style="height:400px;"></div>
+                        <div id="rptpm10_d" class="rpt" :class="{'hide':rpt2r!='D'}"  style="height:400px;"></div>
                             </div>
                   
 
@@ -362,6 +362,9 @@ ctx.methods.showObj = function(item) {
     this.obj = objects[0];
     var object = objects[0];
     this.$nextTick(() => {
+      var width=$("#exceedtd").width();
+      $(".rpt").width(width);
+
       DT("#exceedtd .dtexam", [[2, "desc"]]);
 
       var seriesso2 = [ ];
@@ -420,139 +423,139 @@ ctx.methods.showObj = function(item) {
         this.memberinfo.alertset.o3_avg_h_6]);
 
 
-      var seriesso2 = [{ name: "SO2(ppm)", data: [] }];
-      var seriesno2 = [{ name: "NO2(ppm)", data: [] }];
-      var seriesco = [{ name: "CO(ppm)", data: [] }];
-      var seriesh2s = [{ name: "H2S(ppm)", data: [] }];
-      var serieso3 = [{ name: "O3(ppm)", data: [] }];
+      var seriesso2 = [];
+      var seriesno2 = [];
+      var seriesco = [];
+      var seriesh2s = [];
+      var serieso3 = [];
 
       for (var i = 0; i < object.airdata_day.length; i++) {
         var item = object.airdata_day[i];
-        seriesso2[0].data.push([item.timespan * 1000, Number(item.SO2) * 1000]);
-        seriesno2[0].data.push([item.timespan * 1000, Number(item.NO2) * 1000]);
-        seriesco[0].data.push([item.timespan * 1000, Number(item.CO) * 1000]);
-        seriesh2s[0].data.push([item.timespan * 1000, Number(item.H2S) * 1000]);
-        serieso3[0].data.push([item.timespan * 1000, Number(item.O3) * 1000]);
+        seriesso2.push([item.df2, Number(item.SO2) ]);
+        seriesno2.push([item.df2 , Number(item.NO2)]);
+        seriesco.push([item.df2 , Number(item.CO)]);
+        seriesh2s.push([item.df2 , Number(item.H2S) ]);
+        serieso3.push([item.df2 , Number(item.O3) ]);
       }
 
-      Rpt1(
-        "rptso2_d",
-        "SO2空气污染物走势图",
-        "非规律性时间内的变化（日期）",
-        "ppm",
-        seriesso2
-      );
-      Rpt1(
-        "rptno2_d",
-        "NO2空气污染物走势图",
-        "非规律性时间内的变化（日期）",
-        "ppm",
-        seriesno2
-      );
-      Rpt1(
-        "rptco_d",
-        "CO空气污染物走势图",
-        "非规律性时间内的变化（日期）",
-        "ppm",
-        seriesco
-      );
-      Rpt1(
-        "rpth2s_d",
-        "H2s空气污染物走势图",
-        "非规律性时间内的变化（日期）",
-        "ppm",
-        seriesh2s
-      );
-      Rpt1(
-        "rpto3_d",
-        "SO2空气污染物走势图",
-        "非规律性时间内的变化（日期）",
-        "ppm",
-        serieso3
-      );
+        RPT3("rptso2_d","日期 - SO2(ppm)空气污染物走势图",seriesso2,
+        [this.memberinfo.alertset.so2_avg_d_1,
+        this.memberinfo.alertset.so2_avg_d_2,
+        this.memberinfo.alertset.so2_avg_d_3,
+        this.memberinfo.alertset.so2_avg_d_4,
+        this.memberinfo.alertset.so2_avg_d_5,
+        this.memberinfo.alertset.so2_avg_d_6]);
 
-      var seriestvoc = [{ name: "TVOC(ug/m3)", data: [] }];
-      var seriespm25 = [{ name: "PM2.5(ug/m3)", data: [] }];
-      var seriespm10 = [{ name: "PM10(ug/m3)", data: [] }];
+        RPT3("rptno2_d","日期 - NO2(ppm)空气污染物走势图",seriesno2,
+        [this.memberinfo.alertset.no2_avg_d_1,
+        this.memberinfo.alertset.no2_avg_d_2,
+        this.memberinfo.alertset.no2_avg_d_3,
+        this.memberinfo.alertset.no2_avg_d_4,
+        this.memberinfo.alertset.no2_avg_d_5,
+        this.memberinfo.alertset.no2_avg_d_6]);
+
+        RPT3("rptco_d","日期 - CO2(ppm)空气污染物走势图",seriesco,
+        [this.memberinfo.alertset.co_avg_d_1,
+        this.memberinfo.alertset.co_avg_d_2,
+        this.memberinfo.alertset.co_avg_d_3,
+        this.memberinfo.alertset.co_avg_d_4,
+        this.memberinfo.alertset.co_avg_d_5,
+        this.memberinfo.alertset.co_avg_d_6]);
+
+        
+        RPT3("rpth2s_d","日期 - H2S(ppm)空气污染物走势图",seriesh2s,
+        [this.memberinfo.alertset.h2s_avg_h_1,
+        this.memberinfo.alertset.h2s_avg_h_2,
+        this.memberinfo.alertset.h2s_avg_h_3,
+        this.memberinfo.alertset.h2s_avg_h_4,
+        this.memberinfo.alertset.h2s_avg_h_5,
+        this.memberinfo.alertset.h2s_avg_h_6]);
+
+        alert(this.memberinfo.alertset.o3_avg_8h_1);
+        RPT3("rpto3_d","日期 - O3(ppm)空气污染物走势图",serieso3,
+        [this.memberinfo.alertset.o3_avg_8h_1,
+        this.memberinfo.alertset.o3_avg_8h_2,
+        this.memberinfo.alertset.o3_avg_8h_3,
+        this.memberinfo.alertset.o3_avg_8h_4,
+        this.memberinfo.alertset.o3_avg_8h_5,
+        this.memberinfo.alertset.o3_avg_8h_6]);
+
+      var seriestvoc = [];
+      var seriespm25 = [];
+      var seriespm10 = [];
 
       for (var i = 0; i < object.airdata.length; i++) {
         var item = object.airdata[i];
-        seriestvoc[0].data.push([
-          item.timespan * 1000,
+        seriestvoc.push([
+          item.df,
           Number(item.TVOC) * 1000
         ]);
-        seriespm25[0].data.push([item.timespan * 1000, Number(item.PM25)]);
-        seriespm10[0].data.push([item.timespan * 1000, Number(item.PM10)]);
+        seriespm25.push([item.df, Number(item.PM25)]);
+        seriespm10.push([item.df, Number(item.PM10)]);
       }
-      Rpt2(
-        "rpttvoc",
-        "TVOC可吸入颗粒物走势图",
-        "非规律性时间内的变化（小时）",
-        "ug/m3",
-        seriestvoc,
-        "tvoc",
-        "#689F38"
-      );
-      Rpt2(
-        "rptpm25",
-        "PM2.5可吸入颗粒物走势图",
-        "非规律性时间内的变化（小时）",
-        "ug/m3",
-        seriespm25,
-        "",
-        "#689F38"
-      );
-      Rpt2(
-        "rptpm10",
-        "PM10可吸入颗粒物走势图",
-        "非规律性时间内的变化（小时）",
-        "ug/m3",
-        seriespm10,
-        "",
-        "#689F38"
-      );
 
+        RPT3("rpttvoc","TVOC可吸入颗粒物走势图",seriestvoc,
+        [this.memberinfo.alertset.tvoc_1,
+        this.memberinfo.alertset.tvoc_2,
+        this.memberinfo.alertset.tvoc_3,
+        this.memberinfo.alertset.tvoc_4,
+        this.memberinfo.alertset.tvoc_5,
+       20000]);
 
-      var seriestvoc = [{ name: "TVOC(ug/m3)", data: [] }];
-      var seriespm25 = [{ name: "PM2.5(ug/m3)", data: [] }];
-      var seriespm10 = [{ name: "PM10(ug/m3)", data: [] }];
+        RPT3("rptpm25","PM2.5可吸入颗粒物走势图",seriespm25,
+        [this.memberinfo.alertset.pm25_avg_d_1,
+        this.memberinfo.alertset.pm25_avg_d_2,
+        this.memberinfo.alertset.pm25_avg_d_3,
+        this.memberinfo.alertset.pm25_avg_d_4,
+        this.memberinfo.alertset.pm25_avg_d_5,
+        this.memberinfo.alertset.pm25_avg_d_6]);
+
+        RPT3("rptpm10","PM10可吸入颗粒物走势图",seriespm10,
+        [this.memberinfo.alertset.pm10_avg_d_1,
+        this.memberinfo.alertset.pm10_avg_d_2,
+        this.memberinfo.alertset.pm10_avg_d_3,
+        this.memberinfo.alertset.pm10_avg_d_4,
+        this.memberinfo.alertset.pm10_avg_d_5,
+        this.memberinfo.alertset.pm10_avg_d_6]);
+        
+
+      var seriestvoc = [];
+      var seriespm25 = [];
+      var seriespm10 = [];
 
       for (var i = 0; i < object.airdata_day.length; i++) {
         var item = object.airdata_day[i];
-        seriestvoc[0].data.push([
-          item.timespan * 1000,
+        seriestvoc.push([
+          item.df,
           Number(item.TVOC) * 1000
         ]);
-        seriespm25[0].data.push([item.timespan * 1000, Number(item.PM25)]);
-        seriespm10[0].data.push([item.timespan * 1000, Number(item.PM10)]);
+        seriespm25.push([item.df, Number(item.PM25)]);
+        seriespm10.push([item.df, Number(item.PM10)]);
       }
-      Rpt2(
-        "rpttvoc_d",
-        "TVOC可吸入颗粒物走势图",
-        "非规律性时间内的变化（日期）",
-        "ug/m3",
-        seriestvoc,
-        "tvoc",
-        "#689F38",
-      );
-      Rpt2(
-        "rptpm25_d",
-        "PM2.5可吸入颗粒物走势图",
-        "非规律性时间内的变化（日期）",
-        "ug/m3",
-        seriespm25,
-        "",
-        "#689F38",
-      );
-      Rpt2(
-        "rptpm10_d",
-        "PM10可吸入颗粒物走势图",
-        "非规律性时间内的变化（日期）",
-        "ug/m3",
-        seriespm10,
-        "",
-        "#689F38",
-      );
+      
+        RPT3("rpttvoc_d","TVOC可吸入颗粒物走势图",seriestvoc,
+        [this.memberinfo.alertset.tvoc_1,
+        this.memberinfo.alertset.tvoc_2,
+        this.memberinfo.alertset.tvoc_3,
+        this.memberinfo.alertset.tvoc_4,
+        this.memberinfo.alertset.tvoc_5,
+       20000]);
+
+        RPT3("rptpm25_d","PM2.5可吸入颗粒物走势图",seriespm25,
+        [this.memberinfo.alertset.pm25_avg_d_1,
+        this.memberinfo.alertset.pm25_avg_d_2,
+        this.memberinfo.alertset.pm25_avg_d_3,
+        this.memberinfo.alertset.pm25_avg_d_4,
+        this.memberinfo.alertset.pm25_avg_d_5,
+        this.memberinfo.alertset.pm25_avg_d_6]);
+
+        RPT3("rptpm10_d","PM10可吸入颗粒物走势图",seriespm10,
+        [this.memberinfo.alertset.pm10_avg_d_1,
+        this.memberinfo.alertset.pm10_avg_d_2,
+        this.memberinfo.alertset.pm10_avg_d_3,
+        this.memberinfo.alertset.pm10_avg_d_4,
+        this.memberinfo.alertset.pm10_avg_d_5,
+        this.memberinfo.alertset.pm10_avg_d_6]);
 
 
     });

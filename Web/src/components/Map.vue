@@ -105,22 +105,31 @@ ctx.methods.loaddata = function() {
         imageSize: new AMap.Size(50, 50) // 根据所设置的大小拉伸或压缩图片
       });
 
-      var marker = new AMap.ElasticMarker({
+      var aqi=objects[i].aqi;
+      var color="";
+      if(aqi=="-"){
+        aqi="无";
+      }else{
+        aqi=parseInt(aqi);
+        if(aqi<=50){
+          color="background-color:#096";
+        }else if(50<aqi&&aqi<=100){
+          color="background-color:#ffde33";
+        }else if(100<aqi&&aqi<=150){
+          color="background-color:#ff9933";
+        }else if(150<aqi&&aqi<=200){
+          color="background-color:#cc0033";
+        }else if(200<aqi&&aqi<=300){
+          color="background-color:#660099";
+        }else{
+          color="background-color:#7e0023";
+        }
+      }
+
+      var marker = new AMap.Marker({
         position: position,
         zooms: [12, 20],
-        styles: [
-          {
-            icon: {
-              img: imgurl,
-              size: [30, 30], //可见区域的大小
-              ancher: [8, 16], //锚点
-              fitZoom: 12, //最合适的级别
-              scaleFactor: 10, //地图放大一级的缩放比例系数
-              maxScale: 2, //最大放大比例
-              minScale: 0.125 //最小放大比例
-            }
-          }
-        ],
+        content:"<div class='ocg' style='"+color+"'>"+aqi+"</div>",
         zoomStyleMapping: zoomStyleMapping1,
         clickable: true
       });
@@ -430,3 +439,15 @@ ctx.components = { myheader, mynav, myfooter, objectdetail };
 
 export default ctx;
 </script>
+
+<style>
+.ocg{
+  background:#ccc;
+  width:40px;
+  height:40px;
+  text-align: center;
+  color:white;
+  padding:10px;
+  border-radius: 50%;
+}
+</style>
