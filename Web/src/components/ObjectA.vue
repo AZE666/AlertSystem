@@ -41,7 +41,7 @@
                 <div class="tab-content">
                   <div class="tab-pane active" id="tab_1-1">
                     
-                  <div class="row">
+                  <div class="row"  id="ctable">
                     <div class="col-md-2">
                       <img :src="uploadpath+'object/'+devicedata.cover" class="img-responsive img-rounded">
                     </div>
@@ -65,7 +65,7 @@
                             <thead>
                             <tr>
                               <th>时间</th>
-                              <th v-if="ispc==true">SO2</th>
+                              <th v-if="ispc==true">SO2  </th>
                               <th v-if="ispc==true">NO2</th>
                               <th v-if="ispc==true">CO</th>
                               <th v-if="ispc==true">H2S</th>
@@ -83,32 +83,32 @@
                               <th>噪声</th>-->
                               <th>环境</th>
                               <th>状态</th>
-                              <th>报警</th>
+                              <th  v-if="false">报警</th>
                             </tr>
                             </thead>
                             <tbody id="dtDr" >
                               <tr  v-for="(item, index) in devicedata.airdata">
                                 <td>{{item.df}}时</td>
-                                <td v-if="ispc==false">
-                                  
-                                  <span  v-bind:class="{ 'text-red':item.SO2_s=='l4','text-yellow':item.SO2_s=='l3','text-blue':item.SO2_s=='l2','text-green':item.SO2_s=='l1' }">SO2:{{item.SO2}}</span>
-                                  <span  v-bind:class="{ 'text-red':item.NO2_s=='l4','text-yellow':item.NO2_s=='l3','text-blue':item.NO2_s=='l2','text-green':item.NO2_s=='l1' }">NO2:{{item.NO2}}</span>
-                                  <span  v-bind:class="{ 'text-red':item.CO_s=='l4','text-yellow':item.CO_s=='l3','text-blue':item.CO_s=='l2','text-green':item.CO_s=='l1' }">CO:{{item.CO}}</span>
-                                  <span  v-bind:class="{ 'text-red':item.H2S_s=='l4','text-yellow':item.H2S_s=='l3','text-blue':item.H2S_s=='l2','text-green':item.H2S_s=='l1' }">H2S:{{item.H2S}}</span>
-                                  <span  v-bind:class="{ 'text-red':item.O3_s=='l4','text-yellow':item.O3_s=='l3','text-blue':item.O3_s=='l2','text-green':item.O3_s=='l1' }">O3:{{item.O3}}</span>
-                                  <span  v-bind:class="{ 'text-red':item.TVOC_s=='l4','text-yellow':item.TVOC_s=='l3','text-blue':item.TVOC_s=='l2','text-green':item.TVOC_s=='l1' }">TVOC:{{item.TVOC}}</span>
-                                  <span  v-bind:class="{ 'text-red':item.PM25_s=='l4','text-yellow':item.PM25_s=='l3','text-blue':item.PM25_s=='l2','text-green':item.PM25_s=='l1' }">PM2.5:{{item.PM25}}</span>
-                                  <span  v-bind:class="{ 'text-red':item.PM10_s=='l4','text-yellow':item.PM10_s=='l3','text-blue':item.PM10_s=='l2','text-green':item.PM10_s=='l1' }">PM10:{{item.PM10}}</span>
+                                                                <td v-if="ispc==false" >
 
+                                  <span v-bind:class="{ 'text-red':parseInt(item.SO2)>parseInt(devicedata.exso2) }">SO2: {{item.SO2}}</span>
+                                  <span  v-bind:class="{ 'text-red':parseInt(item.NO2)>parseInt(devicedata.exno2) }">NO2: {{item.NO2}}</span>
+                                  <span  v-bind:class="{ 'text-red':parseInt(item.CO)>parseInt(devicedata.exco) }">CO: {{item.CO}}</span>
+                                  <span  v-bind:class="{ 'text-red':parseInt(item.H2S)>parseInt(devicedata.exh2s) }">H2S: {{item.H2S}}</span>
+                                  <span  v-bind:class="{ 'text-red':parseInt(item.O3)>parseInt(devicedata.exo3) }">O3: {{item.O3}}</span>
+                                  <span  v-bind:class="{ 'text-red':parseInt(item.TVOC)>parseInt(devicedata.extvoc) }">TVOC: {{item.TVOC}}</span>
+                                  <span  v-bind:class="{ 'text-red':parseInt(item.PM25)>parseInt(devicedata.expm25) }">PM2.5: {{item.PM25}}</span>
+                                  <span v-bind:class="{ 'text-red':parseInt(item.PM10)>parseInt(devicedata.expm10) }">PM10: {{item.PM10}}</span>
+                                  
                                 </td>
-                                <td v-if="ispc==true"  v-bind:class="{ 'text-red':item.SO2_s=='l4','text-yellow':item.SO2_s=='l3','text-blue':item.SO2_s=='l2','text-green':item.SO2_s=='l1' }">{{item.SO2}}</td>
-                                <td  v-if="ispc==true"  v-bind:class="{ 'text-red':item.NO2_s=='l4','text-yellow':item.NO2_s=='l3','text-blue':item.NO2_s=='l2','text-green':item.NO2_s=='l1' }">{{item.NO2}}</td>
-                                <td v-if="ispc==true"   v-bind:class="{ 'text-red':item.CO_s=='l4','text-yellow':item.CO_s=='l3','text-blue':item.CO_s=='l2','text-green':item.CO_s=='l1' }">{{item.CO}}</td>
-                                <td v-if="ispc==true"   v-bind:class="{ 'text-red':item.H2S_s=='l4','text-yellow':item.H2S_s=='l3','text-blue':item.H2S_s=='l2','text-green':item.H2S_s=='l1' }">{{item.H2S}}</td>
-                                <td v-if="ispc==true"   v-bind:class="{ 'text-red':item.O3_s=='l4','text-yellow':item.O3_s=='l3','text-blue':item.O3_s=='l2','text-green':item.O3_s=='l1' }">{{item.O3}}</td>
-                                <td v-if="ispc==true"   v-bind:class="{ 'text-red':item.TVOC_s=='l4','text-yellow':item.TVOC_s=='l3','text-blue':item.TVOC_s=='l2','text-green':item.TVOC_s=='l1' }">{{item.TVOC}}</td>
-                                <td v-if="ispc==true"   v-bind:class="{ 'text-red':item.PM25_s=='l4','text-yellow':item.PM25_s=='l3','text-blue':item.PM25_s=='l2','text-green':item.PM25_s=='l1' }">{{item.PM25}}</td>
-                                <td v-if="ispc==true"   v-bind:class="{ 'text-red':item.PM10_s=='l4','text-yellow':item.PM10_s=='l3','text-blue':item.PM10_s=='l2','text-green':item.PM10_s=='l1' }">{{item.PM10}}</td>
+                                <td v-if="ispc==true"  v-bind:class="{ 'text-red':parseInt(item.SO2)>parseInt(devicedata.exso2) }">{{item.SO2}}</td>
+                                <td v-if="ispc==true" v-bind:class="{ 'text-red':parseInt(item.NO2)>parseInt(devicedata.exno2) }">{{item.NO2}}</td>
+                                <td v-if="ispc==true" v-bind:class="{ 'text-red':parseInt(item.CO)>parseInt(devicedata.exco) }">{{item.CO}}</td>
+                                <td v-if="ispc==true" v-bind:class="{ 'text-red':parseInt(item.H2S)>parseInt(devicedata.exh2s) }">{{item.H2S}}</td>
+                                <td v-if="ispc==true" v-bind:class="{ 'text-red':parseInt(item.O3)>parseInt(devicedata.exo3) }">{{item.O3}}</td>
+                                <td v-if="ispc==true" v-bind:class="{ 'text-red':parseInt(item.TVOC)>parseInt(devicedata.extvoc) }">{{item.TVOC}}</td>
+                                <td v-if="ispc==true" v-bind:class="{ 'text-red':parseInt(item.PM25)>parseInt(devicedata.expm25) }">{{item.PM25}}</td>
+                                <td v-if="ispc==true" v-bind:class="{ 'text-red':parseInt(item.PM10)>parseInt(devicedata.expm10) }">{{item.PM10}}</td>
                                 <!--<td>{{item.FS}}</td>
                                 <td>{{item.FX}}</td>
                                 <td>{{item.WD}}</td>
@@ -128,19 +128,15 @@
                                   <a href="#" v-if="item.showenv=='Y'" @click="clickToShowEnv(item)" >收起</a>
                                 </div>
                                 </td>
-                                <td v-if="item.status=='l1'" >
-                                  <small class="label  bg-green">优</small>
+                                <td  >
+                                  <small v-if="item.aqi<=50" class="label" style="background:#096">{{item.aqi}}</small>
+                                  <small v-if="50<item.aqi&&item.aqi<=100"  class="label" style="background:#ffde33">{{item.aqi}}</small>
+                                  <small v-if="100<item.aqi&&item.aqi<=150"  class="label" style="background:#ff9933">{{item.aqi}}</small>
+                                  <small v-if="150<item.aqi&&item.aqi<=200"  class="label" style="background:#cc0033">{{item.aqi}}</small>
+                                  <small v-if="200<item.aqi&&item.aqi<=300"  class="label" style="background:#660099">{{item.aqi}}</small>
+                                  <small v-if="300<item.aqi"  class="label" style="background:#7e0023">{{item.aqi}}</small>
                                 </td>
-                                <td v-if="item.status=='l2'" >
-                                  <small class="label  bg-blue">良</small>
-                                </td>
-                                <td v-if="item.status=='l3'">
-                                  <small class="label  bg-yellow">中</small>
-                                </td>
-                                <td v-if="item.status=='l4'">
-                                  <small class="label  bg-red">差</small>
-                                </td>
-                                <td><button v-if="index>0&&item.alert_id==0&&(item.SO2>devicedata.exso2||
+                                <td v-if="false"><button v-if="index>0&&item.alert_id==0&&(item.SO2>devicedata.exso2||
                                     item.NO2>devicedata.exno2||
                                     item.CO>devicedata.exco||
                                     item.H2S>devicedata.exh2s||
@@ -298,6 +294,7 @@ ctx.methods.onMyShow=function(){
   var object_id = this.$route.query.id;
     this.object_id=object_id;
     this.loadapi("obj","detail",{needairdata:"Y",id:this.object_id},devicedata=>{
+      //alert(JSON.stringify(devicedata));
         this.devicedata=devicedata;
         this.$nextTick(()=>{
             
@@ -356,43 +353,20 @@ ctx.methods.onMyShow=function(){
           series[4].data.push([item.timespan * 1000, Number(item.O3)]);
         }
 
-var chart = Highcharts.chart("rpt1_device_" + object_id, {
-          chart: {
-            type: "spline"
-          },
-          title: {
-            text: "空气污染物走势图"
-          },
-          subtitle: {
-            text: "48小时内非规律性时间内的变化"
-          },
-          xAxis: {
-            type: "datetime",
-            title: {
-              text: null
-            }
-          },
-          yAxis: {
-            title: {
-              text: "ppm"
-            },
-            min: 0
-          },
-          plotOptions: {
-            spline: {
-              marker: {
-                enabled: true
-              }
-            }
-          },
-          series: series
-        });
+        var width=$("#ctable").width();
+        $("#rpt1_device_" + object_id).width(width).height(width*9/16);
+
+        RPT4("rpt1_device_" + object_id,"空气污染物走势图",series);
+
 
         var series2 = [
           { name: "TVOC(mg/m3)", data: [] },
           { name: "PM25(ug/m3)", data: [] },
           { name: "PM10(ug/m3)", data: [] }
         ];
+        var width=$("#ctable").width();
+        $("#rpt2_device_" + object_id).width(width).height(width*9/16);
+
 
         for (var i = 0; i < object.airdata.length; i++) {
           var item = object.airdata[i];
@@ -400,128 +374,7 @@ var chart = Highcharts.chart("rpt1_device_" + object_id, {
           series2[1].data.push([item.timespan * 1000, Number(item.PM25)]);
           series2[2].data.push([item.timespan * 1000, Number(item.PM10)]);
         }
-        var chart = Highcharts.chart("rpt2_device_" + object_id, {
-          chart: {
-            type: "spline"
-          },
-          title: {
-            text: "可吸入颗粒物走势图"
-          },
-          subtitle: {
-            text: "48小时内非规律性时间内的变化"
-          },
-          xAxis: {
-            type: "datetime",
-            labels: {
-              overflow: "justify"
-            }
-          },
-          yAxis: {
-            title: {
-              text: "浓度"
-            },
-            min: 0,
-            minorGridLineWidth: 0,
-            gridLineWidth: 0,
-            alternateGridColor: null,
-            plotBands: [
-              {
-                // Light air
-                from: 0,
-                to: 35,
-                color: "rgba(68, 170, 213, 0.1)",
-                label: {
-                  text: "优",
-                  style: {
-                    color: "#606060"
-                  }
-                }
-              },
-              {
-                // Light breeze
-                from: 35,
-                to: 75,
-                color: "rgba(0, 0, 0, 0)",
-                label: {
-                  text: "良",
-                  style: {
-                    color: "#606060"
-                  }
-                }
-              },
-              {
-                // Gentle breeze
-                from: 75,
-                to: 115,
-                color: "rgba(68, 170, 213, 0.1)",
-                label: {
-                  text: "轻度污染",
-                  style: {
-                    color: "#606060"
-                  }
-                }
-              },
-              {
-                // Moderate breeze
-                from: 115,
-                to: 150,
-                color: "rgba(0, 0, 0, 0)",
-                label: {
-                  text: "中度污染",
-                  style: {
-                    color: "#606060"
-                  }
-                }
-              },
-              {
-                // Fresh breeze
-                from: 150,
-                to: 250,
-                color: "rgba(68, 170, 213, 0.1)",
-                label: {
-                  text: "重度污染",
-                  style: {
-                    color: "#606060"
-                  }
-                }
-              },
-              {
-                // Strong breeze
-                from: 250,
-                to: 1000,
-                color: "rgba(0, 0, 0, 0)",
-                label: {
-                  text: "严重污染",
-                  style: {
-                    color: "#606060"
-                  }
-                }
-              }
-            ]
-          },
-          plotOptions: {
-            spline: {
-              lineWidth: 4,
-              states: {
-                hover: {
-                  lineWidth: 5
-                }
-              },
-              marker: {
-                enabled: false
-              },
-              pointInterval: 3600000, // one hour
-              pointStart: Date.UTC(2009, 9, 6, 0, 0, 0)
-            }
-          },
-          series: series2,
-          navigation: {
-            menuItemStyle: {
-              fontSize: "10px"
-            }
-          }
-        });
-
+        RPT4("rpt2_device_" + object_id,"可吸入颗粒物走势图",series2);
 
         });
 

@@ -52,6 +52,71 @@ function DT(spec,order,displaylength,searching){
         });
 }
 
+function RPT4(id,title,series){
+    var cats=[];
+    var xray=[];
+    var sdata=[];
+    for(var i=0;i<series.length;i++){
+        cats.push(series.name);
+        var s=     {
+                 name:series[i].name,
+                 type:'line',
+                 areaStyle: {},
+                 data:[]
+             };
+        for(var j=0;j<series[i].data.length;j++){
+            s.data.push(series[i].data[j][1]);
+        }
+        sdata.push(s);
+    }
+    for(var i=0;i<series[0].data.length;i++){
+        xray.push(series[0].data[i][0]);
+    }
+    var option = {
+        title: {
+            text: title
+        },
+        tooltip : {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+        legend: {
+            data:cats
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                boundaryGap : false,
+                data : xray
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value'
+            }
+        ],
+        series : sdata
+    };
+    var myChart = echarts.init(document.getElementById(id)); 
+    myChart.setOption(option);
+    return myChart;
+}
+
 function RPT3(id,title,data,marker){
     //alert(marker);
     var myChart = echarts.init(document.getElementById(id)); 
@@ -105,7 +170,7 @@ function RPT3(id,title,data,marker){
                 color: '#7e0023'
             }],
             outOfRange: {
-                color: '#999'
+                color: '#7e0023'
             }
         },
         series: {

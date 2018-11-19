@@ -103,42 +103,44 @@
                                 <td >{{item.df}}时</td>
                                 <td v-if="ispc==false">
                                   
-                                  <span v-bind:class="{ 'text-red':item.SO2>obj.exso2 }">SO2: {{item.SO2}}</span>
-                                  <span  v-bind:class="{ 'text-red':item.NO2>obj.exno2 }">NO2: {{item.NO2}}</span>
-                                  <span  v-bind:class="{ 'text-red':item.CO>obj.exco }">CO: {{item.CO}}</span>
-                                  <span  v-bind:class="{ 'text-red':item.H2S>obj.exh2s }">H2S: {{item.H2S}}</span>
-                                  <span  v-bind:class="{ 'text-red':item.O3>obj.exo3 }">O3: {{item.O3}}</span>
-                                  <span  v-bind:class="{ 'text-red':item.TVOC>obj.extvoc }">TVOC: {{item.TVOC}}</span>
-                                  <span  v-bind:class="{ 'text-red':item.PM25>obj.expm25 }">PM2.5: {{item.PM25}}</span>
-                                  <span v-bind:class="{ 'text-red':item.PM10>obj.expm10 }">PM10: {{item.PM10}}</span>
+                                  <span v-bind:class="{ 'text-red':parseInt(item.SO2)>parseInt(obj.exso2) }">SO2: {{item.SO2}}</span>
+                                  <span  v-bind:class="{ 'text-red':parseInt(item.NO2)>parseInt(obj.exno2) }">NO2: {{item.NO2}}</span>
+                                  <span  v-bind:class="{ 'text-red':parseInt(item.CO)>parseInt(obj.exco) }">CO: {{item.CO}}</span>
+                                  <span  v-bind:class="{ 'text-red':parseInt(item.H2S)>parseInt(obj.exh2s) }">H2S: {{item.H2S}}</span>
+                                  <span  v-bind:class="{ 'text-red':parseInt(item.O3)>parseInt(obj.exo3) }">O3: {{item.O3}}</span>
+                                  <span  v-bind:class="{ 'text-red':parseInt(item.TVOC)>parseInt(obj.extvoc) }">TVOC: {{item.TVOC}}</span>
+                                  <span  v-bind:class="{ 'text-red':parseInt(item.PM25)>parseInt(obj.expm25) }">PM2.5: {{item.PM25}}</span>
+                                  <span v-bind:class="{ 'text-red':parseInt(item.PM10)>parseInt(obj.expm10) }">PM10: {{item.PM10}}</span>
 
                                 </td>
-                                <td v-if="ispc==true"  v-bind:class="{ 'text-red':item.SO2>obj.exso2 }">{{item.SO2}}</td>
-                                <td v-if="ispc==true" v-bind:class="{ 'text-red':item.NO2>obj.exno2 }">{{item.NO2}}</td>
-                                <td v-if="ispc==true" v-bind:class="{ 'text-red':item.CO>obj.exco }">{{item.CO}}</td>
-                                <td v-if="ispc==true" v-bind:class="{ 'text-red':item.H2S>obj.exh2s }">{{item.H2S}}</td>
-                                <td v-if="ispc==true" v-bind:class="{ 'text-red':item.O3>obj.exo3 }">{{item.O3}}</td>
-                                <td v-if="ispc==true" v-bind:class="{ 'text-red':item.TVOC>obj.extvoc }">{{item.TVOC}}</td>
-                                <td v-if="ispc==true" v-bind:class="{ 'text-red':item.PM25>obj.expm25 }">{{item.PM25}}</td>
-                                <td v-if="ispc==true" v-bind:class="{ 'text-red':item.PM10>obj.expm10 }">{{item.PM10}}</td>
+                                <td v-if="ispc==true"  v-bind:class="{ 'text-red':parseInt(item.SO2)>parseInt(obj.exso2) }">{{item.SO2}}</td>
+                                <td v-if="ispc==true" v-bind:class="{ 'text-red':parseInt(item.NO2)>parseInt(obj.exno2) }">{{item.NO2}}</td>
+                                <td v-if="ispc==true" v-bind:class="{ 'text-red':parseInt(item.CO)>parseInt(obj.exco) }">{{item.CO}}</td>
+                                <td v-if="ispc==true" v-bind:class="{ 'text-red':parseInt(item.H2S)>parseInt(obj.exh2s) }">{{item.H2S}}</td>
+                                <td v-if="ispc==true" v-bind:class="{ 'text-red':parseInt(item.O3)>parseInt(obj.exo3) }">{{item.O3}}</td>
+                                <td v-if="ispc==true" v-bind:class="{ 'text-red':parseInt(item.TVOC)>parseInt(obj.extvoc) }">{{item.TVOC}}</td>
+                                <td v-if="ispc==true" v-bind:class="{ 'text-red':parseInt(item.PM25)>parseInt(obj.expm25) }">{{item.PM25}}</td>
+                                <td v-if="ispc==true" v-bind:class="{ 'text-red':parseInt(item.PM10)>parseInt(obj.expm10) }">{{item.PM10}}</td>
 
-                                <td  v-if="false"><button v-if="index>0&&item.alert_id==0&&(item.SO2>obj.exso2||
-                                    item.NO2>obj.exno2||
-                                    item.CO>obj.exco||
-                                    item.H2S>obj.exh2s||
-                                    item.O3>obj.exo3||
-                                    item.TVOC>obj.extvoc||
-                                    item.PM25>obj.expm25||
-                                    item.PM10>obj.expm10)"
+                                <td  v-if="false"><button v-if="index>0&&item.alert_id==0&&(
+                                  parseInt(item.SO2)>parseInt(obj.exso2)||
+                                    parseInt(item.NO2)>parseInt(obj.exno2)||
+                                    parseInt(item.CO)>parseInt(obj.exco)||
+                                    parseInt(item.H2S)>parseInt(obj.exh2s)||
+                                    parseInt(item.O3)>parseInt(obj.exo3)||
+                                    parseInt(item.TVOC)>parseInt(obj.extvoc)||
+                                    parseInt(item.PM25)>parseInt(obj.expm25)||
+                                    parseInt(item.PM10)>parseInt(obj.expm10))"
                                      type="button" class="btn  btn-warning btn-xs" @click="showalert(item,'A')">报警</button>
-                                     <button v-if="index>0&&item.alert_id==0&&(item.SO2>obj.exso2||
-                                    item.NO2>obj.exno2||
-                                    item.CO>obj.exco||
-                                    item.H2S>obj.exh2s||
-                                    item.O3>obj.exo3||
-                                    item.TVOC>obj.extvoc||
-                                    item.PM25>obj.expm25||
-                                    item.PM10>obj.expm10)"
+                                     <button v-if="index>0&&item.alert_id==0&&(
+                                       parseInt(item.SO2)>parseInt(obj.exso2)||
+                                    parseInt(item.NO2)>parseInt(obj.exno2)||
+                                    parseInt(item.CO)>parseInt(obj.exco)||
+                                    parseInt(item.H2S)>parseInt(obj.exh2s)||
+                                    parseInt(item.O3)>parseInt(obj.exo3)||
+                                    parseInt(item.TVOC)>parseInt(obj.extvoc)||
+                                    parseInt(item.PM25)>parseInt(obj.expm25)||
+                                    parseInt(item.PM10)>parseInt(obj.expm10))"
                                      type="button" class="btn btn-default btn-xs" @click="showalert(item,'B')">忽略</button>
                                      <small v-if="item.alert_id>0&&item.alertstatus=='A'"  class="label bg-blue">已报警</small>
                                      <small v-if="item.alert_id>0&&item.alertstatus=='B'"  class="label bg-yellow">不处理</small>
@@ -471,7 +473,7 @@ ctx.methods.showObj = function(item) {
         this.memberinfo.alertset.h2s_avg_h_5,
         this.memberinfo.alertset.h2s_avg_h_6]);
 
-        alert(this.memberinfo.alertset.o3_avg_8h_1);
+        //alert(this.memberinfo.alertset.o3_avg_8h_1);
         RPT3("rpto3_d","日期 - O3(ppm)空气污染物走势图",serieso3,
         [this.memberinfo.alertset.o3_avg_8h_1,
         this.memberinfo.alertset.o3_avg_8h_2,

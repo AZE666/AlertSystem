@@ -197,46 +197,20 @@ ctx.methods.loaddata = function() {
 
         for (var i = 0; i < object.airdata.length; i++) {
           var item = object.airdata[i];
-          series[0].data.push([item.timespan * 1000, Number(item.SO2)]);
-          series[1].data.push([item.timespan * 1000, Number(item.NO2)]);
-          series[2].data.push([item.timespan * 1000, Number(item.CO)]);
-          series[3].data.push([item.timespan * 1000, Number(item.H2S)]);
-          series[4].data.push([item.timespan * 1000, Number(item.O3)]);
+          series[0].data.push([item.df2, Number(item.SO2)]);
+          series[1].data.push([item.df2, Number(item.NO2)]);
+          series[2].data.push([item.df2, Number(item.CO)]);
+          series[3].data.push([item.df2, Number(item.H2S)]);
+          series[4].data.push([item.df2, Number(item.O3)]);
         }
 
         //alert($("#rpt1_device_"+object_id).html());
+        var width= $("#modal_device_"+object_id).width()*0.7;
+        $("#rpt1_device_" + object_id).width(width).height(width*9/16);
 
-        var chart = Highcharts.chart("rpt1_device_" + object_id, {
-          chart: {
-            type: "spline"
-          },
-          title: {
-            text: "空气污染物走势图"
-          },
-          subtitle: {
-            text: "48小时内非规律性时间内的变化"
-          },
-          xAxis: {
-            type: "datetime",
-            title: {
-              text: null
-            }
-          },
-          yAxis: {
-            title: {
-              text: "ppm"
-            },
-            min: 0
-          },
-          plotOptions: {
-            spline: {
-              marker: {
-                enabled: true
-              }
-            }
-          },
-          series: series
-        });
+
+        RPT4("rpt1_device_" + object_id,"空气污染物走势图",series);
+
 
         var series2 = [
           { name: "TVOC(mg/m3)", data: [] },
@@ -246,131 +220,15 @@ ctx.methods.loaddata = function() {
 
         for (var i = 0; i < object.airdata.length; i++) {
           var item = object.airdata[i];
-          series2[0].data.push([item.timespan * 1000, Number(item.TVOC)]);
-          series2[1].data.push([item.timespan * 1000, Number(item.PM25)]);
-          series2[2].data.push([item.timespan * 1000, Number(item.PM10)]);
+          series2[0].data.push([item.df2, Number(item.TVOC)]);
+          series2[1].data.push([item.df2, Number(item.PM25)]);
+          series2[2].data.push([item.df2, Number(item.PM10)]);
         }
-        var chart = Highcharts.chart("rpt2_device_" + object_id, {
-          chart: {
-            type: "spline"
-          },
-          title: {
-            text: "可吸入颗粒物走势图"
-          },
-          subtitle: {
-            text: "48小时内非规律性时间内的变化"
-          },
-          xAxis: {
-            type: "datetime",
-            labels: {
-              overflow: "justify"
-            }
-          },
-          yAxis: {
-            title: {
-              text: "浓度"
-            },
-            min: 0,
-            minorGridLineWidth: 0,
-            gridLineWidth: 0,
-            alternateGridColor: null,
-            plotBands: [
-              {
-                // Light air
-                from: 0,
-                to: 35,
-                color: "rgba(68, 170, 213, 0.1)",
-                label: {
-                  text: "优",
-                  style: {
-                    color: "#606060"
-                  }
-                }
-              },
-              {
-                // Light breeze
-                from: 35,
-                to: 75,
-                color: "rgba(0, 0, 0, 0)",
-                label: {
-                  text: "良",
-                  style: {
-                    color: "#606060"
-                  }
-                }
-              },
-              {
-                // Gentle breeze
-                from: 75,
-                to: 115,
-                color: "rgba(68, 170, 213, 0.1)",
-                label: {
-                  text: "轻度污染",
-                  style: {
-                    color: "#606060"
-                  }
-                }
-              },
-              {
-                // Moderate breeze
-                from: 115,
-                to: 150,
-                color: "rgba(0, 0, 0, 0)",
-                label: {
-                  text: "中度污染",
-                  style: {
-                    color: "#606060"
-                  }
-                }
-              },
-              {
-                // Fresh breeze
-                from: 150,
-                to: 250,
-                color: "rgba(68, 170, 213, 0.1)",
-                label: {
-                  text: "重度污染",
-                  style: {
-                    color: "#606060"
-                  }
-                }
-              },
-              {
-                // Strong breeze
-                from: 250,
-                to: 1000,
-                color: "rgba(0, 0, 0, 0)",
-                label: {
-                  text: "严重污染",
-                  style: {
-                    color: "#606060"
-                  }
-                }
-              }
-            ]
-          },
-          plotOptions: {
-            spline: {
-              lineWidth: 4,
-              states: {
-                hover: {
-                  lineWidth: 5
-                }
-              },
-              marker: {
-                enabled: false
-              },
-              pointInterval: 3600000, // one hour
-              pointStart: Date.UTC(2009, 9, 6, 0, 0, 0)
-            }
-          },
-          series: series2,
-          navigation: {
-            menuItemStyle: {
-              fontSize: "10px"
-            }
-          }
-        });
+
+        $("#rpt2_device_" + object_id).width(width).height(width*9/16);
+        
+        RPT4("rpt2_device_" + object_id,"可吸入颗粒物走势图",series2);
+        
       });
       markers.push(marker);
     }

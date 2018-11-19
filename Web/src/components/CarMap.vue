@@ -12,7 +12,7 @@
 
       <div class="carlist">
         <!-- DIRECT CHAT PRIMARY -->
-          <div class="box box-primary direct-chat direct-chat-primary collapsed-box">
+          <div class="box box-primary direct-chat direct-chat-primary ">
             <div class="box-header with-border">
               <h3 class="box-title">监控车列表</h3>
 
@@ -23,9 +23,9 @@
               </div>
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
+            <div class="box-body" >
               <div class="row">
-                            <div class="col-md-12" >
+                            <div class="col-md-12">
                         <table class="table" id="dtcarlist">
                             <thead>
                             <tr>
@@ -62,9 +62,9 @@
 
   
 
-  <div class="modal fade" id="cardetail" >
+  <div class="modal fade" id="cardetail"  >
     <div class="modal-dialog" :class="{t100:ispc}">
-      <div class="modal-content"  >
+      <div class="modal-content"   >
         <!--
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -72,7 +72,7 @@
           <h4 class="modal-title">监控点</h4>
         </div>
         -->
-        <div class="modal-body">
+        <div class="modal-body" >
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs pull-right">
                   <li class="active"><a href="#tab_1-1" data-toggle="tab">数据</a></li>
@@ -80,7 +80,7 @@
                   <li><a href="#tab_3-2" data-toggle="tab">实时视频</a></li>
                   <li class="pull-left header"><i class="fa fa-th"></i> {{currCar.name}}</li>
                 </ul>
-                <div class="tab-content">
+                <div class="tab-content" >
                   <div class="tab-pane active" id="tab_1-1">
                       
                   <div class="row">
@@ -104,7 +104,9 @@
                           <dd>{{currCar.devicetype_name}}</dd>
                         </dl>
                         
-                        <div id="rpt_car" style="min-width:640px;height:400px;"></div>
+                    </div>
+                    <div class="col-md-12">
+                        <div id="rpt_car" ></div>
                     </div>
                   </div>
                         
@@ -323,26 +325,26 @@ ctx.methods.showCar=function(car){
     
     $("#cardetail").modal("show");
 
-        var series2 = [
-          { name: "TVOC(ug/m3)", data: [] }
-        ];
+        var series2 = [];
 
         for (var i = 0; i < trackline.length; i++) {
           var item = trackline[i];
           if(item.TVOC>0){
-            series2[0].data.push([item.timespan * 1000, Number(item.TVOC)*1000]);
+            series2.push([item.df, Number(item.TVOC)*1000]);
           }
         }
+        var width= $("#cardetail").width()*0.7;
+        $("#rpt_car").width(width).height(width*9/16);
+
+        RPT3("rpt_car","TVOC可吸入颗粒物走势图",series2,
+        [this.memberinfo.alertset.tvoc_1,
+        this.memberinfo.alertset.tvoc_2,
+        this.memberinfo.alertset.tvoc_3,
+        this.memberinfo.alertset.tvoc_4,
+        this.memberinfo.alertset.tvoc_5,
+       20000]);
 
 
-      Rpt2(
-        "rpt_car",
-        "TVOC可吸入颗粒物走势图",
-        "24小时内非规律性时间内的变化",
-        "ug/m3",
-        series2,
-        "tvoc"
-      );
 
 
 
