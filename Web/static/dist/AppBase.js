@@ -57,7 +57,7 @@ function RPT4(id,title,series){
     var xray=[];
     var sdata=[];
     for(var i=0;i<series.length;i++){
-        cats.push(series.name);
+        cats.push(series[i].name);
         var s=     {
                  name:series[i].name,
                  type:'line',
@@ -69,6 +69,7 @@ function RPT4(id,title,series){
         }
         sdata.push(s);
     }
+    //alert(JSON.stringify(cats));
     for(var i=0;i<series[0].data.length;i++){
         xray.push(series[0].data[i][0]);
     }
@@ -120,7 +121,9 @@ function RPT4(id,title,series){
 function RPT3(id,title,data,marker){
     //alert(marker);
     var myChart = echarts.init(document.getElementById(id)); 
-    myChart.setOption(option = {
+
+
+    var option = {
         title: {
             text:title
         },
@@ -147,7 +150,32 @@ function RPT3(id,title,data,marker){
                 saveAsImage: {}
             }
         },
-        visualMap: {
+        series: {
+            name: title,
+            type: 'line',
+            data: data.map(function (item) {
+                return item[1];
+            }),
+            markLine: {
+                silent: true,
+                data: [{
+                    yAxis: marker[0]
+                }, {
+                    yAxis: marker[1]
+                }, {
+                    yAxis: marker[2]
+                }, {
+                    yAxis: marker[3]
+                }, {
+                    yAxis: marker[4]
+                }, {
+                    yAxis: marker[5]
+                }]
+            }
+        }
+    };
+    if(IsPC()==true){
+        option.visualMap={
             top: 10,
             right: 10,
             pieces: [{
@@ -172,31 +200,9 @@ function RPT3(id,title,data,marker){
             outOfRange: {
                 color: '#7e0023'
             }
-        },
-        series: {
-            name: title,
-            type: 'line',
-            data: data.map(function (item) {
-                return item[1];
-            }),
-            markLine: {
-                silent: true,
-                data: [{
-                    yAxis: marker[0]
-                }, {
-                    yAxis: marker[1]
-                }, {
-                    yAxis: marker[2]
-                }, {
-                    yAxis: marker[3]
-                }, {
-                    yAxis: marker[4]
-                }, {
-                    yAxis: marker[5]
-                }]
-            }
-        }
-    });
+        };
+    }
+    myChart.setOption(option);
 }
 
 

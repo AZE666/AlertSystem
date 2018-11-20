@@ -330,7 +330,7 @@ ctx.methods.showCar=function(car){
         for (var i = 0; i < trackline.length; i++) {
           var item = trackline[i];
           if(item.TVOC>0){
-            series2.push([item.df, Number(item.TVOC)*1000]);
+            series2.push([item.upload_time, Number(item.TVOC)*1000]);
           }
         }
         var width= $("#cardetail").width()*0.7;
