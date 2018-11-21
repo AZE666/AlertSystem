@@ -272,7 +272,8 @@ var bodyheight = $(".content-wrapper").height();
   if (bodyheight > this.lastmapheight) {
     this.lastmapheight = bodyheight;
   }
-  var c = document.documentElement.clientHeight - 50 - 51 -300;
+  var cc=IsPC()?300:150;
+  var c = document.documentElement.clientHeight - 50 - 51 -cc;
   //alert(this.lastmapheight);
   $("#map").height(c);
 
@@ -324,7 +325,18 @@ ctx.methods.showCar=function(car){
             series2.push([item.upload_time, Number(item.TVOC)*1000]);
           }
         }
-        var width= $("#cardetail").width()*0.7;
+        
+
+
+
+        if(IsPC()){
+          var width= $("#cardetail .modal-dialog").width()*0.9;
+        }else{
+          var width= $("#cardetail ").width()*0.8;
+        }
+        
+
+
         $("#rpt_car").width(width).height(GetHeight(width));
 
         RPT3("rpt_car","TVOC可吸入颗粒物走势图",series2,

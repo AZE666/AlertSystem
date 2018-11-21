@@ -106,33 +106,33 @@
                           <dt>污染因子</dt>
                           <dd>
                             <div class="row">
-                              <div class="col-md-1 col-xs-1" style="margin-right:10px;">SO2:</div>
+                              <div class="col-md-1 col-xs-1" style="margin-right:20px;">SO2:</div>
                               <div class="col-md-1 col-xs-1"><span  v-bind:class="{ 'text-red':alertinfo.avgairdata.SO2>alertinfo.avgairdata.exso2 }"> {{alertinfo.avgairdata.SO2}}</span></div>
                               <div class="col-md-1 col-xs-1"></div>
-                              <div class="col-md-1 col-xs-1" style="margin-right:10px;">NO2: </div>
+                              <div class="col-md-1 col-xs-1" style="margin-right:20px;">NO2: </div>
                               <div class="col-md-1 col-xs-1"><span style="margin-left:20px;" v-bind:class="{ 'text-red':alertinfo.avgairdata.NO2>alertinfo.avgairdata.exno2 }">{{alertinfo.avgairdata.NO2}}</span></div>
                             </div>
                             <div class="row">
-                              <div class="col-md-1 col-xs-1" style="margin-right:10px;">CO: </div>
+                              <div class="col-md-1 col-xs-1" style="margin-right:20px;">CO: </div>
                               <div class="col-md-1 col-xs-1"><span v-bind:class="{ 'text-red':alertinfo.avgairdata.CO>alertinfo.avgairdata.exco }">{{alertinfo.avgairdata.CO}}</span></div>
                               <div class="col-md-1 col-xs-1"></div>
-                              <div class="col-md-1 col-xs-1" style="margin-right:10px;">H2S: </div>
+                              <div class="col-md-1 col-xs-1" style="margin-right:20px;">H2S: </div>
                               <div class="col-md-1 col-xs-1"><span style="margin-left:20px;" v-bind:class="{ 'text-red':alertinfo.avgairdata.H2S>alertinfo.avgairdata.exh2s }">{{alertinfo.avgairdata.H2S}}</span></div>
                             </div>
 
                             <div class="row">
-                              <div class="col-md-1 col-xs-1" style="margin-right:10px;">O3: </div>
+                              <div class="col-md-1 col-xs-1" style="margin-right:20px;">O3: </div>
                               <div class="col-md-1 col-xs-1"><span v-bind:class="{ 'text-red':alertinfo.avgairdata.O3>alertinfo.avgairdata.exo3 }">{{alertinfo.avgairdata.O3}}</span></div>
                               <div class="col-md-1 col-xs-1"></div>
-                              <div class="col-md-1 col-xs-1" style="margin-right:10px;">TVOC: </div>
+                              <div class="col-md-1 col-xs-1" style="margin-right:20px;">TVOC: </div>
                               <div class="col-md-1 col-xs-1"><span style="margin-left:20px;" v-bind:class="{ 'text-red':alertinfo.avgairdata.TVOC>alertinfo.avgairdata.extvoc }">{{alertinfo.avgairdata.TVOC}}</span></div>
                             </div>
 
                             <div class="row">
-                              <div class="col-md-1 col-xs-1" style="margin-right:10px;">PM2.5: </div>
+                              <div class="col-md-1 col-xs-1" style="margin-right:20px;">PM2.5: </div>
                               <div class="col-md-1 col-xs-1"><span v-bind:class="{ 'text-red':alertinfo.avgairdata.PM25>alertinfo.avgairdata.expm25 }">{{alertinfo.avgairdata.PM25}}</span></div>
                               <div class="col-md-1 col-xs-1"></div>
-                              <div class="col-md-1 col-xs-1" style="margin-right:10px;">PM10: </div>
+                              <div class="col-md-1 col-xs-1" style="margin-right:20px;">PM10: </div>
                               <div class="col-md-1 col-xs-1"><span style="margin-left:20px;" v-bind:class="{ 'text-red':alertinfo.avgairdata.PM10>alertinfo.avgairdata.expm10 }">{{alertinfo.avgairdata.PM10}}</span></div>
                             </div>
                                   

@@ -205,7 +205,13 @@ ctx.methods.loaddata = function() {
         }
 
         //alert($("#rpt1_device_"+object_id).html());
-        var width= $("#modal_device_"+object_id).width()*0.7;
+        if(IsPC()){
+          var width= $("#modal_device_"+object_id+" .modal-dialog").width()*0.9;
+        }else{
+
+          var width= $("#modal_device_"+object_id+"").width()*0.8;
+        }
+        
         $("#rpt1_device_" + object_id).width(width).height(GetHeight(width));
 
 
