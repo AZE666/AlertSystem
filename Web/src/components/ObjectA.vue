@@ -346,15 +346,15 @@ ctx.methods.onMyShow=function(){
 
         for (var i = 0; i < object.airdata.length; i++) {
           var item = object.airdata[i];
-          series[0].data.push([item.timespan * 1000, Number(item.SO2)]);
-          series[1].data.push([item.timespan * 1000, Number(item.NO2)]);
-          series[2].data.push([item.timespan * 1000, Number(item.CO)]);
-          series[3].data.push([item.timespan * 1000, Number(item.H2S)]);
-          series[4].data.push([item.timespan * 1000, Number(item.O3)]);
+          series[0].data.push([item.df2, Number(item.SO2)]);
+          series[1].data.push([item.df2, Number(item.NO2)]);
+          series[2].data.push([item.df2, Number(item.CO)]);
+          series[3].data.push([item.df2, Number(item.H2S)]);
+          series[4].data.push([item.df2, Number(item.O3)]);
         }
 
         var width=$("#ctable").width();
-        $("#rpt1_device_" + object_id).width(width).height(width*9/16);
+        $("#rpt1_device_" + object_id).width(width).height(GetHeight(width));
 
         RPT4("rpt1_device_" + object_id,"空气污染物走势图",series);
 
@@ -365,14 +365,14 @@ ctx.methods.onMyShow=function(){
           { name: "PM10(ug/m3)", data: [] }
         ];
         var width=$("#ctable").width();
-        $("#rpt2_device_" + object_id).width(width).height(width*9/16);
+        $("#rpt2_device_" + object_id).width(width).height(GetHeight(width));
 
 
         for (var i = 0; i < object.airdata.length; i++) {
           var item = object.airdata[i];
-          series2[0].data.push([item.timespan * 1000, Number(item.TVOC)]);
-          series2[1].data.push([item.timespan * 1000, Number(item.PM25)]);
-          series2[2].data.push([item.timespan * 1000, Number(item.PM10)]);
+          series2[0].data.push([item.df2, Number(item.TVOC)]);
+          series2[1].data.push([item.df2, Number(item.PM25)]);
+          series2[2].data.push([item.df2, Number(item.PM10)]);
         }
         RPT4("rpt2_device_" + object_id,"可吸入颗粒物走势图",series2);
 

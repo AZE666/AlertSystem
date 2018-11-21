@@ -7,6 +7,14 @@ function IsPC(){
     }  
     return flag;  
 }
+function GetHeight(width){
+    if(IsPC()){
+        return (width*9/16);
+    }else{
+        
+        return (width*16/11);
+    }
+}
 function DT(spec,order,displaylength,searching){
     if(displaylength==undefined){
       displaylength=10;
@@ -70,6 +78,9 @@ function RPT4(id,title,series){
         sdata.push(s);
     }
     //alert(JSON.stringify(cats));
+    if(IsPC()==false){
+        cats=[];
+    }
     for(var i=0;i<series[0].data.length;i++){
         xray.push(series[0].data[i][0]);
     }
@@ -141,7 +152,8 @@ function RPT3(id,title,data,marker){
             }
         },
         toolbox: {
-            left: 'center',
+            x:'center',
+            y:'bottom',
             feature: {
                 dataZoom: {
                     yAxisIndex: 'none'

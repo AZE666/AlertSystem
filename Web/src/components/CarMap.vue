@@ -11,22 +11,7 @@
       <div style="width:100%;height:100%;" id="map"></div>
 
       <div class="carlist">
-        <!-- DIRECT CHAT PRIMARY -->
-          <div class="box box-primary direct-chat direct-chat-primary ">
-            <div class="box-header with-border">
-              <h3 class="box-title">监控车列表</h3>
-
-              <div class="box-tools pull-right">
-                <span data-toggle="tooltip" class="badge bg-light-blue">{{carlist.length}}</span>
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                </button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body" >
-              <div class="row">
-                            <div class="col-md-12">
-                        <table class="table" id="dtcarlist">
+        <table class="table" id="dtcarlist">
                             <thead>
                             <tr>
                               <th>#</th>
@@ -46,14 +31,6 @@
                               </tr>
                             </tbody>
                           </table>
-                          </div>
-                            
-
-                        </div>
-            </div>
-            
-          </div>
-          <!--/.direct-chat -->
       </div>
 
 	
@@ -78,6 +55,15 @@
                   <li class="active"><a href="#tab_1-1" data-toggle="tab">数据</a></li>
                   <li><a href="#tab_2-2" data-toggle="tab">实时图片</a></li>
                   <li><a href="#tab_3-2" data-toggle="tab">实时视频</a></li>
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                      图表 <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#tab_4-1" data-toggle="tab">空气污染物走势图</a></li>
+                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#tab_4-2" data-toggle="tab">可吸入颗粒物走势图</a></li>
+                    </ul>
+                  </li>
                   <li class="pull-left header"><i class="fa fa-th"></i> {{currCar.name}}</li>
                 </ul>
                 <div class="tab-content" >
@@ -146,6 +132,12 @@
                           <video controls="controls" src="" style="width:640px;height:400px;"></video>
                       </div>
                   </div>
+                  <div class="tab-pane" id="tab_4-1">
+                      <div id="rpt1_car" style="height:600px"></div>
+                  </div>
+                  <div class="tab-pane" id="tab_4-2">
+                      <div id="rpt2_car" style="height:600px"></div>
+                  </div>
                     
                   <!-- /.tab-pane -->
                 </div>
@@ -207,8 +199,7 @@ ctx.methods.loaddata = function() {
     this.loadCarTrack();
     var that=this;
     this.$nextTick(()=>{
-        $(".carlist").css("margin-top",100-document.body.clientHeight);
-        DT("#dtcarlist",[[3, "desc"]],4,false);
+        DT("#dtcarlist",[[3, "desc"]],4,true);
     });
   });
 };
@@ -281,7 +272,7 @@ var bodyheight = $(".content-wrapper").height();
   if (bodyheight > this.lastmapheight) {
     this.lastmapheight = bodyheight;
   }
-  var c = document.documentElement.clientHeight - 50 - 51;
+  var c = document.documentElement.clientHeight - 50 - 51 -300;
   //alert(this.lastmapheight);
   $("#map").height(c);
 
@@ -334,7 +325,7 @@ ctx.methods.showCar=function(car){
           }
         }
         var width= $("#cardetail").width()*0.7;
-        $("#rpt_car").width(width).height(width*9/16);
+        $("#rpt_car").width(width).height(GetHeight(width));
 
         RPT3("rpt_car","TVOC可吸入颗粒物走势图",series2,
         [this.memberinfo.alertset.tvoc_1,
@@ -344,9 +335,43 @@ ctx.methods.showCar=function(car){
         this.memberinfo.alertset.tvoc_5,
        20000]);
 
+        var series = [
+          { name: "SO2(ppm)", data: [] },
+          { name: "NO2(ppm)", data: [] },
+          { name: "CO(ppm)", data: [] },
+          { name: "H2S(ppm)", data: [] },
+          { name: "O3(ppm)", data: [] }
+        ];
+
+        for (var i = 0; i < trackline.length; i++) {
+          var item = trackline[i];
+          series[0].data.push([item.upload_time, Number(item.SO2)]);
+          series[1].data.push([item.upload_time, Number(item.NO2)]);
+          series[2].data.push([item.upload_time, Number(item.CO)]);
+          series[3].data.push([item.upload_time, Number(item.H2S)]);
+          series[4].data.push([item.upload_time, Number(item.O3)]);
+        }
+
+        $("#rpt1_car").width(width).height(GetHeight(width));
+
+        RPT4("rpt1_car" ,"空气污染物走势图",series);
 
 
+        var series2 = [
+          { name: "TVOC(mg/m3)", data: [] },
+          { name: "PM25(ug/m3)", data: [] },
+          { name: "PM10(ug/m3)", data: [] }
+        ];
+        $("#rpt2_car").width(width).height(GetHeight(width));
 
+
+        for (var i = 0; i < trackline.length; i++) {
+          var item = trackline[i];
+          series2[0].data.push([item.upload_time, Number(item.TVOC)]);
+          series2[1].data.push([item.upload_time, Number(item.PM25)]);
+          series2[2].data.push([item.upload_time, Number(item.PM10)]);
+        }
+        RPT4("rpt2_car","可吸入颗粒物走势图",series2);
 
   });
 };
@@ -360,11 +385,10 @@ export default ctx;
 
 <style>
 .carlist{
-  position: absolute;
-  width:400px;
+  padding:10px;
 }
 .carlist div{
-  background: rgba(255, 255, 255, 0.5);
+  
 }
 .carlist .box-tools{
   background: transparent !important; 

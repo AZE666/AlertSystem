@@ -206,7 +206,7 @@ ctx.methods.loaddata = function() {
 
         //alert($("#rpt1_device_"+object_id).html());
         var width= $("#modal_device_"+object_id).width()*0.7;
-        $("#rpt1_device_" + object_id).width(width).height(width*9/16);
+        $("#rpt1_device_" + object_id).width(width).height(GetHeight(width));
 
 
         RPT4("rpt1_device_" + object_id,"空气污染物走势图",series);
@@ -225,7 +225,7 @@ ctx.methods.loaddata = function() {
           series2[2].data.push([item.df2, Number(item.PM10)]);
         }
 
-        $("#rpt2_device_" + object_id).width(width).height(width*9/16);
+        $("#rpt2_device_" + object_id).width(width).height(GetHeight(width));
         
         RPT4("rpt2_device_" + object_id,"可吸入颗粒物走势图",series2);
         
