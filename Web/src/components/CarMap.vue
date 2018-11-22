@@ -11,22 +11,33 @@
       <div style="width:100%;height:100%;" id="map"></div>
 
       <div class="carlist">
-        <table class="table" id="dtcarlist">
+        <div class="row">
+            <div class="col-md-3 col-xs-12">
+              <div class="form-group">
+                <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" class="form-control pull-right" id="datepicker" readonly >
+                </div>
+                <!-- /.input group -->
+              </div>
+            </div>
+        </div>
+        <table class="table" id="dtcarlist" >
                             <thead>
                             <tr>
                               <th>#</th>
                               <th>监控车</th>
                               <th>设备号</th>
-                              <th>日期</th>
                               <th>数据</th>
                             </tr>
                             </thead>
                             <tbody id="dtDr" >
-                              <tr v-for="(item,index) in carlist">
+                              <tr v-for="(item,index) in vcarlist">
                                 <td><input type="checkbox" :checked="item.checked=='Y'" @change="checkNewData(item) " /></td>
                                 <td>{{item.name}}</td>
                                 <td>{{item.machineid}}</td>
-                                <td>{{item.upload_date}}</td>
                                 <td><a @click="showCar(item)">查看</a></td>
                               </tr>
                             </tbody>
@@ -185,6 +196,7 @@ data.mainnav = "carmap";
 data.map = null;
 data.layer=null;
 data.carlist=[];
+data.vcarlist=[];
 data.currCar={};
 data.datarunning=false;
 data.datarunning2=false;
@@ -199,7 +211,7 @@ ctx.methods.loaddata = function() {
     this.loadCarTrack();
     var that=this;
     this.$nextTick(()=>{
-        DT("#dtcarlist",[[3, "desc"]],4,true);
+         that.showCarTrack();
     });
   });
 };
@@ -208,7 +220,7 @@ ctx.methods.loadCarTrack=function(){
   //alert(this.carlist.length);
   var str=[];
   for(let car of this.carlist){
-    if(car.checked=='Y'){
+    if(car.checked=='Y'&&car.upload_date==this.day){
       str.push(car.id+":"+car.upload_date);
     }
   }
@@ -292,8 +304,33 @@ var bodyheight = $(".content-wrapper").height();
     });
 
   this.map = map;
+var d=new Date();
+var year=d.getFullYear().toString();
+var month=(d.getMonth()+1>9)?(d.getMonth()+1).toString():"0"+(d.getMonth()+1).toString();
+var date=(d.getDate()>9)?d.getDate().toString():"0"+(d.getDate()).toString();
+var today=year+"-"+month+"-"+date;
+this.day=today;
+var that=this;
+$('#datepicker').val(today);
+    $('#datepicker').datepicker({
+      autoclose: true,
+        endDate: (new Date()),
+        format: 'yyyy-mm-dd',
+        language: 'zh-CN',
+        todayBtn: true,
+        defaultDate : new Date(),
+        todayHighlight:true
+    }).on('changeDate', function(e){
+        var d=e.date;
+        var year=d.getFullYear().toString();
+        var month=(d.getMonth()+1>9)?(d.getMonth()+1).toString():"0"+(d.getMonth()+1).toString();
+        var date=(d.getDate()>9)?d.getDate().toString():"0"+(d.getDate()).toString();
+        var today=year+"-"+month+"-"+date;
+        that.day=today;
+        that.showCarTrack();
+        that.loadCarTrack();
 
-
+    });
        
 
 
@@ -307,9 +344,25 @@ var bodyheight = $(".content-wrapper").height();
   this.loaddata();
 };
 ctx.methods.checkNewData=function(item){
-  item.checked=item.checked=='Y'?'N':"Y";
+  if(item!=undefined){
+     item.checked=item.checked=='Y'?'N':"Y";
+  }
   this.loadCarTrack();
 };
+
+
+ctx.methods.showCarTrack=function(){
+  var vcarlist=[];
+  for(var car of this.carlist){
+     if(car.upload_date==this.day){
+       vcarlist.push(car);
+     }
+  }
+  this.vcarlist=vcarlist;
+  this.$nextTick(()=>{
+   DT("#dtcarlist",[[3, "desc"]],4,false);
+  });
+}
 
 ctx.methods.showCar=function(car){
   this.currCar=car;
@@ -401,12 +454,6 @@ export default ctx;
 }
 .carlist div{
   
-}
-.carlist .box-tools{
-  background: transparent !important; 
-}
-.carlist table,th,td,tr{
-  background: transparent !important; 
 }
 .flex-row{
   display: flex;
