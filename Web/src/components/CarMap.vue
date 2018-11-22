@@ -360,7 +360,7 @@ ctx.methods.showCarTrack=function(){
   }
   this.vcarlist=vcarlist;
   this.$nextTick(()=>{
-   DT("#dtcarlist",[[3, "desc"]],4,false);
+   //DT("#dtcarlist",[[3, "desc"]],4,false);
   });
 }
 
