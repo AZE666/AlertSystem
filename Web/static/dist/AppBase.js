@@ -74,6 +74,9 @@ function RPT5(id,title,date,data){
             text: title,
         },
         toolbox: {
+            top:"30px",
+            x:'center',
+            y:'bottom',
             feature: {
                 dataZoom: {
                     yAxisIndex: 'none'
