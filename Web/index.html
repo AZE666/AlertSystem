@@ -104,7 +104,7 @@
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.10&key=d92a630125f401f982b175c61d1fd528&plugin=ElasticMarker"></script>
 <script src="//webapi.amap.com/loca?v=1.2.0&key=d92a630125f401f982b175c61d1fd528"></script>
 
-<script src="https://cdn.bootcss.com/echarts/4.2.0-rc.2/echarts.js"></script>
+<script src="https://cdn.bootcss.com/echarts/4.2.0-rc.2/echarts.min.js"></script>
 
   <!-- AdminLTE App -->
   <script src="static/dist/AppBase.js"></script>
@@ -122,7 +122,7 @@
 
 <body class="hold-transition skin-blue sidebar-mini " id="bodyctx" >
   <div class="wrapper" id="app"></div>
-
+  <div class="top"  id="btnGoTop" style="display:none;" ><a  href="#"><img src="/static/dist/img/top.png"style="width:50px;"  /></a></div>
   
 <div id="dialog_password" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog_passwordtitle" aria-hidden="true">
   <div class="modal-dialog">
@@ -160,5 +160,57 @@
 
   <!-- built files will be auto injected -->
 </body>
+
+<script>
+window.onload=function(){
+
+  var topbtn = document.getElementById("btnGoTop");
+  if(IsPC()==true){
+    topbtn.style.display="none";
+  }else{
+    topbtn.style.display="block";
+  }
+
+
+  return;
+    var timer = null; 
+    var pagelookheight = document.documentElement.clientHeight;
+    window.onscroll = function(){
+        //滚动超出高度，显示按钮，否则隐藏
+        var backtop = $("#app").scrollTop(); 
+        console.log(backtop);
+        console.log(pagelookheight);
+        if(backtop >= pagelookheight){
+            topbtn.style.display = "block";
+        } 
+        else{
+            topbtn.style.display = "none";
+        }
+    }
+ 
+    topbtn.onclick = function () {
+            timer = setInterval(function () {
+            var backtop = document.body.scrollTop;   
+            var speedtop = backtop/5;  
+            document.body.scrollTop = backtop -speedtop;  //高度不断减少
+            if(backtop ==0){  //滑动到顶端
+                clearInterval(timer);  //清除计时器
+            }
+        }, 30);
+    }
+}
+</script>
+
+<style>
+.top{
+  position: fixed;
+  bottom: 50px;
+  right:20px;
+  background: white;
+  width:50px;
+  height: 50px;
+  border-radius: 50%;
+}
+</style>
 
 </html>

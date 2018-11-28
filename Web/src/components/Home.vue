@@ -85,7 +85,7 @@
 				<!-- Main row -->
 				<div class="row">
 					<!-- Left col -->
-					<section class="col-lg-7 connectedSortable">
+					<section class="col-lg-7 connectedSortable" id="soutttable">
 						<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
 							<ol class="carousel-indicators">
 							<li data-target="#carousel-example-generic" data-slide-to="0" :class="{active:index==0}" v-for="(item,index) in objects"></li>
@@ -93,20 +93,49 @@
 							<div class="carousel-inner">
 
 							<div class="item" :class="{active:index==0}" v-for="(item,index) in objects">
-								<div style="height:400px;width:100%" :id="'pm25_chart_'+item.id" class="pm25_chart">
+								<div style="height:400px;" :id="'pm25_chart_'+item.id" class="pm25_chart">
 									
 								</div>
 							</div>
 							</div>
 							<a class="left carousel-control" href="#carousel-example-generic" data-slide="prev" style="height: 100px;top: 100px;">
-							<span class="fa fa-angle-left"></span>
+							<span class="fa fa-angle-left" style="color:black;"></span>
 							</a>
 							<a class="right carousel-control" href="#carousel-example-generic" data-slide="next" style="height: 100px;top: 100px;">
-							<span class="fa fa-angle-right" ></span>
+							<span class="fa fa-angle-right"  style="color:black;"></span>
 							</a>
 						</div>
 
 
+
+						<!-- solid sales graph -->
+						<div class="box box-solid ">
+							<div class="box-header">
+								<i class="fa fa-th"></i>
+
+								<h3 class="box-title">监控设备安装</h3>
+
+								<div class="box-tools pull-right">
+									<button type="button" class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
+									</button>
+									<button type="button" class="btn bg-teal btn-sm" data-widget="remove"><i class="fa fa-times"></i>
+									</button>
+								</div>
+							</div>
+							<div class="box-body border-radius-none">
+								<div class="chart" id="line-chart" style="height: 350px;"></div>
+							</div>
+							<!-- /.box-footer -->
+						</div>
+						<!-- /.box -->
+
+					</section>
+					<!-- /.Left col -->
+					<!-- right col (We are only adding the ID to make the widgets sortable)-->
+					<section class="col-lg-5 connectedSortable">
+
+
+						
 						<!-- TO DO List -->
 						<div class="box box-primary">
 							<div class="box-header">
@@ -217,59 +246,6 @@
 							<div class="box-footer clearfix no-border">
 								<button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> 新增事项</button>
 							</div>
-						</div>
-						<!-- /.box -->
-
-						
-
-					</section>
-					<!-- /.Left col -->
-					<!-- right col (We are only adding the ID to make the widgets sortable)-->
-					<section class="col-lg-5 connectedSortable">
-
-
-						<!-- solid sales graph -->
-						<div class="box box-solid bg-teal-gradient">
-							<div class="box-header">
-								<i class="fa fa-th"></i>
-
-								<h3 class="box-title">企业数</h3>
-
-								<div class="box-tools pull-right">
-									<button type="button" class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
-									</button>
-									<button type="button" class="btn bg-teal btn-sm" data-widget="remove"><i class="fa fa-times"></i>
-									</button>
-								</div>
-							</div>
-							<div class="box-body border-radius-none">
-								<div class="chart" id="line-chart" style="height: 250px;"></div>
-							</div>
-							<!-- /.box-body -->
-							<div class="box-footer no-border">
-								<div class="row">
-									<div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-										<input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60" data-fgColor="#39CCCC">
-
-										<div class="knob-label">已申请</div>
-									</div>
-									<!-- ./col -->
-									<div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-										<input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60" data-fgColor="#39CCCC">
-
-										<div class="knob-label">已安装</div>
-									</div>
-									<!-- ./col -->
-									<div class="col-xs-4 text-center">
-										<input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60" data-fgColor="#39CCCC">
-
-										<div class="knob-label">已完成</div>
-									</div>
-									<!-- ./col -->
-								</div>
-								<!-- /.row -->
-							</div>
-							<!-- /.box-footer -->
 						</div>
 						<!-- /.box -->
 
@@ -407,14 +383,16 @@ ctx.methods.onMyShow=function(){
 	this.loadapi("airdata", "summary", {daydetail:"Y"}, objects => {
 		this.objects=objects;
 		this.$nextTick(()=>{
-			var width=0;
+			var width=$("#soutttable").width();
+			//alert(width);
 			for(var i=0;i<this.objects.length;i++){
 				/* Morris.js Charts */
 				// Sales chart
 				var obj=this.objects[i];
 				
+				var date=[];
 				var data=[];
-				var airdataline=obj.airdataline;
+				var airdataline=obj.airdata;
 				for(var line of airdataline){
 					//alert(line);
 					//break;
@@ -423,87 +401,17 @@ ctx.methods.onMyShow=function(){
 					//console.log();
 					var pm25=Number( line.PM25);
 					if(pm25>0){
-						data.push([line.timespan*1000,pm25]);
+						date.push(line.df2);
+						data.push(pm25);
 					}
 				}
 				//alert(data.length);
 				//alert(data[0][1]);
-				var chart = Highcharts.chart('pm25_chart_'+obj.id, {
-						chart: {
-							zoomType: 'x'
-						},
-						title: {
-							text: '24小时内PM2.5走势图 - '+obj.name
-						},
-						subtitle: {
-							text: document.ontouchstart === undefined ?
-							'鼠标拖动可以进行缩放' : '手势操作进行缩放'
-						},
-						xAxis: {
-							type: 'datetime',
-							dateTimeLabelFormats: {
-								millisecond: '%H:%M:%S.%L',
-								second: '%H:%M:%S',
-								minute: '%H:%M',
-								hour: '%H:%M',
-								day: '%m-%d',
-								week: '%m-%d',
-								month: '%Y-%m',
-								year: '%Y'
-							}
-						},
-						tooltip: {
-							dateTimeLabelFormats: {
-								millisecond: '%H:%M:%S.%L',
-								second: '%H:%M:%S',
-								minute: '%H:%M',
-								hour: '%H:%M',
-								day: '%Y-%m-%d',
-								week: '%m-%d',
-								month: '%Y-%m',
-								year: '%Y'
-							}
-						},
-						yAxis: {
-							title: {
-								text: 'PM2.5'
-							}
-						},
-						legend: {
-							enabled: false
-						},
-						plotOptions: {
-							area: {
-								fillColor: {
-									linearGradient: {
-										x1: 0,
-										y1: 0,
-										x2: 0,
-										y2: 1
-									},
-									stops: [
-										[0, Highcharts.getOptions().colors[0]],
-										[1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-									]
-								},
-								marker: {
-									radius: 2
-								},
-								lineWidth: 1,
-								states: {
-									hover: {
-										lineWidth: 1
-									}
-								},
-								threshold: null
-							}
-						},
-						series: [{
-							type: 'area',
-							name: 'PM2.5(mg/m3)',
-							data: data
-						}]
-					});
+				console.log(data);
+				$('#pm25_chart_'+obj.id).width(width);
+				//alert(obj.name);
+				RPT5('pm25_chart_'+obj.id,'24小时内PM2.5走势图 - '+obj.name,date,data);
+
 			}
 		});
 	});
@@ -601,35 +509,162 @@ ctx.methods.onMyShow=function(){
     }
   });
 
-  var line = new Morris.Line({
-    element          : 'line-chart',
-    resize           : true,
-    data             : [
-      { y: '2016 Q1', item1: 2666, item2: 2666 },
-      { y: '2016 Q2', item1: 2778, item2: 2294 },
-      { y: '2016 Q3', item1: 4912, item2: 1969 },
-      { y: '2016 Q4', item1: 3767, item2: 3597 },
-      { y: '2017 Q1', item1: 6810, item2: 1914 },
-      { y: '2017 Q2', item1: 5670, item2: 4293 },
-      { y: '2017 Q3', item1: 4820, item2: 3795 },
-      { y: '2017 Q4', item1: 15073, item2: 5967 },
-      { y: '2018 Q1', item1: 10687, item2: 4460 },
-      { y: '2018 Q2', item1: 8432, item2: 5713 }
-    ],
-    xkey             : 'y',
-    ykeys            : ['item1'],
-    labels           : ['Item 1'],
-    lineColors       : ['#efefef'],
-    lineWidth        : 2,
-    hideHover        : 'auto',
-    gridTextColor    : '#fff',
-    gridStrokeWidth  : 0.4,
-    pointSize        : 4,
-    pointStrokeColors: ['#efefef'],
-    gridLineColor    : '#efefef',
-    gridTextFamily   : 'Open Sans',
-    gridTextSize     : 10
-  });
+
+var dataMap = {};
+function dataFormatter(obj) {
+    var pList = ['南山','福田','罗湖','盐田','龙岗','宝安','龙华','坪山','光明','大鹏'];
+    var temp;
+    for (var year = 2017; year <= 2018; year++) {
+        var max = 0;
+        var sum = 0;
+        temp = obj[year];
+        for (var i = 0, l = temp.length; i < l; i++) {
+            max = Math.max(max, temp[i]);
+            sum += temp[i];
+            obj[year][i] = {
+                name : pList[i],
+                value : temp[i]
+            }
+		}
+        obj[year + 'max'] = Math.floor(max / 100) * 100;
+        obj[year + 'sum'] = sum;
+    }
+    return obj;
+}
+
+dataMap.dataGDP = dataFormatter({
+    //max : 60000,
+    2018:[16251.93,11307.28,24515.76,11237.55,14359.88,22226.7,10568.83,12582,19195.69,49110.27,32318.85,15300.65,17560.18,11702.82,45361.85,26931.03,19632.26,19669.56,53210.28,11720.87,2522.66,10011.37,21026.68,5701.84,8893.12,605.83,12512.3,5020.37,1670.44,2102.21,6610.05],
+    2017:[14113.58,9224.46,20394.26,9200.86,11672,18457.27,8667.58,10368.6,17165.98,41425.48,27722.31,12359.33,14737.12,9451.26,39169.92,23092.36,15967.61,16037.96,46013.06,9569.85,2064.5,7925.58,17185.48,4602.16,7224.18,507.46,10123.48,4120.75,1350.43,1689.65,5437.47],
+   
+});
+
+dataMap.dataPI = dataFormatter({
+    //max : 4000,
+    2018:[136.27,159.72,2905.73,641.42,1306.3,1915.57,1277.44,1701.5,124.94,3064.78,1583.04,2015.31,1612.24,1391.07,3973.85,3512.24,2569.3,2768.03,2665.2,2047.23,659.23,844.52,2983.51,726.22,1411.01,74.47,1220.9,678.75,155.08,184.14,1139.03],
+    2017:[124.36,145.58,2562.81,554.48,1095.28,1631.08,1050.15,1302.9,114.15,2540.1,1360.56,1729.02,1363.67,1206.98,3588.28,3258.09,2147,2325.5,2286.98,1675.06,539.83,685.38,2482.89,625.03,1108.38,68.72,988.45,599.28,134.92,159.29,1078.63],
+
+});
+
+dataMap.dataSI = dataFormatter({
+    //max : 26600,
+    2018:[3752.48,5928.32,13126.86,6635.26,8037.69,12152.15,5611.48,5962.41,7927.89,25203.28,16555.58,8309.38,9069.2,6390.55,24017.11,15427.08,9815.94,9361.99,26447.38,5675.32,714.5,5543.04,11029.13,2194.33,3780.32,208.79,6935.59,2377.83,975.18,1056.15,3225.9],
+    2017:[3388.38,4840.23,10707.68,5234,6367.69,9976.82,4506.31,5025.15,7218.32,21753.93,14297.93,6436.62,7522.83,5122.88,21238.49,13226.38,7767.24,7343.19,23014.53,4511.68,571,4359.12,8672.18,1800.06,3223.49,163.92,5446.1,1984.97,744.63,827.91,2592.15],
+  
+});
+var d=new Date();
+var kvc=[];
+for(var i=-11;i<=0;i++){
+	var k=new Date(d.getTime()+i*30*24*3600*1000);
+	var mon=k.getMonth()+1;
+	mon=mon>9?mon.toString():"0"+mon.toString();
+	kvc.push(k.getFullYear()+"/"+mon);
+}
+
+var option = {
+    baseOption: {
+		timeline: {
+            // y: 0,
+            axisType: 'category',
+            // realtime: false,
+            // loop: false,
+            autoPlay: true,
+            // currentIndex: 2,
+            playInterval: 1000,
+            // controlStyle: {
+            //     position: 'left'
+            // },
+            data: kvc,
+            label: {
+                formatter : function(s) {
+                    return s;
+                }
+            }
+        },
+        title: {
+            subtext: '数据来自安志环保监控'
+        },
+        tooltip: {
+        },
+        legend: {
+            x: 'right',
+            data: ['空气监测', '监控车', '水污染']
+        },
+        calculable : true,
+        grid: {
+            top: 80,
+            bottom: 100,
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow',
+                    label: {
+                        show: true,
+                        formatter: function (params) {
+                            return params.value.replace('\n', '');
+                        }
+                    }
+                }
+            }
+        },
+        xAxis: [
+            {
+                'type':'category',
+                'axisLabel':{'interval':0},
+                'data': ['南山','福田','罗湖','盐田','龙岗','宝安','龙华','坪山','光明','大鹏'],
+                splitLine: {show: false}
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: '数量'
+            }
+        ],
+        series: [
+            {name: '空气监测', type: 'bar'},
+            {name: '监控车', type: 'bar'},
+            {name: '水污染', type: 'bar'},
+            {
+                name: 'GDP占比',
+                type: 'pie',
+                center: ['75%', '35%'],
+                radius: '28%',
+                z: 100
+            }
+        ]
+    },
+    options: [
+        {
+            series: [
+                {data: dataMap.dataGDP['2017']},
+                {data: dataMap.dataPI['2017']},
+                {data: dataMap.dataSI['2017']},
+                {data: [
+                    {name: '空气监测', value: dataMap.dataGDP['2017sum']},
+                    {name: '监控车', value: dataMap.dataPI['2017sum']},
+                    {name: '水污染', value: dataMap.dataSI['2017sum']}
+                ]}
+            ]
+        },
+        {
+            series: [
+                {data: dataMap.dataGDP['2018']},
+                {data: dataMap.dataPI['2018']},
+                {data: dataMap.dataSI['2018']},
+                {data: [
+                    {name: '空气监测', value: dataMap.dataGDP['2018sum']},
+                    {name: '监控车', value: dataMap.dataPI['2018sum']},
+                    {name: '水污染', value: dataMap.dataSI['2018sum']}
+                ]}
+            ]
+        }
+    ]
+};
+
+
+    var myChart = echarts.init(document.getElementById("line-chart")); 
+    myChart.setOption(option);
 
 
 };
