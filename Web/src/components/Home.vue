@@ -378,13 +378,13 @@ ctx.methods.onMyShow = function() {
   var data = [];
   data.push({ name: "福田区", value: 36 });
   data.push({ name: "罗湖区", value: 35 });
-  data.push({ name: "南山区", value: 36 });
-  data.push({ name: "盐田区", value: 56 });
-  data.push({ name: "宝安区", value: 32 });
-  data.push({ name: "龙岗区", value: 36 });
-  data.push({ name: "龙华区", value: 46 });
-  data.push({ name: "坪山区", value: 36 });
-  data.push({ name: "光明区", value: 86 });
+  data.push({ name: "南山区", value: 46 });
+  data.push({ name: "盐田区", value: 16 });
+  data.push({ name: "宝安区", value: 12 });
+  data.push({ name: "龙岗区", value: 16 });
+  data.push({ name: "龙华区", value: 6 });
+  data.push({ name: "坪山区", value: 6 });
+  data.push({ name: "光明区", value: 6 });
   RPTPie("anzhuangdiqupie", "企业安装设备数量", data);
 
   this.loadapi("airdata", "staticdata", {}, cbdata => {
