@@ -18,16 +18,16 @@
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-            <li  :data-toggle="ispc==false?'push-menu':''" role="button"  v-bind:class="{ 'active':mainnav=='home' }" @click="refresh()"><router-link to="/" ><i class="fa fa-circle-o "></i> <span>总览</span></router-link></li>
-            <li  :data-toggle="ispc==false?'push-menu':''" role="button"  v-bind:class="{ 'active':mainnav=='map' }" @click="refresh()"><router-link to="/Map" ><i class="fa fa-map"></i> <span>地图</span></router-link></li>
-            <li   :data-toggle="ispc==false?'push-menu':''" role="button" v-bind:class="{ 'active':mainnav=='carmap' }" @click="refresh()"><router-link to="/CarMap" ><i class="fa fa-bus"></i> <span>监控车</span></router-link></li>
+            <li  :data-toggle="ispc==false?'push-menu':''" role="button"  v-bind:class="{ 'active':mainnav=='home' }" @click="refresh()"><a to="#/" ><i class="fa fa-circle-o "></i> <span>总览</span></a></li>
+            <li  :data-toggle="ispc==false?'push-menu':''" role="button"  v-bind:class="{ 'active':mainnav=='map' }" @click="refresh()"><a to="#/Map" ><i class="fa fa-map"></i> <span>地图</span></a></li>
+            <li   :data-toggle="ispc==false?'push-menu':''" role="button" v-bind:class="{ 'active':mainnav=='carmap' }" @click="refresh()"><a to="#/CarMap" ><i class="fa fa-bus"></i> <span>监控车</span></a></li>
             <!--<li  v-bind:class="{ 'active':mainnav=='obj' }" @click="refresh()"><router-link to="/ObjectList" ><i class="fa fa-list"></i> <span>监控企业</span></router-link></li>-->
-            <li   :data-toggle="ispc==false?'push-menu':''" role="button" v-bind:class="{ 'active':mainnav=='obj' }" @click="refresh()"><router-link to="/ObjectList" ><i class="fa fa-pie-chart"></i> <span>监控企业</span></router-link></li>
-            <li   :data-toggle="ispc==false?'push-menu':''" role="button" v-bind:class="{ 'active':mainnav=='rptalert' }"><router-link to="/RPTAlert"><i class="fa fa-pie-chart"></i> <span>超标数据统计</span>
+            <li   :data-toggle="ispc==false?'push-menu':''" role="button" v-bind:class="{ 'active':mainnav=='obj' }" @click="refresh()"><a to="#/ObjectList" ><i class="fa fa-pie-chart"></i> <span>监控企业</span></a></li>
+            <li   :data-toggle="ispc==false?'push-menu':''" role="button" v-bind:class="{ 'active':mainnav=='rptalert' }"><a to="#/RPTAlert"><i class="fa fa-pie-chart"></i> <span>超标数据统计</span>
             <span class="pull-right-container">
               <small class="label pull-right bg-green">{{memberinfo.alertcount}}</small>
             </span>
-            </router-link></li>
+            </a></li>
           </ul>
     </section>
     <!-- /.sidebar -->

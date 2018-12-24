@@ -638,10 +638,10 @@ class AppBase {
                     if (token != null) {
                         //alert(this.memberinfo.status);
                         if (this.memberinfo.status!="A") {
-                            window.location.href = "/#/Login";
+                            window.location.href = "#/Login";
                         }
                     } else {
-                        window.location.href = "/#/Login";
+                        window.location.href = "#/Login";
                     }
                 }
             },
