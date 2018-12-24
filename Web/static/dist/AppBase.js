@@ -60,6 +60,42 @@ function DT(spec,order,displaylength,searching){
         });
 }
 
+function RPTPie(id,title,data){
+    var cats=[];
+    for(var a of data){
+        cats.push(a.name);
+    }
+    var option = {
+        title: {
+            text: title,
+            left: 'center'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{b} : {c} ({d}%)"
+        },
+        legend: {
+            // orient: 'vertical',
+            // top: 'middle',
+            bottom: 10,
+            left: 'center',
+            data: cats
+        },
+        series : [
+            {
+                type: 'pie',
+                radius : '65%',
+                center: ['50%', '50%'],
+                selectedMode: 'single',
+                data:data
+            }
+        ]
+    };
+    var myChart = echarts.init(document.getElementById(id)); 
+    myChart.setOption(option);
+    return myChart;
+}
+
 function RPT5(id,title,date,data){
 
     option = {
