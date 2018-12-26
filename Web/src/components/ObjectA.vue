@@ -194,7 +194,7 @@
                       <h3 class="timeline-header"><a href="#">{{devicedata.address}}</a></h3>
 
                       <div class="timeline-body">
-                          <video controls="controls" src="" style="width:100%;height:400px;"></video>
+                          <video controls="controls" :src="uploadpath+'object/'+devicedata.video" style="height:500px;width:100%;"></video>
                       </div>
                   </div>
                   <div class="tab-pane" id="tab_4-1">

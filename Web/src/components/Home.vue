@@ -109,6 +109,13 @@
             </div>
           </section>
 
+          <section class="col-lg-12 connectedSortable">
+            <div class="row">
+              <div class="col-md-8">
+      <div style="width:100%;height:100%;" id="map"></div>
+              </div>
+            </div>
+          </section>
           <!-- /.Left col -->
           <!-- right col (We are only adding the ID to make the widgets sortable)-->
           <section class="col-lg-12 connectedSortable" style="margin-top:20px;">
@@ -117,10 +124,10 @@
                 <div class="nav-tabs-custom">
                   <ul class="nav nav-tabs">
                     <li class="active">
-                      <a href="#tab_1" data-toggle="tab">1天</a>
+                      <a href="#tab_1" data-toggle="tab">过去24小时</a>
                     </li>
                     <li>
-                      <a href="#tab_2" data-toggle="tab">1个月</a>
+                      <a href="#tab_2" data-toggle="tab">过去30天</a>
                     </li>
                   </ul>
                   <div class="tab-content">
@@ -143,6 +150,7 @@
                   </ul>
                   <div class="tab-content">
                     <div class="tab-pane active" id="tab_3">
+                      <div style="height:44px;"></div>
                       <div id="anzhuangdiqupie" class="whlikebelow"></div>
                     </div>
                   </div>
@@ -198,6 +206,7 @@
 import myheader from "./myheader";
 import mynav from "./mynav";
 import myfooter from "./myfooter";
+import imap from "./imap";
 
 var base = new AppBase();
 var ctx = base.Gen();
@@ -224,6 +233,7 @@ ctx.methods.onMyShow = function() {
 
         var date = [];
         var data = [];
+      var seriespm25 = [];
         var airdataline = obj.airdata;
         for (var line of airdataline) {
           //alert(line);
@@ -235,19 +245,25 @@ ctx.methods.onMyShow = function() {
           if (pm25 > 0) {
             date.push(line.df2);
             data.push(pm25);
+
+            seriespm25.push([line.df2, Number(pm25)]);
           }
         }
+
+
         //alert(data.length);
         //alert(data[0][1]);
         console.log(data);
         $("#pm25_chart_" + obj.id).width(width);
         //alert(obj.name);
-        RPT5(
-          "pm25_chart_" + obj.id,
-          "24小时内PM2.5走势图 - " + obj.name,
-          date,
-          data
-        );
+
+        RPT3("pm25_chart_" + obj.id, obj.name+" - PM2.5可吸入颗粒物走势图",seriespm25,
+        [this.memberinfo.alertset.pm25_avg_d_1,
+        this.memberinfo.alertset.pm25_avg_d_2,
+        this.memberinfo.alertset.pm25_avg_d_3,
+        this.memberinfo.alertset.pm25_avg_d_4,
+        this.memberinfo.alertset.pm25_avg_d_5,
+        this.memberinfo.alertset.pm25_avg_d_6]);
       }
     });
   });
@@ -367,24 +383,24 @@ ctx.methods.onMyShow = function() {
   var data = [];
   data.push({ name: "超标企业", value: 5 });
   data.push({ name: "正常企业", value: 28 });
-  RPTPie("anzhuangpie", "1天超标分析", data);
+  RPTPie("anzhuangpie", "过去24小时超标分析", data);
 
   
   var data = [];
   data.push({ name: "超标企业", value: 7 });
   data.push({ name: "正常企业", value: 26 });
-  RPTPie("anzhuangpie2", "1个月超标分析", data);
+  RPTPie("anzhuangpie2", "过去30天超标分析", data);
 
   var data = [];
-  data.push({ name: "福田区", value: 36 });
-  data.push({ name: "罗湖区", value: 35 });
-  data.push({ name: "南山区", value: 46 });
-  data.push({ name: "盐田区", value: 16 });
-  data.push({ name: "宝安区", value: 12 });
-  data.push({ name: "龙岗区", value: 16 });
-  data.push({ name: "龙华区", value: 6 });
-  data.push({ name: "坪山区", value: 6 });
-  data.push({ name: "光明区", value: 6 });
+  data.push({ name: "福田区", value: 36,description:"油烟监控：20<br />监控车：10<br />定点监控：6" });
+  data.push({ name: "罗湖区", value: 35,description:"油烟监控：12<br />监控车：10<br />定点监控：13" });
+  data.push({ name: "南山区", value: 46,description:"油烟监控：20<br />监控车：22<br />定点监控：4" });
+  data.push({ name: "盐田区", value: 16,description:"油烟监控：5<br />监控车：10<br />定点监控：1" });
+  data.push({ name: "宝安区", value: 12,description:"油烟监控：2<br />监控车：10<br />定点监控：0" });
+  data.push({ name: "龙岗区", value: 16 ,description:"油烟监控：10<br />监控车：2<br />定点监控：4"});
+  data.push({ name: "龙华区", value: 6 ,description:"油烟监控：2<br />监控车：1<br />定点监控：3"});
+  data.push({ name: "坪山区", value: 6 ,description:"油烟监控：4<br />监控车：0<br />定点监控：2"});
+  data.push({ name: "光明区", value: 6 ,description:"油烟监控：1<br />监控车：1<br />定点监控：5"});
   RPTPie("anzhuangdiqupie", "企业安装设备数量", data);
 
   this.loadapi("airdata", "staticdata", {}, cbdata => {
@@ -395,7 +411,7 @@ ctx.methods.onMyShow = function() {
   });
 };
 
-ctx.components = { myheader, mynav, myfooter };
+ctx.components = { myheader, mynav, myfooter,imap };
 
 export default ctx;
 </script>

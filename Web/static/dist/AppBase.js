@@ -72,7 +72,15 @@ function RPTPie(id,title,data){
         },
         tooltip : {
             trigger: 'item',
-            formatter: "{b} : {c} ({d}%)"
+            formatter: function(a){
+                //console.log("formatter");
+                //console.log(a);
+                var ret= a.data.name+" : "+a.data.value+" ("+a.percent+"%)";
+                if(a.data.description!=undefined){
+                    ret+=" <br/> "+a.data.description;
+                }
+                return ret;
+            }
         },
         legend: {
             // orient: 'vertical',
